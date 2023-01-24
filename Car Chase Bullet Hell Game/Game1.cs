@@ -8,6 +8,7 @@ namespace Car_Chase_Bullet_Hell_Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Background _background;
 
         public Game1()
         {
@@ -18,7 +19,12 @@ namespace Car_Chase_Bullet_Hell_Game
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            // increase size of the game window
+            _graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
+            _graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+            _graphics.ApplyChanges();
+
+            _background = new Background(GraphicsDevice);
 
             base.Initialize();
         }
@@ -27,7 +33,13 @@ namespace Car_Chase_Bullet_Hell_Game
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            // add the same image two times for the background
+            for (int i = 0; i < 2; i++)
+            {
+                Sprite sprite = new Sprite();
+                sprite.LoadContent(Content, "Road");
+                _background.AddBackground(sprite);
+            }
         }
 
         protected override void Update(GameTime gameTime)
@@ -35,7 +47,7 @@ namespace Car_Chase_Bullet_Hell_Game
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             base.Update(gameTime);
         }
@@ -44,7 +56,9 @@ namespace Car_Chase_Bullet_Hell_Game
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+            _background.Draw(_spriteBatch);
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }

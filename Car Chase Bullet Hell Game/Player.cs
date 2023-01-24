@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Car_Chase_Bullet_Hell_Game
 {
     // singleton pattern
-    internal sealed class Player
+    internal sealed class Player : Sprite
     {
         private static Player _instance;
         private static readonly object _lock = new object();
