@@ -23,6 +23,10 @@ namespace Car_Chase_Bullet_Hell_Game
         public SpriteEffects Effects = SpriteEffects.None;
         public float LayerDepth = 0f;
 
+        // Contains the boundaries in the source image for the different animations of the Sprite
+        public List<Rectangle> Animations;
+        private int animationIndex = 0;
+
         private Texture2D _texture;
 
         // call this function to load an asset image for the sprite
@@ -33,10 +37,29 @@ namespace Car_Chase_Bullet_Hell_Game
             DestinationRectangle = new Rectangle(_texture.Bounds.X, _texture.Bounds.Y, _texture.Bounds.Width, _texture.Bounds.Height);
         }
 
+        public void LoadContent(ContentManager content, string asset, Rectangle sourceRectangle)
+        {
+            _texture = content.Load<Texture2D>(asset);
+            SourceRectangle = sourceRectangle;
+            DestinationRectangle = new Rectangle(0, 0, sourceRectangle.Width, sourceRectangle.Height);
+        }
+
         // call this function to display the sprite
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Draw(_texture, DestinationRectangle, SourceRectangle, Color, Rotation, Origin, Effects, LayerDepth);
+
+            // change to next animation
+            if (Animations != null)
+            {
+                animationIndex++;
+                if (animationIndex == Animations.Count)
+                {
+                    animationIndex = 0;
+                }
+
+                SourceRectangle = Animations[animationIndex];
+            }
         }
     }
 }
