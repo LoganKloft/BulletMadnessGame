@@ -29,8 +29,12 @@ namespace Car_Chase_Bullet_Hell_Game
 
         public override void Move(GameTime gameTime)
         {
+            base.Origin = new Vector2(base.DestinationRectangle.Width / 2, base.DestinationRectangle.Height / 2);
+            base.Rotation = (float)_direction;
             base.DestinationRectangle.X += (int) (_xDirection * _speed);
             base.DestinationRectangle.Y += (int)(_yDirection * _speed);
+            base.Collided();
+            base.Offscreen();
         }
     }
 }

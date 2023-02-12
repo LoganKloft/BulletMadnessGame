@@ -21,9 +21,13 @@ namespace Car_Chase_Bullet_Hell_Game
             while (ShotPatterns.TryPeek(out shotPattern) && shotPattern.Finished())
             {
                 ShotPatterns.Dequeue();
+                System.Diagnostics.Debug.WriteLine("ShotPattern Dequeued");
             }
 
-            MovementPattern.Move(gameTime, this);
+            if (MovementPattern is not null)
+            {
+                MovementPattern.Move(gameTime, this);
+            }
             foreach (ShotPattern pattern in ShotPatterns)
             {
                 pattern.Update(gameTime);

@@ -61,5 +61,13 @@ namespace Car_Chase_Bullet_Hell_Game
                 SourceRectangle = Animations[animationIndex];
             }
         }
+
+        public Point Center
+        {
+            get
+            {
+                return new Point(DestinationRectangle.X + (DestinationRectangle.Width / 2), DestinationRectangle.Y + (DestinationRectangle.Height / 2));
+            }
+        }
     }
 }
