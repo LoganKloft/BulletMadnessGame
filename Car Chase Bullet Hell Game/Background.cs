@@ -55,11 +55,11 @@ namespace Car_Chase_Bullet_Hell_Game
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             foreach (Sprite sprite in _backgrounds)
             {
-                sprite.Draw(spriteBatch);
+                sprite.Draw(spriteBatch, gameTime);
             }
         }
     }
