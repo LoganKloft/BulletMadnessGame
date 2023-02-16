@@ -15,7 +15,7 @@ namespace Car_Chase_Bullet_Hell_Game
         private List<Shot> shots = new List<Shot>();
         private int shotCount = 0;
 
-        internal HalfCircleShotPattern(int shotCount) : base()
+        public HalfCircleShotPattern(int shotCount) : base()
         {
             this.shotCount = shotCount;
         }

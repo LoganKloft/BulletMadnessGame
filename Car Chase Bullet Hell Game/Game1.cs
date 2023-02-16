@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,6 +16,8 @@ namespace Car_Chase_Bullet_Hell_Game
         private Enemy _midBossEnemy;
         private float time = 0f;
         private float time2 = 0f;
+        private int occurence = 1, shotIndex = 0, numBullets=8;
+        private List<Type> shotTypes = new List<Type>();
 
         public static GraphicsDevice gd;
 
@@ -24,6 +28,9 @@ namespace Car_Chase_Bullet_Hell_Game
             IsMouseVisible = true;
 
             System.Diagnostics.Debug.WriteLine("Starting Game");
+
+            shotTypes.Add(typeof(HalfCircleShotPattern));
+            shotTypes.Add(typeof(CircleShotPattern));
         }
 
         protected override void Initialize()
@@ -102,12 +109,41 @@ namespace Car_Chase_Bullet_Hell_Game
                 time = 0f;
             }
 
+            // Mid-Boss Shot
+            if(gameTime.ElapsedGameTime.TotalSeconds>5)
+            { 
+            }
             if (time2 > 2f)
             {
-                HalfCircleShotPattern circle = new HalfCircleShotPattern(6);
-                circle.CreateShots(Content, "bullet1", _midBossEnemy.Center);
-                _midBossEnemy.ShotPatterns.Enqueue(circle);
-                time2 = 0f;
+                if((occurence-1)%3==0 && occurence!=1)
+                {
+                    if (shotIndex == 0)
+                    {
+                        shotIndex = 1;
+                        numBullets = 16;
+                    }
+                    else
+                    {
+                        shotIndex = 0;
+                        numBullets = 8;
+                    }
+                }
+                var constructors = shotTypes[shotIndex].GetConstructors();
+                object pattern = constructors[0].Invoke(new object[] { numBullets });
+                if(pattern.GetType() == typeof(HalfCircleShotPattern))
+                {
+                    HalfCircleShotPattern half = (HalfCircleShotPattern)pattern;
+                    half.CreateShots(Content, "bullet1", _midBossEnemy.Center);
+                    _midBossEnemy.ShotPatterns.Enqueue(half);
+                }
+                else if(pattern.GetType() == typeof(CircleShotPattern))
+                {
+                    CircleShotPattern circle = (CircleShotPattern)pattern;
+                    circle.CreateShots(Content, "01", _midBossEnemy.Center);
+                    _midBossEnemy.ShotPatterns.Enqueue(circle);
+                }
+                this.time2 = 0f;
+                this.occurence++;
             }
 
             _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);
