@@ -103,7 +103,12 @@ namespace Car_Chase_Bullet_Hell_Game
             gameUpdate = (float)gameTime.TotalGameTime.TotalSeconds;
 
             //Final-Boss shots and unpdate only after 7 seconds of game play
-            if(gameUpdate>10 && gameUpdate<=15)
+            if((int)gameUpdate == 20)
+            {
+                CircleMovementPattern circ = new CircleMovementPattern();
+                _bossEnemy.MovementPattern = circ;
+            }
+            if((gameUpdate>10 && gameUpdate<=15) || gameUpdate>=20)
             {
                 time += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (time > 1f)
@@ -158,12 +163,12 @@ namespace Car_Chase_Bullet_Hell_Game
 
                 _midBossEnemy.Update(gameTime);
             }
-            if(gameUpdate>=10)
+            if(gameUpdate>=10 && gameUpdate<15)
             {
                 _midBossEnemy.MovementPattern = offScreen;
                 _midBossEnemy.Update(gameTime);
             }
-            if(gameUpdate>=15)
+            if(gameUpdate>=15 && gameUpdate<20)
             {
                 _bossEnemy.MovementPattern = offScreen;
                 _bossEnemy.Update(gameTime);
