@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using Car_Chase_Bullet_Hell_Game.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -44,7 +44,7 @@ namespace Car_Chase_Bullet_Hell_Game
             List<Rectangle> _bossAnimationRectangles = new List<Rectangle>();
 
             _midBossEnemy = new Enemy();
-            CircleMovementPattern circle = new CircleMovementPattern();
+            TriangleMovementPattern circle = new TriangleMovementPattern();
             _midBossEnemy.MovementPattern = circle;
 
             // prepare boss enemy instantiations
