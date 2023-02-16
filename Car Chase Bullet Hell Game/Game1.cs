@@ -13,6 +13,7 @@ namespace Car_Chase_Bullet_Hell_Game
         private Enemy _bossEnemy;
         private Enemy _midBossEnemy;
         private float time = 0f;
+        private float time2 = 0f;
 
         public static GraphicsDevice gd;
 
@@ -92,12 +93,21 @@ namespace Car_Chase_Bullet_Hell_Game
                 Exit();
 
             time += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            time2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (time > 1f)
             {
                 CircleShotPattern csp = new CircleShotPattern(16);
                 csp.CreateShots(Content, "01", _bossEnemy.Center);
                 _bossEnemy.ShotPatterns.Enqueue(csp);
                 time = 0f;
+            }
+
+            if (time2 > 2f)
+            {
+                HalfCircleShotPattern circle = new HalfCircleShotPattern(6);
+                circle.CreateShots(Content, "bullet1", _midBossEnemy.Center);
+                _midBossEnemy.ShotPatterns.Enqueue(circle);
+                time2 = 0f;
             }
 
             _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);
