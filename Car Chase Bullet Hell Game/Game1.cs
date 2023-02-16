@@ -12,6 +12,7 @@ namespace Car_Chase_Bullet_Hell_Game
         private SpriteBatch _spriteBatch;
         private Background _background;
         private Enemy _bossEnemy;
+        private Enemy _midBossEnemy;
         private float time = 0f;
 
         public static GraphicsDevice gd;
@@ -41,6 +42,10 @@ namespace Car_Chase_Bullet_Hell_Game
             _bossEnemy = new Enemy();
             CircleMovementPattern _movementPattern = new CircleMovementPattern();
             List<Rectangle> _bossAnimationRectangles = new List<Rectangle>();
+
+            _midBossEnemy = new Enemy();
+            CircleMovementPattern circle = new CircleMovementPattern();
+            _midBossEnemy.MovementPattern = circle;
 
             // prepare boss enemy instantiations
             _bossEnemy.MovementPattern = _movementPattern;
@@ -75,6 +80,8 @@ namespace Car_Chase_Bullet_Hell_Game
 
             _bossEnemy.LoadContent(Content, "Boss", _bossEnemy.Animations[0]);
 
+            _midBossEnemy.LoadContent(Content, "tank");
+
             // make boss bigger
             _bossEnemy.DestinationRectangle.Width = 512;
             _bossEnemy.DestinationRectangle.Height = 512;
@@ -96,6 +103,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
             _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);
             _bossEnemy.Update(gameTime);
+            _midBossEnemy.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -107,6 +115,8 @@ namespace Car_Chase_Bullet_Hell_Game
             _spriteBatch.Begin();
             _background.Draw(_spriteBatch, gameTime);
             _bossEnemy.Draw(_spriteBatch, gameTime);
+            _bossEnemy.Draw(_spriteBatch, gameTime);
+            _midBossEnemy.Draw(_spriteBatch, gameTime);
             Player.Instance.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
 
