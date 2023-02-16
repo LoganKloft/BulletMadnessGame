@@ -99,17 +99,25 @@ namespace Car_Chase_Bullet_Hell_Game
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            time += (float)gameTime.ElapsedGameTime.TotalSeconds;
             gameUpdate = (float)gameTime.TotalGameTime.TotalSeconds;
-            if (time > 1f)
-            {
-                CircleShotPattern csp = new CircleShotPattern(16);
-                csp.CreateShots(Content, "01", _bossEnemy.Center);
-                _bossEnemy.ShotPatterns.Enqueue(csp);
-                time = 0f;
-            }
 
-            // Mid-Boss Shot
+            //Final-Boss shots and unpdate only after 7 seconds of game play
+            if(gameUpdate>10)
+            {
+                time += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (time > 1f)
+                {
+                    CircleShotPattern csp = new CircleShotPattern(16);
+                    csp.CreateShots(Content, "01", _bossEnemy.Center);
+                    _bossEnemy.ShotPatterns.Enqueue(csp);
+                    time = 0f;
+                }
+
+                _bossEnemy.Update(gameTime);
+            }
+            
+
+            // Mid-Boss Shot and update only after 5 seconds of game play
             if(gameUpdate>5)
             {
                 time2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -152,7 +160,6 @@ namespace Car_Chase_Bullet_Hell_Game
             
 
             _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);
-            _bossEnemy.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -164,8 +171,11 @@ namespace Car_Chase_Bullet_Hell_Game
 
             _spriteBatch.Begin();
             _background.Draw(_spriteBatch, gameTime);
-            _bossEnemy.Draw(_spriteBatch, gameTime);
-            _bossEnemy.Draw(_spriteBatch, gameTime);
+            if(gameDraw>10)
+            {
+                _bossEnemy.Draw(_spriteBatch, gameTime);
+                _bossEnemy.Draw(_spriteBatch, gameTime);
+            }
 
             if(gameDraw > 5)
             {
