@@ -18,6 +18,7 @@ namespace Car_Chase_Bullet_Hell_Game
         private float time2 = 0f, gameUpdate=0f, gameDraw=0f;
         private int occurence = 1, shotIndex = 0, numBullets=8;
         private List<Type> shotTypes = new List<Type>();
+        private OffScreenMovementPattern offScreen = new OffScreenMovementPattern();
 
         public static GraphicsDevice gd;
 
@@ -118,7 +119,7 @@ namespace Car_Chase_Bullet_Hell_Game
             
 
             // Mid-Boss Shot and update only after 5 seconds of game play
-            if(gameUpdate>5)
+            if(gameUpdate>5 && gameUpdate<10)
             {
                 time2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (time2 > 2f)
@@ -155,6 +156,11 @@ namespace Car_Chase_Bullet_Hell_Game
                     this.occurence++;
                 }
 
+                _midBossEnemy.Update(gameTime);
+            }
+            if(gameUpdate>=10)
+            {
+                _midBossEnemy.MovementPattern = offScreen;
                 _midBossEnemy.Update(gameTime);
             }
             
