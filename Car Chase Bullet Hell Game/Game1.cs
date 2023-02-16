@@ -139,7 +139,7 @@ namespace Car_Chase_Bullet_Hell_Game
                 else if(pattern.GetType() == typeof(CircleShotPattern))
                 {
                     CircleShotPattern circle = (CircleShotPattern)pattern;
-                    circle.CreateShots(Content, "01", _midBossEnemy.Center);
+                    circle.CreateShots(Content, "bullet2", _midBossEnemy.Center);
                     _midBossEnemy.ShotPatterns.Enqueue(circle);
                 }
                 this.time2 = 0f;
