@@ -20,23 +20,28 @@ namespace Car_Chase_Bullet_Hell_Game.Content
         
         public override void Move(GameTime gameTime, Enemy enemy)
         {
+            // Set enemy at the correct position at the start of the movvement pattern
             if(lap==0)
             {
                 enemy.DestinationRectangle.X = 400;
                 enemy.DestinationRectangle.Y = 1000;
                 lap++;
             }
+            //Update the index when it goes out of range
             if(pointIndex == 3)
             {
                 pointIndex = 0;
             }
+            //Account for pauses at each corner of the triangle
             if(time%100==0)
             {
                 pause = false;
+                //Calculate necessary movement directions
                 x_move = points[pointIndex].X - enemy.DestinationRectangle.X;
                 y_move = points[pointIndex].Y - enemy.DestinationRectangle.Y;
                 distance = Math.Sqrt(Math.Pow(x_move, 2) + Math.Pow(y_move, 2));
                 direction = speed / distance;
+                //Update destination rectangles
                 if (x_move != 0)
                 {
                     enemy.DestinationRectangle.X += (int)(x_move * direction);
@@ -46,11 +51,13 @@ namespace Car_Chase_Bullet_Hell_Game.Content
                     enemy.DestinationRectangle.Y += (int)(y_move * direction);
                 }
             }
+            //Update the index of the point we are trying to get to once we have reached the previous point.
             if(enemy.DestinationRectangle.X == points[pointIndex].X && enemy.DestinationRectangle.Y == points[pointIndex].Y)
             {
                 pause = true;
                 pointIndex++;
             }
+            //Handle pausing at each corner of the triagle
             if(pause==true)
             {
                 time++;
