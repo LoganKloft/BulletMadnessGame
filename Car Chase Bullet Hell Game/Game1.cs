@@ -110,9 +110,6 @@ namespace Car_Chase_Bullet_Hell_Game
             }
 
             // Mid-Boss Shot
-            if(gameTime.ElapsedGameTime.TotalSeconds>5)
-            { 
-            }
             if (time2 > 2f)
             {
                 if((occurence-1)%3==0 && occurence!=1)
