@@ -102,13 +102,13 @@ namespace Car_Chase_Bullet_Hell_Game
 
             gameUpdate = (float)gameTime.TotalGameTime.TotalSeconds;
 
-            //Final-Boss shots and unpdate only after 7 seconds of game play
-            if((int)gameUpdate == 20)
+            if((int)gameUpdate == 90)
             {
                 CircleMovementPattern circ = new CircleMovementPattern();
                 _bossEnemy.MovementPattern = circ;
             }
-            if((gameUpdate>10 && gameUpdate<=15) || gameUpdate>=20)
+            //Final-Boss shots and unpdate only after 10 seconds of game play and again at 20 seconds to end
+            if ((gameUpdate>40 && gameUpdate<=75) || gameUpdate>=90)
             {
                 time += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (time > 1f)
@@ -124,7 +124,7 @@ namespace Car_Chase_Bullet_Hell_Game
             
 
             // Mid-Boss Shot and update only after 5 seconds of game play
-            if(gameUpdate>5 && gameUpdate<10)
+            if(gameUpdate>5 && gameUpdate<40)
             {
                 time2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (time2 > 2f)
@@ -163,12 +163,16 @@ namespace Car_Chase_Bullet_Hell_Game
 
                 _midBossEnemy.Update(gameTime);
             }
-            if(gameUpdate>=10 && gameUpdate<15)
+
+            //Move mid boss enemy of screen at the correct time
+            if(gameUpdate>=40 && gameUpdate<50)
             {
                 _midBossEnemy.MovementPattern = offScreen;
                 _midBossEnemy.Update(gameTime);
             }
-            if(gameUpdate>=15 && gameUpdate<20)
+
+            //Move final boss enemy off the screen when time is between 2 numbers.
+            if(gameUpdate>= 75 && gameUpdate< 80)
             {
                 _bossEnemy.MovementPattern = offScreen;
                 _bossEnemy.Update(gameTime);
@@ -189,13 +193,13 @@ namespace Car_Chase_Bullet_Hell_Game
 
             _spriteBatch.Begin();
             _background.Draw(_spriteBatch, gameTime);
-            if(gameDraw>10)
+            if(gameDraw>40)
             {
                 _bossEnemy.Draw(_spriteBatch, gameTime);
                 _bossEnemy.Draw(_spriteBatch, gameTime);
             }
 
-            if(gameDraw > 5)
+            if(gameDraw > 5 && gameDraw<=50)
             {
                 _midBossEnemy.Draw(_spriteBatch, gameTime);
             }
