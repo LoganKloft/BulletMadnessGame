@@ -6,34 +6,34 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Car_Chase_Bullet_Hell_Game.Content
+namespace Car_Chase_Bullet_Hell_Game
 {
     internal class TriangleMovementPattern : MovementPattern
     {
         private float speed = 5f;
         private float time = 0;
-        private Point[] points = { new Point(400, 1000), new Point(1800, 1000), new Point(1000, 500) };
-        private int pointIndex = 1;
+        private Point[] points = { new Point(400, 1400), new Point(2300, 1400), new Point(1325, 700) };
+        private int pointIndex = 0;
         private int lap = 0;
         private double x_move = 0, y_move = 0, distance = 0, direction = 0;
         private bool pause = false;
-        
+
         public override void Move(GameTime gameTime, Enemy enemy)
         {
-            // Set enemy at the correct position at the start of the movvement pattern
-            if(lap==0)
+            // Set enemy at the correct position at the start of the movement pattern
+            if (lap == 0)
             {
-                enemy.DestinationRectangle.X = 400;
-                enemy.DestinationRectangle.Y = 1000;
+                enemy.DestinationRectangle.X = 300;
+                enemy.DestinationRectangle.Y = 1700;
                 lap++;
             }
             //Update the index when it goes out of range
-            if(pointIndex == 3)
+            if (pointIndex == 3)
             {
                 pointIndex = 0;
             }
             //Account for pauses at each corner of the triangle
-            if(time%100==0)
+            if (time % 100 == 0)
             {
                 pause = false;
                 //Calculate necessary movement directions
@@ -52,16 +52,16 @@ namespace Car_Chase_Bullet_Hell_Game.Content
                 }
             }
             //Update the index of the point we are trying to get to once we have reached the previous point.
-            if(enemy.DestinationRectangle.X == points[pointIndex].X && enemy.DestinationRectangle.Y == points[pointIndex].Y)
+            if (enemy.DestinationRectangle.X == points[pointIndex].X && enemy.DestinationRectangle.Y == points[pointIndex].Y)
             {
                 pause = true;
                 pointIndex++;
             }
             //Handle pausing at each corner of the triagle
-            if(pause==true)
+            if (pause == true)
             {
                 time++;
             }
-         }
+        }
     }
 }

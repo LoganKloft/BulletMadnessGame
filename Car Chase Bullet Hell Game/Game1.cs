@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Car_Chase_Bullet_Hell_Game.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
