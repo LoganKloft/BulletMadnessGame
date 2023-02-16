@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,7 +13,11 @@ namespace Car_Chase_Bullet_Hell_Game
         private SpriteBatch _spriteBatch;
         private Background _background;
         private Enemy _bossEnemy;
+        private Enemy _midBossEnemy;
         private float time = 0f;
+        private float time2 = 0f;
+        private int occurence = 1, shotIndex = 0, numBullets=8;
+        private List<Type> shotTypes = new List<Type>();
 
         public static GraphicsDevice gd;
 
@@ -23,6 +28,9 @@ namespace Car_Chase_Bullet_Hell_Game
             IsMouseVisible = true;
 
             System.Diagnostics.Debug.WriteLine("Starting Game");
+
+            shotTypes.Add(typeof(HalfCircleShotPattern));
+            shotTypes.Add(typeof(CircleShotPattern));
         }
 
         protected override void Initialize()
@@ -41,6 +49,10 @@ namespace Car_Chase_Bullet_Hell_Game
             _bossEnemy = new Enemy();
             CircleMovementPattern _movementPattern = new CircleMovementPattern();
             List<Rectangle> _bossAnimationRectangles = new List<Rectangle>();
+
+            _midBossEnemy = new Enemy();
+            TriangleMovementPattern circle = new TriangleMovementPattern();
+            _midBossEnemy.MovementPattern = circle;
 
             // prepare boss enemy instantiations
             _bossEnemy.MovementPattern = _movementPattern;
@@ -75,6 +87,8 @@ namespace Car_Chase_Bullet_Hell_Game
 
             _bossEnemy.LoadContent(Content, "Boss", _bossEnemy.Animations[0]);
 
+            _midBossEnemy.LoadContent(Content, "tank");
+
             // make boss bigger
             _bossEnemy.DestinationRectangle.Width = 512;
             _bossEnemy.DestinationRectangle.Height = 512;
@@ -86,6 +100,7 @@ namespace Car_Chase_Bullet_Hell_Game
                 Exit();
 
             time += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            time2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (time > 1f)
             {
                 CircleShotPattern csp = new CircleShotPattern(16);
@@ -94,8 +109,43 @@ namespace Car_Chase_Bullet_Hell_Game
                 time = 0f;
             }
 
+            // Mid-Boss Shot
+            if (time2 > 2f)
+            {
+                if((occurence-1)%3==0 && occurence!=1)
+                {
+                    if (shotIndex == 0)
+                    {
+                        shotIndex = 1;
+                        numBullets = 16;
+                    }
+                    else
+                    {
+                        shotIndex = 0;
+                        numBullets = 8;
+                    }
+                }
+                var constructors = shotTypes[shotIndex].GetConstructors();
+                object pattern = constructors[0].Invoke(new object[] { numBullets });
+                if(pattern.GetType() == typeof(HalfCircleShotPattern))
+                {
+                    HalfCircleShotPattern half = (HalfCircleShotPattern)pattern;
+                    half.CreateShots(Content, "bullet1", _midBossEnemy.Center);
+                    _midBossEnemy.ShotPatterns.Enqueue(half);
+                }
+                else if(pattern.GetType() == typeof(CircleShotPattern))
+                {
+                    CircleShotPattern circle = (CircleShotPattern)pattern;
+                    circle.CreateShots(Content, "bullet2", _midBossEnemy.Center);
+                    _midBossEnemy.ShotPatterns.Enqueue(circle);
+                }
+                this.time2 = 0f;
+                this.occurence++;
+            }
+
             _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);
             _bossEnemy.Update(gameTime);
+            _midBossEnemy.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -107,6 +157,8 @@ namespace Car_Chase_Bullet_Hell_Game
             _spriteBatch.Begin();
             _background.Draw(_spriteBatch, gameTime);
             _bossEnemy.Draw(_spriteBatch, gameTime);
+            _bossEnemy.Draw(_spriteBatch, gameTime);
+            _midBossEnemy.Draw(_spriteBatch, gameTime);
             Player.Instance.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
 
