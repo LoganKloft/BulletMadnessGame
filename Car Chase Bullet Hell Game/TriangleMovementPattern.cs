@@ -24,7 +24,7 @@ namespace Car_Chase_Bullet_Hell_Game
             if (lap == 0)
             {
                 enemy.DestinationRectangle.X = 300;
-                enemy.DestinationRectangle.Y = 1700;
+                enemy.DestinationRectangle.Y = 2200;
                 lap++;
             }
             //Update the index when it goes out of range
