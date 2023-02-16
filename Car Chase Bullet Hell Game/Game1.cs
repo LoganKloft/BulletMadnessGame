@@ -15,7 +15,7 @@ namespace Car_Chase_Bullet_Hell_Game
         private Enemy _bossEnemy;
         private Enemy _midBossEnemy;
         private float time = 0f;
-        private float time2 = 0f;
+        private float time2 = 0f, gameUpdate=0f, gameDraw=0f;
         private int occurence = 1, shotIndex = 0, numBullets=8;
         private List<Type> shotTypes = new List<Type>();
 
@@ -100,7 +100,7 @@ namespace Car_Chase_Bullet_Hell_Game
                 Exit();
 
             time += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            time2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            gameUpdate = (float)gameTime.TotalGameTime.TotalSeconds;
             if (time > 1f)
             {
                 CircleShotPattern csp = new CircleShotPattern(16);
@@ -110,45 +110,49 @@ namespace Car_Chase_Bullet_Hell_Game
             }
 
             // Mid-Boss Shot
-            if(gameTime.ElapsedGameTime.TotalSeconds>5)
-            { 
-            }
-            if (time2 > 2f)
+            if(gameUpdate>5)
             {
-                if((occurence-1)%3==0 && occurence!=1)
+                time2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (time2 > 2f)
                 {
-                    if (shotIndex == 0)
+                    if ((occurence - 1) % 3 == 0 && occurence != 1)
                     {
-                        shotIndex = 1;
-                        numBullets = 16;
+                        if (shotIndex == 0)
+                        {
+                            shotIndex = 1;
+                            numBullets = 16;
+                        }
+                        else
+                        {
+                            shotIndex = 0;
+                            numBullets = 8;
+                        }
                     }
-                    else
+                    //Determine what type of bullet pattern we should be firing.
+                    var constructors = shotTypes[shotIndex].GetConstructors();
+                    object pattern = constructors[0].Invoke(new object[] { numBullets });
+                    if (pattern.GetType() == typeof(HalfCircleShotPattern))
                     {
-                        shotIndex = 0;
-                        numBullets = 8;
+                        HalfCircleShotPattern half = (HalfCircleShotPattern)pattern;
+                        half.CreateShots(Content, "bullet1", _midBossEnemy.Center);
+                        _midBossEnemy.ShotPatterns.Enqueue(half);
                     }
+                    else if (pattern.GetType() == typeof(CircleShotPattern))
+                    {
+                        CircleShotPattern circle = (CircleShotPattern)pattern;
+                        circle.CreateShots(Content, "bullet2", _midBossEnemy.Center);
+                        _midBossEnemy.ShotPatterns.Enqueue(circle);
+                    }
+                    this.time2 = 0f;
+                    this.occurence++;
                 }
-                var constructors = shotTypes[shotIndex].GetConstructors();
-                object pattern = constructors[0].Invoke(new object[] { numBullets });
-                if(pattern.GetType() == typeof(HalfCircleShotPattern))
-                {
-                    HalfCircleShotPattern half = (HalfCircleShotPattern)pattern;
-                    half.CreateShots(Content, "bullet1", _midBossEnemy.Center);
-                    _midBossEnemy.ShotPatterns.Enqueue(half);
-                }
-                else if(pattern.GetType() == typeof(CircleShotPattern))
-                {
-                    CircleShotPattern circle = (CircleShotPattern)pattern;
-                    circle.CreateShots(Content, "bullet2", _midBossEnemy.Center);
-                    _midBossEnemy.ShotPatterns.Enqueue(circle);
-                }
-                this.time2 = 0f;
-                this.occurence++;
+
+                _midBossEnemy.Update(gameTime);
             }
+            
 
             _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);
             _bossEnemy.Update(gameTime);
-            _midBossEnemy.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -156,12 +160,17 @@ namespace Car_Chase_Bullet_Hell_Game
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            gameDraw = (float)gameTime.TotalGameTime.TotalSeconds;
 
             _spriteBatch.Begin();
             _background.Draw(_spriteBatch, gameTime);
             _bossEnemy.Draw(_spriteBatch, gameTime);
             _bossEnemy.Draw(_spriteBatch, gameTime);
-            _midBossEnemy.Draw(_spriteBatch, gameTime);
+
+            if(gameDraw > 5)
+            {
+                _midBossEnemy.Draw(_spriteBatch, gameTime);
+            }
             Player.Instance.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
 
