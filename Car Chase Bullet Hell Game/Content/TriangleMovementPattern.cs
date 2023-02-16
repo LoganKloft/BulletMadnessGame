@@ -14,7 +14,7 @@ namespace Car_Chase_Bullet_Hell_Game.Content
         private float time = 0;
         private Point[] points = { new Point(400, 1000), new Point(1800, 1000), new Point(1000, 500) };
         private int pointIndex = 1;
-        private int instance = 1, lap = 0;
+        private int lap = 0;
         private double x_move = 0, y_move = 0, distance = 0, direction = 0;
         private bool pause = false;
         
@@ -33,7 +33,6 @@ namespace Car_Chase_Bullet_Hell_Game.Content
             if(time%100==0)
             {
                 pause = false;
-                instance = 1;
                 x_move = points[pointIndex].X - enemy.DestinationRectangle.X;
                 y_move = points[pointIndex].Y - enemy.DestinationRectangle.Y;
                 distance = Math.Sqrt(Math.Pow(x_move, 2) + Math.Pow(y_move, 2));
