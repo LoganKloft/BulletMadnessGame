@@ -14,8 +14,11 @@ namespace Car_Chase_Bullet_Hell_Game
         private Background _background;
         private Enemy _bossEnemy;
         private Enemy _midBossEnemy;
+        private Enemy _gruntA;
+        private Enemy _gruntB;
+
         private float time = 0f;
-        private float time2 = 0f, gameUpdate=0f, gameDraw=0f;
+        private float time2 = 0f, gameUpdate=0f, gameDraw=0f, time3 = 0f;
         private int occurence = 1, shotIndex = 0, numBullets=8;
         private List<Type> shotTypes = new List<Type>();
         private OffScreenMovementPattern offScreen = new OffScreenMovementPattern();
@@ -51,6 +54,16 @@ namespace Car_Chase_Bullet_Hell_Game
             CircleMovementPattern _movementPattern = new CircleMovementPattern();
             List<Rectangle> _bossAnimationRectangles = new List<Rectangle>();
 
+            _gruntA = new Enemy();
+            RightMovementPattern _rightMovementPattern = new RightMovementPattern();
+            _gruntA.MovementPattern = _rightMovementPattern;
+
+            // first enemy
+            _gruntB = new Enemy();
+            LeftMovementPattern _leftMovementPattern = new LeftMovementPattern();
+            _gruntB.MovementPattern = _leftMovementPattern;
+
+
             _midBossEnemy = new Enemy();
             TriangleMovementPattern circle = new TriangleMovementPattern();
             _midBossEnemy.MovementPattern = circle;
@@ -85,6 +98,21 @@ namespace Car_Chase_Bullet_Hell_Game
                 sprite.LoadContent(Content, "Road");
                 _background.AddBackground(sprite);
             }
+
+            // load grunt A
+            _gruntA.LoadContent(Content, "Motorcycle");
+
+            // make grunt A smaller
+            _gruntA.DestinationRectangle.Width = 125;
+            _gruntA.DestinationRectangle.Height = 125;
+
+            // load grunt A
+            _gruntB.LoadContent(Content, "Motorcycle");
+
+            // make grunt A smaller
+            _gruntB.DestinationRectangle.Width = 125;
+            _gruntB.DestinationRectangle.Height = 125;
+
 
             _bossEnemy.LoadContent(Content, "Boss", _bossEnemy.Animations[0]);
 
@@ -178,7 +206,25 @@ namespace Car_Chase_Bullet_Hell_Game
                 _bossEnemy.Update(gameTime);
             }
 
+            if (gameUpdate >= 0 && gameUpdate <= 35)
+            {
+                time3 += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+                if (time3 > 2f)
+                {
+                    HalfCircleShotPattern half = new(20);
+                    half.CreateShots(Content, "bullet03", _gruntA.Center);
+                    half.CreateShots(Content, "bullet03", _gruntB.Center);
+
+                    _gruntA.ShotPatterns.Enqueue(half);
+                    _gruntB.ShotPatterns.Enqueue(half);
+                
+                    this.time3 = 0f;
+                }
+
+                _gruntA.Update(gameTime);
+                _gruntB.Update(gameTime);
+            }
             
 
             _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);
@@ -193,6 +239,11 @@ namespace Car_Chase_Bullet_Hell_Game
 
             _spriteBatch.Begin();
             _background.Draw(_spriteBatch, gameTime);
+
+            _gruntA.Draw(_spriteBatch, gameTime);
+            _gruntB.Draw(_spriteBatch, gameTime);
+
+
             if(gameDraw>40)
             {
                 _bossEnemy.Draw(_spriteBatch, gameTime);

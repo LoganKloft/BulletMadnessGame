@@ -42,6 +42,10 @@ namespace Car_Chase_Bullet_Hell_Game
                 shot.Direction = -offset * i;
                 shot.DestinationRectangle.X = point.X - (shot.DestinationRectangle.Width / 2);
                 shot.DestinationRectangle.Y = point.Y - (shot.DestinationRectangle.Height / 2);
+
+                shot.DestinationRectangle.Width = 50;
+                shot.DestinationRectangle.Height = 50;
+
                 shots.Add(shot);
                 shot.BulletEndEvent += BulletEndEventHandler;
             }
