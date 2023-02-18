@@ -14,10 +14,14 @@ namespace Car_Chase_Bullet_Hell_Game
         private Background _background;
         private Enemy _bossEnemy;
         private Enemy _midBossEnemy;
+        private Enemy _gruntA;
+        private Enemy _gruntB;
+
         private float time = 0f;
-        private float time2 = 0f;
+        private float time2 = 0f, gameUpdate=0f, gameDraw=0f, time3 = 0f;
         private int occurence = 1, shotIndex = 0, numBullets=8;
         private List<Type> shotTypes = new List<Type>();
+        private OffScreenMovementPattern offScreen = new OffScreenMovementPattern();
 
         public static GraphicsDevice gd;
 
@@ -55,9 +59,19 @@ namespace Car_Chase_Bullet_Hell_Game
             CircleMovementPattern _movementPattern = new CircleMovementPattern(new Point(widthSize / 2, heightSize / 10), heightSize / 10);
             List<Rectangle> _bossAnimationRectangles = new List<Rectangle>();
 
+            _gruntA = new Enemy();
+            RightMovementPattern _rightMovementPattern = new RightMovementPattern();
+            _gruntA.MovementPattern = _rightMovementPattern;
+
+            // first enemy
+            _gruntB = new Enemy();
+            LeftMovementPattern _leftMovementPattern = new LeftMovementPattern();
+            _gruntB.MovementPattern = _leftMovementPattern;
+
+
             _midBossEnemy = new Enemy();
-            TriangleMovementPattern circle = new TriangleMovementPattern();
-            _midBossEnemy.MovementPattern = circle;
+            TriangleMovementPattern _triangleMove = new TriangleMovementPattern();
+            _midBossEnemy.MovementPattern = _triangleMove;
 
             // prepare boss enemy instantiations
             _bossEnemy.MovementPattern = _movementPattern;
@@ -90,6 +104,21 @@ namespace Car_Chase_Bullet_Hell_Game
                 _background.AddBackground(sprite);
             }
 
+            // load grunt A
+            _gruntA.LoadContent(Content, "Motorcycle");
+
+            // make grunt A smaller
+            _gruntA.DestinationRectangle.Width = 125;
+            _gruntA.DestinationRectangle.Height = 125;
+
+            // load grunt A
+            _gruntB.LoadContent(Content, "Motorcycle");
+
+            // make grunt A smaller
+            _gruntB.DestinationRectangle.Width = 125;
+            _gruntB.DestinationRectangle.Height = 125;
+
+
             _bossEnemy.LoadContent(Content, "Boss", _bossEnemy.Animations[0]);
 
             _midBossEnemy.LoadContent(Content, "tank");
@@ -112,14 +141,25 @@ namespace Car_Chase_Bullet_Hell_Game
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            time += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            time2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (time > .4f)
+            gameUpdate = (float)gameTime.TotalGameTime.TotalSeconds;
+
+            if((int)gameUpdate == 130)
             {
-                CircleShotPattern csp = new CircleShotPattern(16);
-                csp.CreateShots(Content, "01", _bossEnemy.Center);
-                _bossEnemy.ShotPatterns.Enqueue(csp);
-                time = 0f;
+                CircleMovementPattern circ = new CircleMovementPattern();
+                _bossEnemy.MovementPattern = circ;
+            }
+            //Final-Boss shots and unpdate only after 10 seconds of game play and again at 20 seconds to end
+            if ((gameUpdate>85 && gameUpdate<=110) || (gameUpdate>=130&&gameUpdate<=145))
+            {
+                time += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (time > 1f)
+                {
+                    CircleShotPattern csp = new CircleShotPattern(16);
+                    csp.CreateShots(Content, "01", _bossEnemy.Center);
+                    _bossEnemy.ShotPatterns.Enqueue(csp);
+                    time = 0f;
+                }
+                _bossEnemy.Update(gameTime);
             }
 
             CircleMovementPattern cmp = _bossEnemy.MovementPattern as CircleMovementPattern;
@@ -144,44 +184,99 @@ namespace Car_Chase_Bullet_Hell_Game
             }
 
             Player.Instance.Update(gameTime);
-
-            // Mid-Boss Shot
-            if (time2 > 2f)
+            // Mid-Boss Shot and update only after 35 seconds of game play
+            if (gameUpdate > 35 && gameUpdate < 75)
             {
-                if((occurence-1)%3==0 && occurence!=1)
+                time2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (time2 > 2f)
                 {
-                    if (shotIndex == 0)
+                    if ((occurence - 1) % 3 == 0 && occurence != 1)
                     {
-                        shotIndex = 1;
-                        numBullets = 16;
+                        if (shotIndex == 0)
+                        {
+                            shotIndex = 1;
+                            numBullets = 16;
+                        }
+                        else
+                        {
+                            shotIndex = 0;
+                            numBullets = 8;
+                        }
                     }
-                    else
+                    //Determine what type of bullet pattern we should be firing.
+                    var constructors = shotTypes[shotIndex].GetConstructors();
+                    object pattern = constructors[0].Invoke(new object[] { numBullets });
+                    if (pattern.GetType() == typeof(HalfCircleShotPattern))
                     {
-                        shotIndex = 0;
-                        numBullets = 8;
+                        HalfCircleShotPattern half = (HalfCircleShotPattern)pattern;
+                        half.CreateShots(Content, "bullet1", _midBossEnemy.Center);
+                        _midBossEnemy.ShotPatterns.Enqueue(half);
                     }
+                    else if (pattern.GetType() == typeof(CircleShotPattern))
+                    {
+                        CircleShotPattern circle = (CircleShotPattern)pattern;
+                        circle.CreateShots(Content, "bullet2", _midBossEnemy.Center);
+                        _midBossEnemy.ShotPatterns.Enqueue(circle);
+                    }
+                    this.time2 = 0f;
+                    this.occurence++;
                 }
-                var constructors = shotTypes[shotIndex].GetConstructors();
-                object pattern = constructors[0].Invoke(new object[] { numBullets });
-                if(pattern.GetType() == typeof(HalfCircleShotPattern))
+
+                _midBossEnemy.Update(gameTime);
+            }
+
+            //Move mid boss enemy of screen at the correct time
+            if (gameUpdate >= 75 && gameUpdate < 80)
+            {
+                _midBossEnemy.MovementPattern = offScreen;
+                _midBossEnemy.Update(gameTime);
+            }
+
+            //Move final boss enemy off the screen when time is between 2 numbers.
+            if ((gameUpdate >= 110 && gameUpdate < 120) || (gameUpdate>=145 && gameUpdate<155))
+            {
+                _bossEnemy.MovementPattern = offScreen;
+                _bossEnemy.Update(gameTime);
+            }
+            if((int)gameUpdate==75)
+            {
+                RightMovementPattern _rightMovementPattern = new RightMovementPattern();
+                _gruntA.MovementPattern = _rightMovementPattern;
+
+                LeftMovementPattern _leftMovementPattern = new LeftMovementPattern();
+                _gruntB.MovementPattern = _leftMovementPattern;
+            }
+
+            if ((gameUpdate >= 0 && gameUpdate < 35) || gameUpdate>=75 && gameUpdate<85)
+            {
+                time3 += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (time3 > 2f)
                 {
-                    HalfCircleShotPattern half = (HalfCircleShotPattern)pattern;
-                    half.CreateShots(Content, "bullet1", _midBossEnemy.Center);
-                    _midBossEnemy.ShotPatterns.Enqueue(half);
+                    HalfCircleShotPattern half = new(8);
+                    half.CreateShots(Content, "cycleBullet", _gruntA.Center);
+                    half.CreateShots(Content, "cycleBullet", _gruntB.Center);
+
+                    _gruntA.ShotPatterns.Enqueue(half);
+                    _gruntB.ShotPatterns.Enqueue(half);
+
+                    this.time3 = 0f;
                 }
-                else if(pattern.GetType() == typeof(CircleShotPattern))
-                {
-                    CircleShotPattern circle = (CircleShotPattern)pattern;
-                    circle.CreateShots(Content, "bullet2", _midBossEnemy.Center);
-                    _midBossEnemy.ShotPatterns.Enqueue(circle);
-                }
-                this.time2 = 0f;
-                this.occurence++;
+
+                _gruntA.Update(gameTime);
+                _gruntB.Update(gameTime);
+            }
+
+            if((gameUpdate>=35 && gameUpdate<45) || (gameUpdate >= 85 && gameUpdate < 90))
+            {
+                _gruntA.MovementPattern = offScreen;
+                _gruntB.MovementPattern = offScreen;
+
+                _gruntA.Update(gameTime);
+                _gruntB.Update(gameTime);
             }
 
             _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);
-            _bossEnemy.Update(gameTime);
-            _midBossEnemy.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -189,11 +284,25 @@ namespace Car_Chase_Bullet_Hell_Game
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            gameDraw = (float)gameTime.TotalGameTime.TotalSeconds;
 
             _spriteBatch.Begin();
             _background.Draw(_spriteBatch, gameTime);
-            _bossEnemy.Draw(_spriteBatch, gameTime);
-            _midBossEnemy.Draw(_spriteBatch, gameTime);
+
+            _gruntA.Draw(_spriteBatch, gameTime);
+            _gruntB.Draw(_spriteBatch, gameTime);
+
+
+            if(gameDraw>110)
+            {
+                _bossEnemy.Draw(_spriteBatch, gameTime);
+                _bossEnemy.Draw(_spriteBatch, gameTime);
+            }
+
+            if(gameDraw > 35 && gameDraw<= 80)
+            {
+                _midBossEnemy.Draw(_spriteBatch, gameTime);
+            }
             Player.Instance.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
 
