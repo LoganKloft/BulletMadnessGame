@@ -41,8 +41,8 @@ namespace Car_Chase_Bullet_Hell_Game
                 StraightShot shot = new StraightShot();
                 shot.LoadContent(content, asset);
                 shot.Direction = shotOffset * i;
-                shot.DestinationRectangle.X = point.X - (shot.DestinationRectangle.Width / 2);
-                shot.DestinationRectangle.Y = point.Y - (shot.DestinationRectangle.Height / 2);
+                shot.DestinationRectangle.X = point.X;
+                shot.DestinationRectangle.Y = point.Y;
                 shots.Add(shot);
                 shot.BulletEndEvent += BulletEndEventHandler;
             }
