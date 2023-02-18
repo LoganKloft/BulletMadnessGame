@@ -69,8 +69,8 @@ namespace Car_Chase_Bullet_Hell_Game
 
 
             _midBossEnemy = new Enemy();
-            TriangleMovementPattern circle = new TriangleMovementPattern();
-            _midBossEnemy.MovementPattern = circle;
+            TriangleMovementPattern _triangleMove = new TriangleMovementPattern();
+            _midBossEnemy.MovementPattern = _triangleMove;
 
             // prepare boss enemy instantiations
             _bossEnemy.MovementPattern = _movementPattern;
