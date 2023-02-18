@@ -27,8 +27,8 @@ namespace Car_Chase_Bullet_Hell_Game
             if (curRun == 0)
             {
                 ++curRun;
-                enemy.DestinationRectangle.Y = 700;
-                enemy.DestinationRectangle.X = 1750;
+                enemy.DestinationRectangle.Y = 100;
+                enemy.DestinationRectangle.X = 1120;
             }
 
             if (moveLeft)
@@ -36,7 +36,7 @@ namespace Car_Chase_Bullet_Hell_Game
             else
                 enemy.DestinationRectangle.X += 5;
 
-            if (enemy.DestinationRectangle.X < 895 || enemy.DestinationRectangle.X > 1750)
+            if (enemy.DestinationRectangle.X < 580 || enemy.DestinationRectangle.X > 1130)
                 moveLeft = !moveLeft;
         }
     }

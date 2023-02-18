@@ -220,15 +220,16 @@ namespace Car_Chase_Bullet_Hell_Game
                 LeftMovementPattern _leftMovementPattern = new LeftMovementPattern();
                 _gruntB.MovementPattern = _leftMovementPattern;
             }
+
             if ((gameUpdate >= 0 && gameUpdate < 35) || gameUpdate>=75 && gameUpdate<85)
             {
                 time3 += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                 if (time3 > 2f)
                 {
-                    HalfCircleShotPattern half = new(20);
-                    half.CreateShots(Content, "bullet03", _gruntA.Center);
-                    half.CreateShots(Content, "bullet03", _gruntB.Center);
+                    HalfCircleShotPattern half = new(8);
+                    half.CreateShots(Content, "cycleBullet", _gruntA.Center);
+                    half.CreateShots(Content, "cycleBullet", _gruntB.Center);
 
                     _gruntA.ShotPatterns.Enqueue(half);
                     _gruntB.ShotPatterns.Enqueue(half);
