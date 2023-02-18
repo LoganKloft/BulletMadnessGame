@@ -21,6 +21,10 @@ namespace Car_Chase_Bullet_Hell_Game
 
         public static GraphicsDevice gd;
 
+        public const int widthSize = 1250, heightSize = 800;
+        public const int playerWidth = 70;
+        public const int playerHeight = 125;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -35,12 +39,12 @@ namespace Car_Chase_Bullet_Hell_Game
 
         protected override void Initialize()
         {
-            //
+            // display settings
             gd = GraphicsDevice;
 
             // increase size of the game window
-            _graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
-            _graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+            _graphics.PreferredBackBufferWidth = widthSize;
+            _graphics.PreferredBackBufferHeight = heightSize;
             _graphics.ApplyChanges();
 
             _background = new Background(GraphicsDevice);
@@ -75,7 +79,7 @@ namespace Car_Chase_Bullet_Hell_Game
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            Player.Instance.LoadContent(Content, "Cars", new Rectangle(0, 0, 157 / 2, 250 / 2));
+            Player.Instance.LoadContent(Content, "Cars", new Rectangle(0, 0, playerWidth, playerHeight));
 
             // add the same image two times for the background
             for (int i = 0; i < 2; i++)
@@ -88,6 +92,10 @@ namespace Car_Chase_Bullet_Hell_Game
             _bossEnemy.LoadContent(Content, "Boss", _bossEnemy.Animations[0]);
 
             _midBossEnemy.LoadContent(Content, "tank");
+
+            // center main player
+            Player.Instance.DestinationRectangle.X = widthSize / 2 - ((157 / 2) / 2);
+            Player.Instance.DestinationRectangle.Y = heightSize / 2 - ((250 / 2) / 2);
 
             // make boss bigger
             _bossEnemy.DestinationRectangle.Width = 512;
@@ -108,6 +116,8 @@ namespace Car_Chase_Bullet_Hell_Game
                 _bossEnemy.ShotPatterns.Enqueue(csp);
                 time = 0f;
             }
+
+            Player.Instance.Update(gameTime);
 
             // Mid-Boss Shot
             if (time2 > 2f)
