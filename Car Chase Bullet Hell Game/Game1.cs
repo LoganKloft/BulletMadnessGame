@@ -28,7 +28,10 @@ namespace Car_Chase_Bullet_Hell_Game
         public const int widthSize = 1250, heightSize = 800;
         public const int playerWidth = 70;
         public const int playerHeight = 125;
+
         private int _direction = 1;
+        private int _bossStartTime = 90;
+        private int _bossEndTime = 120;
 
         public Game1()
         {
@@ -56,7 +59,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
             // instantiate boss enemy classes
             _bossEnemy = new Enemy();
-            CircleMovementPattern _movementPattern = new CircleMovementPattern(new Point(widthSize / 2, heightSize / 10), heightSize / 10);
+            //CircleMovementPattern _movementPattern = new CircleMovementPattern(new Point(widthSize / 2, heightSize / 10), heightSize / 10);
             List<Rectangle> _bossAnimationRectangles = new List<Rectangle>();
 
             _gruntA = new Enemy();
@@ -74,7 +77,7 @@ namespace Car_Chase_Bullet_Hell_Game
             _midBossEnemy.MovementPattern = _triangleMove;
 
             // prepare boss enemy instantiations
-            _bossEnemy.MovementPattern = _movementPattern;
+            //_bossEnemy.MovementPattern = _movementPattern;
 
             // create boss animation frames - not using a loop since r2 and r3 don't follow adding 128 to the x
             Rectangle r1 = new Rectangle(0, 0, 128, 128); // first animation frame
@@ -143,44 +146,46 @@ namespace Car_Chase_Bullet_Hell_Game
 
             gameUpdate = (float)gameTime.TotalGameTime.TotalSeconds;
 
-            if((int)gameUpdate == 130)
+            if ((int)gameUpdate == _bossStartTime)
             {
-                CircleMovementPattern circ = new CircleMovementPattern();
+                CircleMovementPattern circ = new CircleMovementPattern(new Point(widthSize / 2, heightSize / 10), heightSize / 10);
                 _bossEnemy.MovementPattern = circ;
             }
-            //Final-Boss shots and unpdate only after 10 seconds of game play and again at 20 seconds to end
-            if ((gameUpdate>85 && gameUpdate<=110) || (gameUpdate>=130&&gameUpdate<=145))
+
+            //Final-Boss shots and update only after 10 seconds of game play and again at 20 seconds to end
+            if (gameUpdate >= _bossStartTime && gameUpdate <= _bossEndTime)
             {
                 time += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (time > 1f)
+                if (time > .3f)
                 {
                     CircleShotPattern csp = new CircleShotPattern(16);
                     csp.CreateShots(Content, "01", _bossEnemy.Center);
                     _bossEnemy.ShotPatterns.Enqueue(csp);
                     time = 0f;
                 }
+
+                CircleMovementPattern cmp = _bossEnemy.MovementPattern as CircleMovementPattern;
+                if (cmp != null)
+                {
+                    Point pivotPoint = cmp.PivotPoint;
+
+                    if (pivotPoint.X < widthSize / 4)
+                    {
+                        _direction = 1;
+                        pivotPoint.X = widthSize / 4;
+                    }
+
+                    if (pivotPoint.X > widthSize - widthSize / 4)
+                    {
+                        _direction = -1;
+                        pivotPoint.X = widthSize - widthSize / 4;
+                    }
+
+                    pivotPoint.X += 2 * _direction;
+                    cmp.PivotPoint = pivotPoint;
+                }
+
                 _bossEnemy.Update(gameTime);
-            }
-
-            CircleMovementPattern cmp = _bossEnemy.MovementPattern as CircleMovementPattern;
-            if(cmp != null)
-            {
-                Point pivotPoint = cmp.PivotPoint;
-
-                if (pivotPoint.X < widthSize / 4)
-                {
-                    _direction = 1;
-                    pivotPoint.X = widthSize / 4;
-                }
-                
-                if (pivotPoint.X > widthSize - widthSize / 4)
-                {
-                    _direction = -1;
-                    pivotPoint.X = widthSize - widthSize / 4;
-                }
-
-                pivotPoint.X += 2 * _direction;
-                cmp.PivotPoint = pivotPoint;
             }
 
             Player.Instance.Update(gameTime);
@@ -233,12 +238,12 @@ namespace Car_Chase_Bullet_Hell_Game
             }
 
             //Move final boss enemy off the screen when time is between 2 numbers.
-            if ((gameUpdate >= 110 && gameUpdate < 120) || (gameUpdate>=145 && gameUpdate<155))
+            if (gameUpdate > _bossEndTime && gameUpdate < _bossEndTime + 5)
             {
                 _bossEnemy.MovementPattern = offScreen;
                 _bossEnemy.Update(gameTime);
             }
-            if((int)gameUpdate==75)
+            if ((int)gameUpdate==75)
             {
                 RightMovementPattern _rightMovementPattern = new RightMovementPattern();
                 _gruntA.MovementPattern = _rightMovementPattern;
@@ -292,10 +297,8 @@ namespace Car_Chase_Bullet_Hell_Game
             _gruntA.Draw(_spriteBatch, gameTime);
             _gruntB.Draw(_spriteBatch, gameTime);
 
-
-            if(gameDraw>110)
+            if(gameDraw >= _bossStartTime)
             {
-                _bossEnemy.Draw(_spriteBatch, gameTime);
                 _bossEnemy.Draw(_spriteBatch, gameTime);
             }
 
