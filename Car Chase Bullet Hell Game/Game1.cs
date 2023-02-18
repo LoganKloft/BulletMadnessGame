@@ -24,6 +24,7 @@ namespace Car_Chase_Bullet_Hell_Game
         public const int widthSize = 1250, heightSize = 800;
         public const int playerWidth = 70;
         public const int playerHeight = 125;
+        private int _direction = 1;
 
         public Game1()
         {
@@ -51,7 +52,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
             // instantiate boss enemy classes
             _bossEnemy = new Enemy();
-            CircleMovementPattern _movementPattern = new CircleMovementPattern();
+            CircleMovementPattern _movementPattern = new CircleMovementPattern(new Point(widthSize / 2, heightSize / 10), heightSize / 10);
             List<Rectangle> _bossAnimationRectangles = new List<Rectangle>();
 
             _midBossEnemy = new Enemy();
@@ -97,9 +98,13 @@ namespace Car_Chase_Bullet_Hell_Game
             Player.Instance.DestinationRectangle.X = widthSize / 2 - ((157 / 2) / 2);
             Player.Instance.DestinationRectangle.Y = heightSize / 2 - ((250 / 2) / 2);
 
+            // make the player smaller
+            Player.Instance.DestinationRectangle.Width = Player.Instance.DestinationRectangle.Width / 2;
+            Player.Instance.DestinationRectangle.Height = Player.Instance.DestinationRectangle.Height / 2;
+
             // make boss bigger
-            _bossEnemy.DestinationRectangle.Width = 512;
-            _bossEnemy.DestinationRectangle.Height = 512;
+            _bossEnemy.DestinationRectangle.Width = heightSize / 4;
+            _bossEnemy.DestinationRectangle.Height = heightSize / 4;
         }
 
         protected override void Update(GameTime gameTime)
@@ -109,12 +114,33 @@ namespace Car_Chase_Bullet_Hell_Game
 
             time += (float)gameTime.ElapsedGameTime.TotalSeconds;
             time2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (time > 1f)
+            if (time > .4f)
             {
                 CircleShotPattern csp = new CircleShotPattern(16);
                 csp.CreateShots(Content, "01", _bossEnemy.Center);
                 _bossEnemy.ShotPatterns.Enqueue(csp);
                 time = 0f;
+            }
+
+            CircleMovementPattern cmp = _bossEnemy.MovementPattern as CircleMovementPattern;
+            if(cmp != null)
+            {
+                Point pivotPoint = cmp.PivotPoint;
+
+                if (pivotPoint.X < widthSize / 4)
+                {
+                    _direction = 1;
+                    pivotPoint.X = widthSize / 4;
+                }
+                
+                if (pivotPoint.X > widthSize - widthSize / 4)
+                {
+                    _direction = -1;
+                    pivotPoint.X = widthSize - widthSize / 4;
+                }
+
+                pivotPoint.X += 2 * _direction;
+                cmp.PivotPoint = pivotPoint;
             }
 
             Player.Instance.Update(gameTime);
@@ -166,7 +192,6 @@ namespace Car_Chase_Bullet_Hell_Game
 
             _spriteBatch.Begin();
             _background.Draw(_spriteBatch, gameTime);
-            _bossEnemy.Draw(_spriteBatch, gameTime);
             _bossEnemy.Draw(_spriteBatch, gameTime);
             _midBossEnemy.Draw(_spriteBatch, gameTime);
             Player.Instance.Draw(_spriteBatch, gameTime);
