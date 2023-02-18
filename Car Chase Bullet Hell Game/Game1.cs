@@ -138,13 +138,13 @@ namespace Car_Chase_Bullet_Hell_Game
 
             gameUpdate = (float)gameTime.TotalGameTime.TotalSeconds;
 
-            if((int)gameUpdate == 90)
+            if((int)gameUpdate == 130)
             {
                 CircleMovementPattern circ = new CircleMovementPattern();
                 _bossEnemy.MovementPattern = circ;
             }
             //Final-Boss shots and unpdate only after 10 seconds of game play and again at 20 seconds to end
-            if ((gameUpdate>40 && gameUpdate<=75) || gameUpdate>=90)
+            if ((gameUpdate>85 && gameUpdate<=110) || (gameUpdate>=130&&gameUpdate<=145))
             {
                 time += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (time > 1f)
@@ -158,8 +158,8 @@ namespace Car_Chase_Bullet_Hell_Game
             }
 
             Player.Instance.Update(gameTime);
-            // Mid-Boss Shot and update only after 5 seconds of game play
-            if (gameUpdate > 5 && gameUpdate < 40)
+            // Mid-Boss Shot and update only after 35 seconds of game play
+            if (gameUpdate > 35 && gameUpdate < 75)
             {
                 time2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (time2 > 2f)
@@ -200,20 +200,27 @@ namespace Car_Chase_Bullet_Hell_Game
             }
 
             //Move mid boss enemy of screen at the correct time
-            if (gameUpdate >= 40 && gameUpdate < 50)
+            if (gameUpdate >= 75 && gameUpdate < 80)
             {
                 _midBossEnemy.MovementPattern = offScreen;
                 _midBossEnemy.Update(gameTime);
             }
 
             //Move final boss enemy off the screen when time is between 2 numbers.
-            if (gameUpdate >= 75 && gameUpdate < 80)
+            if ((gameUpdate >= 110 && gameUpdate < 120) || (gameUpdate>=145 && gameUpdate<155))
             {
                 _bossEnemy.MovementPattern = offScreen;
                 _bossEnemy.Update(gameTime);
             }
+            if((int)gameUpdate==75)
+            {
+                RightMovementPattern _rightMovementPattern = new RightMovementPattern();
+                _gruntA.MovementPattern = _rightMovementPattern;
 
-            if (gameUpdate >= 0 && gameUpdate <= 35)
+                LeftMovementPattern _leftMovementPattern = new LeftMovementPattern();
+                _gruntB.MovementPattern = _leftMovementPattern;
+            }
+            if ((gameUpdate >= 0 && gameUpdate < 35) || gameUpdate>=75 && gameUpdate<85)
             {
                 time3 += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -228,6 +235,15 @@ namespace Car_Chase_Bullet_Hell_Game
 
                     this.time3 = 0f;
                 }
+
+                _gruntA.Update(gameTime);
+                _gruntB.Update(gameTime);
+            }
+
+            if((gameUpdate>=35 && gameUpdate<45) || (gameUpdate >= 85 && gameUpdate < 90))
+            {
+                _gruntA.MovementPattern = offScreen;
+                _gruntB.MovementPattern = offScreen;
 
                 _gruntA.Update(gameTime);
                 _gruntB.Update(gameTime);
@@ -250,13 +266,13 @@ namespace Car_Chase_Bullet_Hell_Game
             _gruntB.Draw(_spriteBatch, gameTime);
 
 
-            if(gameDraw>40)
+            if(gameDraw>110)
             {
                 _bossEnemy.Draw(_spriteBatch, gameTime);
                 _bossEnemy.Draw(_spriteBatch, gameTime);
             }
 
-            if(gameDraw > 5 && gameDraw<=50)
+            if(gameDraw > 35 && gameDraw<= 80)
             {
                 _midBossEnemy.Draw(_spriteBatch, gameTime);
             }

@@ -10,7 +10,7 @@ namespace Car_Chase_Bullet_Hell_Game
     internal class OffScreenMovementPattern : MovementPattern
     {
         private float speed = 5f;
-        private Point location = new Point(1325, 2200);
+        private Point location = new Point(545, -1000);
         private double x_move = 0, y_move = 0, distance = 0, direction = 0;
         public override void Move(GameTime gameTime, Enemy enemy)
         {
