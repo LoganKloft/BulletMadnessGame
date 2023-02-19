@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Car_Chase_Bullet_Hell_Game
 {
-    internal class HalfCircleShotPattern : ShotPattern
+    internal class StraightShotPattern : ShotPattern
     {
 
         private List<Shot> shots = new List<Shot>();
         private int shotCount = 0;
 
-        public HalfCircleShotPattern(int shotCount) : base()
+        public StraightShotPattern(int shotCount) : base()
         {
             this.shotCount = shotCount;
         }
@@ -27,28 +27,19 @@ namespace Car_Chase_Bullet_Hell_Game
             shotCount--;
         }
 
-        internal void CreateShots(ContentManager content, string asset, Point point)
+        internal void CreateShots(ContentManager content, string asset, Point point, double dir)
         {
-            if (shotCount == 0)
-            {
-                return;
-            }
+            StraightShot shot = new StraightShot();
+            shot.LoadContent(content, asset);
+            shot.Direction = dir;
+            shot.DestinationRectangle.X = point.X - (shot.DestinationRectangle.Width / 2);
+            shot.DestinationRectangle.Y = point.Y - (shot.DestinationRectangle.Height / 2);
 
-            double offset = (Math.PI * 1d) / shotCount;
-            for (int i = 0; i < shotCount; i++)
-            {
-                StraightShot shot = new StraightShot();
-                shot.LoadContent(content, asset);
-                shot.Direction = offset * i;
-                shot.DestinationRectangle.X = point.X - (shot.DestinationRectangle.Width / 2);
-                shot.DestinationRectangle.Y = point.Y - (shot.DestinationRectangle.Height / 2);
+                //shot.DestinationRectangle.Width = 50;
+                //shot.DestinationRectangle.Height = 50;
 
-                shot.DestinationRectangle.Width = 50;
-                shot.DestinationRectangle.Height = 50;
-
-                shots.Add(shot);
-                shot.BulletEndEvent += BulletEndEventHandler;
-            }
+            shots.Add(shot);
+            shot.BulletEndEvent += BulletEndEventHandler;
         }
 
         public override void Update(GameTime gameTime)
