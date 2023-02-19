@@ -47,7 +47,7 @@ namespace Car_Chase_Bullet_Hell_Game
                 {
                     float temp = 1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    speed = fast;
+                    speed = slow;
 
                     Vector2 v = new Vector2(temp * speed, 0);
 
@@ -56,7 +56,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
                     _instance.DestinationRectangle.Offset(v);
 
-                    speed = slow;
+                    speed = normal;
                 }
                 else
                 {
@@ -76,7 +76,7 @@ namespace Car_Chase_Bullet_Hell_Game
                 {
                     float temp = -1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    speed = fast;
+                    speed = slow;
 
                     Vector2 v = new Vector2(temp * speed, 0);
 
@@ -85,7 +85,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
                     _instance.DestinationRectangle.Offset(v);
 
-                    speed = slow;
+                    speed = normal;
                 }
                 else
                 {
@@ -107,7 +107,7 @@ namespace Car_Chase_Bullet_Hell_Game
                 {
                     float temp = -1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    speed = fast;
+                    speed = slow;
 
                     Vector2 v = new Vector2(0, temp * speed);
 
@@ -116,7 +116,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
                     _instance.DestinationRectangle.Offset(v);
 
-                    speed = slow;
+                    speed = normal;
                 }
                 else
                 {
