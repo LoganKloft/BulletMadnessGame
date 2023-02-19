@@ -119,7 +119,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
             Player.Instance.Update(gameTime);
 
-            // Mid-Boss Shot
+            // Mid-Boss Shot    
             if (time2 > 2f)
             {
                 if((occurence-1)%3==0 && occurence!=1)
