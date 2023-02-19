@@ -15,7 +15,7 @@ namespace Car_Chase_Bullet_Hell_Game
         private double _direction = 0d;
         private double _xDirection = 1d;
         private double _yDirection = 0d;
-        private double _speed = 10f;
+        private double _speed = 5f;
 
         public double Direction
         {

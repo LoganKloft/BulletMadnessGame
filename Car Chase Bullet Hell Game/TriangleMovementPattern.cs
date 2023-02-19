@@ -12,7 +12,7 @@ namespace Car_Chase_Bullet_Hell_Game
     {
         private float speed = 5f;
         private float time = 0;
-        private Point[] points = { new Point(400, 1400), new Point(2300, 1400), new Point(1325, 700) };
+        private Point[] points = { new Point(100, 200), new Point(950, 200), new Point(525, 50) };
         private int pointIndex = 0;
         private int lap = 0;
         private double x_move = 0, y_move = 0, distance = 0, direction = 0;
@@ -23,8 +23,8 @@ namespace Car_Chase_Bullet_Hell_Game
             // Set enemy at the correct position at the start of the movement pattern
             if (lap == 0)
             {
-                enemy.DestinationRectangle.X = 300;
-                enemy.DestinationRectangle.Y = 1700;
+                enemy.DestinationRectangle.X = -10;
+                enemy.DestinationRectangle.Y = -10;
                 lap++;
             }
             //Update the index when it goes out of range
@@ -40,19 +40,19 @@ namespace Car_Chase_Bullet_Hell_Game
                 x_move = points[pointIndex].X - enemy.DestinationRectangle.X;
                 y_move = points[pointIndex].Y - enemy.DestinationRectangle.Y;
                 distance = Math.Sqrt(Math.Pow(x_move, 2) + Math.Pow(y_move, 2));
-                direction = speed / distance;
+                direction = speed/distance;
                 //Update destination rectangles
                 if (x_move != 0)
                 {
-                    enemy.DestinationRectangle.X += (int)(x_move * direction);
+                    enemy.DestinationRectangle.X += (int)(x_move*direction);
                 }
                 if (y_move != 0)
                 {
-                    enemy.DestinationRectangle.Y += (int)(y_move * direction);
+                    enemy.DestinationRectangle.Y += (int)(y_move*direction);
                 }
             }
             //Update the index of the point we are trying to get to once we have reached the previous point.
-            if (enemy.DestinationRectangle.X == points[pointIndex].X && enemy.DestinationRectangle.Y == points[pointIndex].Y)
+            if ((enemy.DestinationRectangle.X >= (points[pointIndex].X-5) && enemy.DestinationRectangle.X <= (points[pointIndex].X + 5)) && (enemy.DestinationRectangle.Y >= (points[pointIndex].Y-5) && enemy.DestinationRectangle.Y <= (points[pointIndex].Y + 5)))
             {
                 pause = true;
                 pointIndex++;
