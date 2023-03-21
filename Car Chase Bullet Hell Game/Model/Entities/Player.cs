@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Car_Chase_Bullet_Hell_Game.Controller;
+using Car_Chase_Bullet_Hell_Game.View.Sprite;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -7,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Car_Chase_Bullet_Hell_Game
+namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 {
     // singleton pattern
     internal sealed class Player : Sprite
@@ -17,10 +19,10 @@ namespace Car_Chase_Bullet_Hell_Game
         private static float speed = normal;
         private static readonly object _lock = new object();
         private static Rectangle screenSize = Game1.gd.Viewport.Bounds;
-        private float rightSideMax = screenSize.Width - (Game1.playerWidth / 2);
-        private float leftSideMax = 0.0f + (Game1.playerWidth / 2);
-        private float topSideMax = 0.0f + (Game1.playerHeight / 2);
-        private float bottomSideMax = screenSize.Height - (Game1.playerHeight / 2);
+        private float rightSideMax = screenSize.Width - Game1.playerWidth / 2;
+        private float leftSideMax = 0.0f + Game1.playerWidth / 2;
+        private float topSideMax = 0.0f + Game1.playerHeight / 2;
+        private float bottomSideMax = screenSize.Height - Game1.playerHeight / 2;
 
         Player() { }
         public static Player Instance
@@ -51,7 +53,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
                     Vector2 v = new Vector2(temp * speed, 0);
 
-                    if (current.X + (temp * speed) >= rightSideMax)
+                    if (current.X + temp * speed >= rightSideMax)
                         v.X = rightSideMax - current.X;
 
                     _instance.DestinationRectangle.Offset(v);
@@ -63,8 +65,8 @@ namespace Car_Chase_Bullet_Hell_Game
                     float temp = 1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     Vector2 v = new Vector2(temp * speed, 0);
-                    
-                    if (current.X + (temp * speed) >= rightSideMax)
+
+                    if (current.X + temp * speed >= rightSideMax)
                         v.X = rightSideMax - current.X;
 
                     _instance.DestinationRectangle.Offset(v);
@@ -80,7 +82,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
                     Vector2 v = new Vector2(temp * speed, 0);
 
-                    if (current.X + (temp * speed) <= leftSideMax)
+                    if (current.X + temp * speed <= leftSideMax)
                         v.X = leftSideMax - current.X;
 
                     _instance.DestinationRectangle.Offset(v);
@@ -93,11 +95,11 @@ namespace Car_Chase_Bullet_Hell_Game
 
                     Vector2 v = new Vector2(temp * speed, 0);
 
-                    if (current.X + (temp * speed) <= leftSideMax)
+                    if (current.X + temp * speed <= leftSideMax)
                     {
                         v.X = leftSideMax - current.X;
                     }
-                        
+
                     _instance.DestinationRectangle.Offset(v);
                 }
             }
@@ -111,7 +113,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
                     Vector2 v = new Vector2(0, temp * speed);
 
-                    if (current.Y + (temp * speed) <= topSideMax)
+                    if (current.Y + temp * speed <= topSideMax)
                         v.Y = topSideMax - current.Y;
 
                     _instance.DestinationRectangle.Offset(v);
@@ -124,7 +126,7 @@ namespace Car_Chase_Bullet_Hell_Game
                     float temp = -1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     Vector2 v = new Vector2(0, temp * speed);
-                    if (current.Y + (temp * speed) <= topSideMax)
+                    if (current.Y + temp * speed <= topSideMax)
                         v.Y = topSideMax - current.Y;
                     _instance.DestinationRectangle.Offset(v);
                 }
@@ -139,7 +141,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
                     Vector2 v = new Vector2(0, temp * speed);
 
-                    if (current.Y + (temp * speed) > bottomSideMax)
+                    if (current.Y + temp * speed > bottomSideMax)
                         v.Y = bottomSideMax - current.Y;
 
                     _instance.DestinationRectangle.Offset(v);
@@ -154,7 +156,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
                     Vector2 v = new Vector2(0, temp * speed);
 
-                    if (current.Y + (temp * speed) > bottomSideMax)
+                    if (current.Y + temp * speed > bottomSideMax)
                         v.Y = bottomSideMax - current.Y;
 
                     _instance.DestinationRectangle.Offset(v);
@@ -175,7 +177,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
                         Vector2 v = new Vector2(temp * speed, 0);
 
-                        if (current.X + (temp * speed) >= rightSideMax)
+                        if (current.X + temp * speed >= rightSideMax)
                             v.X = rightSideMax - current.X;
 
                         _instance.DestinationRectangle.Offset(v);
@@ -186,7 +188,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
                         Vector2 v = new Vector2(temp * speed, 0);
 
-                        if (current.X + (temp * speed) <= leftSideMax)
+                        if (current.X + temp * speed <= leftSideMax)
                             v.X = leftSideMax - current.X;
 
                         _instance.DestinationRectangle.Offset(v);
@@ -200,7 +202,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
                         Vector2 v = new Vector2(0, temp * speed);
 
-                        if (current.Y + (temp * speed) <= topSideMax)
+                        if (current.Y + temp * speed <= topSideMax)
                             v.Y = topSideMax - current.Y;
 
                         _instance.DestinationRectangle.Offset(v);
@@ -211,7 +213,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
                         Vector2 v = new Vector2(0, temp * speed);
 
-                        if (current.Y + (temp * speed) > bottomSideMax)
+                        if (current.Y + temp * speed > bottomSideMax)
                             v.Y = bottomSideMax - current.Y;
 
                         _instance.DestinationRectangle.Offset(v);

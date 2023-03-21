@@ -1,11 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Car_Chase_Bullet_Hell_Game.Model.Entities;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Car_Chase_Bullet_Hell_Game
+namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
 {
     internal class TargetingShot : Shot
     {
@@ -18,7 +19,7 @@ namespace Car_Chase_Bullet_Hell_Game
 
         public TargetingShot()
         {
-            base.Origin = new Vector2(base.DestinationRectangle.Width / 2, base.DestinationRectangle.Height / 2);
+            Origin = new Vector2(DestinationRectangle.Width / 2, DestinationRectangle.Height / 2);
         }
 
         public delegate void BulletLifetimeExpiredEventHandler(object sender);
@@ -41,7 +42,7 @@ namespace Car_Chase_Bullet_Hell_Game
         public override void Move(GameTime gameTime)
         {
             Point target = Player.Instance.Center;
-            Point current = base.Center;
+            Point current = Center;
 
             // v = unit vector from current to target
             Vector2 v = new Vector2(target.X - current.X, target.Y - current.Y);
@@ -89,16 +90,16 @@ namespace Car_Chase_Bullet_Hell_Game
             offset *= _rotationSpeed;
             Direction += offset;
 
-            base.Rotation = (float)Direction;
-            base.DestinationRectangle.X += (int)(_xDirection * _speed);
-            base.DestinationRectangle.Y += (int)(_yDirection * _speed);
+            Rotation = (float)Direction;
+            DestinationRectangle.X += (int)(_xDirection * _speed);
+            DestinationRectangle.Y += (int)(_yDirection * _speed);
 
             LifeTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (LifeTime < 0)
             {
                 BulletLifetimeExpiredEvent?.Invoke(this);
-                base.InvokeBulletEnd();
+                InvokeBulletEnd();
             }
         }
     }

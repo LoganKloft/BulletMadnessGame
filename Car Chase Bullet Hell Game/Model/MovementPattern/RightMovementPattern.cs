@@ -1,3 +1,4 @@
+using Car_Chase_Bullet_Hell_Game.Model.Entities;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -5,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Car_Chase_Bullet_Hell_Game
+namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
 {
-    internal class LeftMovementPattern : MovementPattern
+    internal class RightMovementPattern : MovementPattern
     {
         //float speed = 100f;
         Queue<Point> waypoints = new Queue<Point>();
@@ -15,7 +16,7 @@ namespace Car_Chase_Bullet_Hell_Game
         public bool repeat = false;
         private int curRun = 0;
 
-        private bool moveLeft = true;
+        private bool moveRight = true;
 
         public void AddPoint(Point p)
         {
@@ -28,16 +29,16 @@ namespace Car_Chase_Bullet_Hell_Game
             {
                 ++curRun;
                 enemy.DestinationRectangle.Y = 100;
-                enemy.DestinationRectangle.X = 1120;
+                enemy.DestinationRectangle.X = 0;
             }
 
-            if (moveLeft)
-                enemy.DestinationRectangle.X -= 5;
-            else
+            if (moveRight)
                 enemy.DestinationRectangle.X += 5;
+            else
+                enemy.DestinationRectangle.X -= 5;
 
-            if (enemy.DestinationRectangle.X < 580 || enemy.DestinationRectangle.X > 1130)
-                moveLeft = !moveLeft;
+            if (enemy.DestinationRectangle.X > 550 || enemy.DestinationRectangle.X < 0)
+                moveRight = !moveRight;
         }
     }
 }

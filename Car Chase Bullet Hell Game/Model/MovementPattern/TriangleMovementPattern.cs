@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Car_Chase_Bullet_Hell_Game.Model.Entities;
+using Car_Chase_Bullet_Hell_Game.Model.MovementPattern;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +8,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Car_Chase_Bullet_Hell_Game
+namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
 {
     internal class TriangleMovementPattern : MovementPattern
     {
@@ -40,19 +42,19 @@ namespace Car_Chase_Bullet_Hell_Game
                 x_move = points[pointIndex].X - enemy.DestinationRectangle.X;
                 y_move = points[pointIndex].Y - enemy.DestinationRectangle.Y;
                 distance = Math.Sqrt(Math.Pow(x_move, 2) + Math.Pow(y_move, 2));
-                direction = speed/distance;
+                direction = speed / distance;
                 //Update destination rectangles
                 if (x_move != 0)
                 {
-                    enemy.DestinationRectangle.X += (int)(x_move*direction);
+                    enemy.DestinationRectangle.X += (int)(x_move * direction);
                 }
                 if (y_move != 0)
                 {
-                    enemy.DestinationRectangle.Y += (int)(y_move*direction);
+                    enemy.DestinationRectangle.Y += (int)(y_move * direction);
                 }
             }
             //Update the index of the point we are trying to get to once we have reached the previous point.
-            if ((enemy.DestinationRectangle.X >= (points[pointIndex].X-5) && enemy.DestinationRectangle.X <= (points[pointIndex].X + 5)) && (enemy.DestinationRectangle.Y >= (points[pointIndex].Y-5) && enemy.DestinationRectangle.Y <= (points[pointIndex].Y + 5)))
+            if (enemy.DestinationRectangle.X >= points[pointIndex].X - 5 && enemy.DestinationRectangle.X <= points[pointIndex].X + 5 && enemy.DestinationRectangle.Y >= points[pointIndex].Y - 5 && enemy.DestinationRectangle.Y <= points[pointIndex].Y + 5)
             {
                 pause = true;
                 pointIndex++;

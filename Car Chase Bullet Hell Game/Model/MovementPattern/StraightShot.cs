@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Car_Chase_Bullet_Hell_Game.Model.Entities;
 
-namespace Car_Chase_Bullet_Hell_Game
+namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
 {
     internal class StraightShot : Shot
     {
@@ -29,12 +30,12 @@ namespace Car_Chase_Bullet_Hell_Game
 
         public override void Move(GameTime gameTime)
         {
-            base.Origin = new Vector2(base.DestinationRectangle.Width / 2, base.DestinationRectangle.Height / 2);
-            base.Rotation = (float)_direction;
-            base.DestinationRectangle.X += (int) (_xDirection * _speed);
-            base.DestinationRectangle.Y += (int)(_yDirection * _speed);
-            base.Collided();
-            base.Offscreen();
+            Origin = new Vector2(DestinationRectangle.Width / 2, DestinationRectangle.Height / 2);
+            Rotation = (float)_direction;
+            DestinationRectangle.X += (int)(_xDirection * _speed);
+            DestinationRectangle.Y += (int)(_yDirection * _speed);
+            Collided();
+            Offscreen();
         }
     }
 }

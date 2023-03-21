@@ -1,11 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Car_Chase_Bullet_Hell_Game.Model.Entities;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Car_Chase_Bullet_Hell_Game
+namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
 {
     internal class StraightMovementPattern : MovementPattern
     {
@@ -29,14 +30,14 @@ namespace Car_Chase_Bullet_Hell_Game
                 // move the enemy closer to the target
                 // 1 - create unit vector
                 Vector2 v = new Vector2(target.X - current.X, target.Y - current.Y);
-                float magnitude = (float) Math.Sqrt(Math.Pow(v.X, 2) + Math.Pow(v.Y, 2));
+                float magnitude = (float)Math.Sqrt(Math.Pow(v.X, 2) + Math.Pow(v.Y, 2));
                 v.X = v.X / magnitude;
                 v.Y = v.Y / magnitude;
 
                 Point difference = target - current;
 
-                int xDistance = (int) Math.Min((float) Math.Abs(gameTime.ElapsedGameTime.TotalSeconds * speed * v.X), Math.Abs(difference.X));
-                int yDistance = (int) Math.Min((float) Math.Abs(gameTime.ElapsedGameTime.TotalSeconds * speed * v.Y), Math.Abs(difference.Y));
+                int xDistance = (int)Math.Min((float)Math.Abs(gameTime.ElapsedGameTime.TotalSeconds * speed * v.X), Math.Abs(difference.X));
+                int yDistance = (int)Math.Min((float)Math.Abs(gameTime.ElapsedGameTime.TotalSeconds * speed * v.Y), Math.Abs(difference.Y));
 
                 xDistance = v.X < 0 ? -xDistance : xDistance;
                 yDistance = v.Y < 0 ? -yDistance : yDistance;
@@ -53,7 +54,7 @@ namespace Car_Chase_Bullet_Hell_Game
             }
             else if (repeat)
             {
-                while(discarded.Count > 0)
+                while (discarded.Count > 0)
                 {
                     waypoints.Enqueue(discarded.Dequeue());
                 }
