@@ -1,11 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Car_Chase_Bullet_Hell_Game.Model.Entities;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Car_Chase_Bullet_Hell_Game
+namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
 {
     internal class CircleMovementPattern : MovementPattern
     {
@@ -20,11 +21,13 @@ namespace Car_Chase_Bullet_Hell_Game
             _radius = radius;
         }
 
-        public Point PivotPoint {
+        public Point PivotPoint
+        {
             get { return _pivotPoint; }
             set { _pivotPoint = value; }
         }
-        public int Radius { 
+        public int Radius
+        {
             get { return _radius; }
             set { _radius = value; }
         }

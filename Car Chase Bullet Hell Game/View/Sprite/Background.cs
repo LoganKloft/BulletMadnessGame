@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-namespace Car_Chase_Bullet_Hell_Game
+namespace Car_Chase_Bullet_Hell_Game.View.Sprite
 {
     internal class Background
     {

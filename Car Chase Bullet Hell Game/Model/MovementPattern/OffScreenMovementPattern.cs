@@ -1,11 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Car_Chase_Bullet_Hell_Game.Model.Entities;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Car_Chase_Bullet_Hell_Game
+namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
 {
     internal class OffScreenMovementPattern : MovementPattern
     {
@@ -14,7 +15,7 @@ namespace Car_Chase_Bullet_Hell_Game
         private double x_move = 0, y_move = 0, distance = 0, direction = 0;
         public override void Move(GameTime gameTime, Enemy enemy)
         {
-            
+
             x_move = location.X - enemy.DestinationRectangle.X;
             y_move = location.Y - enemy.DestinationRectangle.Y;
             distance = Math.Sqrt(Math.Pow(x_move, 2) + Math.Pow(y_move, 2));

@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Car_Chase_Bullet_Hell_Game.Model.Entities;
+using Car_Chase_Bullet_Hell_Game.Model.MovementPattern;
 
-namespace Car_Chase_Bullet_Hell_Game
+namespace Car_Chase_Bullet_Hell_Game.Model.ShotPattern
 {
     internal class CircleShotPattern : ShotPattern
     {
@@ -35,8 +37,8 @@ namespace Car_Chase_Bullet_Hell_Game
                 return;
             }
 
-            double shotOffset = (Math.PI * 2d) / _shotCount;
-            for(int i = 0; i < _shotCount; i++)
+            double shotOffset = Math.PI * 2d / _shotCount;
+            for (int i = 0; i < _shotCount; i++)
             {
                 StraightShot shot = new StraightShot();
                 shot.LoadContent(content, asset);
