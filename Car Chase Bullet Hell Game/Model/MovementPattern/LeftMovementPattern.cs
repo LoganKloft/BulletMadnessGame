@@ -23,22 +23,24 @@ namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
             waypoints.Enqueue(p);
         }
 
-        public override void Move(GameTime gameTime, Enemy enemy)
+        public override void Move(GameTime gameTime, Entity entity)
         {
             if (curRun == 0)
             {
                 ++curRun;
-                enemy.DestinationRectangle.Y = 100;
-                enemy.DestinationRectangle.X = 1120;
+                entity.DestinationRectangle.Y = 100;
+                entity.DestinationRectangle.X = 1120;
             }
 
             if (moveLeft)
-                enemy.DestinationRectangle.X -= 5;
+                entity.DestinationRectangle.X -= 5;
             else
-                enemy.DestinationRectangle.X += 5;
+                entity.DestinationRectangle.X += 5;
 
-            if (enemy.DestinationRectangle.X < 580 || enemy.DestinationRectangle.X > 1130)
+            if (entity.DestinationRectangle.X < 580 || entity.DestinationRectangle.X > 1130)
                 moveLeft = !moveLeft;
+
+            entity.NotifyOfDestinationRectangleChange();
         }
     }
 }

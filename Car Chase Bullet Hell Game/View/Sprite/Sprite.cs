@@ -69,5 +69,20 @@ namespace Car_Chase_Bullet_Hell_Game.View.Sprite
                 return new Point(DestinationRectangle.X + DestinationRectangle.Width / 2, DestinationRectangle.Y + DestinationRectangle.Height / 2);
             }
         }
+
+        public void DestinationRectangleChangedHandler(Rectangle destinationRectangle)
+        {
+            DestinationRectangle = destinationRectangle;
+        }
+
+        public void RotationChangedHandler(float rotation)
+        {
+            Rotation = rotation;
+        }
+
+        public void OriginChangedHandler(Vector2 origin)
+        {
+            Origin = origin;
+        }
     }
 }

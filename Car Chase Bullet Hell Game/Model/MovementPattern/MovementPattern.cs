@@ -12,6 +12,28 @@ namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
 {
     internal abstract class MovementPattern
     {
-        public abstract void Move(GameTime gameTime, Enemy enemy);
+        public abstract void Move(GameTime gameTime, Entity entity);
+
+        public static MovementPattern Parse(string pattern)
+        {
+            if (pattern == "LeftMovementPattern")
+            {
+                return new LeftMovementPattern();
+            }
+            else if (pattern == "RightMovementPattern")
+            {
+                return new RightMovementPattern();
+            }
+            else if (pattern == "TriangleMovementPattern")
+            {
+                return new TriangleMovementPattern();
+            }
+            else if (pattern.Contains("CircleMovementPattern"))
+            {
+                return new CircleMovementPattern(new Point(625, 80), 80);
+            }
+
+            return null;
+        }
     }
 }

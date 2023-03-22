@@ -8,19 +8,19 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
-using Car_Chase_Bullet_Hell_Game.Model.ShotPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
 using Car_Chase_Bullet_Hell_Game.Model.MovementPattern;
 
 namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 {
-    internal class Enemy : Sprite
+    internal class Enemy : Entity
     {
         public MovementPattern.MovementPattern MovementPattern;
-        public Queue<ShotPattern.ShotPattern> ShotPatterns = new Queue<ShotPattern.ShotPattern>();
+        public Queue<ShotPattern> ShotPatterns = new Queue<ShotPattern>();
 
         public void Update(GameTime gameTime)
         {
-            ShotPattern.ShotPattern shotPattern;
+            ShotPattern shotPattern;
             while (ShotPatterns.TryPeek(out shotPattern) && shotPattern.Finished())
             {
                 ShotPatterns.Dequeue();
@@ -31,18 +31,9 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             {
                 MovementPattern.Move(gameTime, this);
             }
-            foreach (ShotPattern.ShotPattern pattern in ShotPatterns)
+            foreach (ShotPattern pattern in ShotPatterns)
             {
                 pattern.Update(gameTime);
-            }
-        }
-
-        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {
-            base.Draw(spriteBatch, gameTime);
-            foreach (ShotPattern.ShotPattern pattern in ShotPatterns)
-            {
-                pattern.Draw(spriteBatch, gameTime);
             }
         }
     }

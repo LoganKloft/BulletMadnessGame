@@ -12,7 +12,7 @@ using Car_Chase_Bullet_Hell_Game.Controller;
 
 namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 {
-    internal abstract class Shot : Sprite
+    internal abstract class Shot : Entity
     {
         public float Damage;
         private bool _offscreen = false; // prevent multiple offscreen event calls
@@ -21,27 +21,11 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         // the behavior for the movement of the bullet
         public abstract void Move(GameTime gameTime);
 
-        public delegate void BulletCollideEventHandler(object sender);
-        public event BulletCollideEventHandler BulletCollideEvent;
-
         public delegate void BulletOffscreenEventHandler(object sender);
-        public event BulletCollideEventHandler BulletOffscreenEvent;
+        public event BulletOffscreenEventHandler BulletOffscreenEvent;
 
         public delegate void BulletEndEventHandler(object sender);
         public event BulletEndEventHandler BulletEndEvent; // invoked whenever a Bullet has collided, went offscreen, etc.
-
-        // returns whether the bullet collided with the player
-        public void Collided()
-        {
-            if (_collided) return;
-            // return base.DestinationRectangle.Intersects(Player.Instance.DestinationRectangle);
-            if (DestinationRectangle.Intersects(Player.Instance.DestinationRectangle))
-            {
-                BulletCollideEvent?.Invoke(this);
-                InvokeBulletEnd();
-                _collided = true;
-            }
-        }
 
         public void Offscreen()
         {
