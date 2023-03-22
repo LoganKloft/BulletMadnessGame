@@ -34,7 +34,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
             Rotation = (float)_direction;
             DestinationRectangle.X += (int)(_xDirection * _speed);
             DestinationRectangle.Y += (int)(_yDirection * _speed);
-            Collided();
+            NotifyOfDestinationRectangleChange();
             Offscreen();
         }
     }

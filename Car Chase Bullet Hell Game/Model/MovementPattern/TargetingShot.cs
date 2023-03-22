@@ -93,6 +93,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
             Rotation = (float)Direction;
             DestinationRectangle.X += (int)(_xDirection * _speed);
             DestinationRectangle.Y += (int)(_yDirection * _speed);
+            NotifyOfDestinationRectangleChange();
 
             LifeTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Car_Chase_Bullet_Hell_Game.Model.ShotPattern
+namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 {
     internal class StraightShotPattern : ShotPattern
     {
@@ -32,10 +32,11 @@ namespace Car_Chase_Bullet_Hell_Game.Model.ShotPattern
         internal void CreateShots(ContentManager content, string asset, Point point, double dir)
         {
             StraightShot shot = new StraightShot();
-            shot.LoadContent(content, asset);
-            shot.Direction = dir;
+            //shot.LoadContent(content, asset);
+            //shot.Direction = dir;
             shot.DestinationRectangle.X = point.X - shot.DestinationRectangle.Width / 2;
             shot.DestinationRectangle.Y = point.Y - shot.DestinationRectangle.Height / 2;
+            shot.NotifyOfDestinationRectangleChange();
 
             //shot.DestinationRectangle.Width = 50;
             //shot.DestinationRectangle.Height = 50;
@@ -52,13 +53,13 @@ namespace Car_Chase_Bullet_Hell_Game.Model.ShotPattern
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {
-            foreach (Shot shot in shots)
-            {
-                shot.Draw(spriteBatch, gameTime);
-            }
-        }
+        //public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        //{
+        //    foreach (Shot shot in shots)
+        //    {
+        //        shot.Draw(spriteBatch, gameTime);
+        //    }
+        //}
 
         public override bool Finished()
         {

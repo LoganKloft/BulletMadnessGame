@@ -9,8 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
 using Car_Chase_Bullet_Hell_Game.Model.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.View.Sprite;
 
-namespace Car_Chase_Bullet_Hell_Game.Model.ShotPattern
+namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 {
     internal class CircleShotPattern : ShotPattern
     {
@@ -41,10 +42,17 @@ namespace Car_Chase_Bullet_Hell_Game.Model.ShotPattern
             for (int i = 0; i < _shotCount; i++)
             {
                 StraightShot shot = new StraightShot();
-                shot.LoadContent(content, asset);
+                Sprite shotSprite = new Sprite();
+                shotSprite.LoadContent(content, asset);
+                shot.DestinationRectangleChanged += shotSprite.DestinationRectangleChangedHandler;
+                shot.RotationChanged += shotSprite.RotationChangedHandler;
+                shot.OriginChanged += shotSprite.OriginChangedHandler;
+                DrawController.AddSprite(shotSprite);
+
                 shot.Direction = shotOffset * i;
                 shot.DestinationRectangle.X = point.X;
                 shot.DestinationRectangle.Y = point.Y;
+                shot.NotifyOfDestinationRectangleChange();
                 shots.Add(shot);
                 shot.BulletEndEvent += BulletEndEventHandler;
             }
@@ -59,13 +67,13 @@ namespace Car_Chase_Bullet_Hell_Game.Model.ShotPattern
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {
-            foreach (Shot shot in shots)
-            {
-                shot.Draw(spriteBatch, gameTime);
-            }
-        }
+        //public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        //{
+        //    foreach (Shot shot in shots)
+        //    {
+        //        shot.Draw(spriteBatch, gameTime);
+        //    }
+        //}
 
         public override bool Finished()
         {
