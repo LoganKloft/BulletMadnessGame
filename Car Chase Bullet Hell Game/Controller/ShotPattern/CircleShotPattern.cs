@@ -44,6 +44,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
                 StraightShot shot = new StraightShot();
                 Sprite shotSprite = new Sprite();
                 shotSprite.LoadContent(content, asset);
+                shot.DestinationRectangle = shotSprite.DestinationRectangle;
                 shot.DestinationRectangleChanged += shotSprite.DestinationRectangleChangedHandler;
                 shot.RotationChanged += shotSprite.RotationChangedHandler;
                 shot.OriginChanged += shotSprite.OriginChangedHandler;
