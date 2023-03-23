@@ -40,7 +40,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         {
             DestinationRectangle = new Rectangle();
             HitBoxRectangle = new Rectangle();
-            percent = percentHitBoxSize
+            percent = percentHitBoxSize;
         }
 
         // alternatively can send 'this' instead of specific attributes
@@ -68,8 +68,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             DestinationRectangleChanged?.Invoke(DestinationRectangle);
 
             // change the location of hitbox while also maintaining the percentage size
-            HitBoxRectangle.X = DestinationRectangle.X * percent;
-            HitBoxRectangle.Y = DestinationRectangle.Y * percent;
+            HitBoxRectangle.X = Convert.ToInt32(DestinationRectangle.X * percent);
+            HitBoxRectangle.Y = Convert.ToInt32(DestinationRectangle.Y * percent);
         }
 
         public float Rotation
