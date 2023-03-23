@@ -16,17 +16,19 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 {
     internal abstract class ShotPattern
     {
-        public abstract void Update(GameTime gameTime);
+        //public abstract void Update(GameTime gameTime);
         //public abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime);
 
-        public abstract bool Finished();
+        //public abstract bool Finished();
 
-        public static ShotPattern Parse(string type, string asset, Entity entity)
+        public abstract void CreateShots();
+
+        public static ShotPattern Parse(string type, string asset, Point point, int shotCount, Entity entity)
         {
             if (type == "CircleShotPattern")
             {
-                CircleShotPattern csp = new CircleShotPattern(16);
-                csp.CreateShots(Game1.content, asset, entity.Center);
+                CircleShotPattern csp = new CircleShotPattern(asset, point, shotCount);
+                csp.CreateShots();
                 return csp;
             }
             else if (type == "HalfCircleShotPattern")

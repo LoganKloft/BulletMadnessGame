@@ -38,6 +38,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         public delegate void BulletOffscreenEventHandler(Shot shot);
         public event BulletOffscreenEventHandler BulletOffscreenEvent;
 
+        public override event DestroyEventHandler DestroyEvent;
+
         public void Offscreen()
         {
             if (_offscreen) return;
@@ -47,7 +49,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                 || DestinationRectangle.Top > Game1.gd.Viewport.Bounds.Bottom
                 || DestinationRectangle.Bottom < Game1.gd.Viewport.Bounds.Top)
             {
-                BulletOffscreenEvent?.Invoke(this);
+                //BulletOffscreenEvent?.Invoke(this);
+                DestroyEvent?.Invoke(this);
                 _offscreen = true;
             }
         }

@@ -53,6 +53,9 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         public delegate void OriginChangedHandler(Vector2 origin);
         public event OriginChangedHandler OriginChanged;
 
+        public delegate void DestroyEventHandler(Entity entity);
+        public abstract event DestroyEventHandler DestroyEvent;
+
         public void NotifyOfDestinationRectangleChange()
         {
             DestinationRectangleChanged?.Invoke(DestinationRectangle);

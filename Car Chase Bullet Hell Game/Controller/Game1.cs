@@ -97,6 +97,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 Exit();
 
             spawner.Update(gameTime);
+            ShotController.Update(gameTime);
 
             Player.Instance.Update(gameTime);
             _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);

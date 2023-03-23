@@ -24,6 +24,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         private float topSideMax = 0.0f + Game1.playerHeight / 2;
         private float bottomSideMax = screenSize.Height - Game1.playerHeight / 2;
 
+        public override event DestroyEventHandler DestroyEvent;
+
         Player() { }
         public static Player Instance
         {

@@ -13,23 +13,27 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 {
     internal class StraightShotPattern : ShotPattern
     {
-
-        private List<Shot> shots = new List<Shot>();
         private int shotCount = 0;
+        string asset;
+        Point point;
+        double dir;
 
-        public StraightShotPattern(int shotCount) : base()
+        public StraightShotPattern(string asset, Point point, double dir, int shotCount) : base()
         {
             this.shotCount = shotCount;
+            this.asset = asset;
+            this.point = point;
+            this.dir = dir;
         }
 
         // potential to be called multiple times if bullet is both offscreen and collides with enemy at the same time
         // or if bullet collides with enemy and lifetime runs outs, etc - some design improvements to make
-        private void BulletOffscreenHandler(object sender)
-        {
-            shotCount--;
-        }
+        //private void BulletOffscreenHandler(object sender)
+        //{
+        //    shotCount--;
+        //}
 
-        internal void CreateShots(ContentManager content, string asset, Point point, double dir)
+        public override void CreateShots()
         {
             Shot shot = new Shot();
             MovementPattern.MovementPattern movementPattern = new StraightShot(0);
@@ -43,17 +47,18 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             //shot.DestinationRectangle.Width = 50;
             //shot.DestinationRectangle.Height = 50;
 
-            shots.Add(shot);
-            shot.BulletOffscreenEvent += BulletOffscreenHandler;
+            //shots.Add(shot);
+            //shot.BulletOffscreenEvent += BulletOffscreenHandler;
+            ShotController.AddShot(shot);
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            foreach (Shot shot in shots)
-            {
-                shot.Update(gameTime);
-            }
-        }
+        //public override void Update(GameTime gameTime)
+        //{
+        //    foreach (Shot shot in shots)
+        //    {
+        //        shot.Update(gameTime);
+        //    }
+        //}
 
         //public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         //{
@@ -63,9 +68,9 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
         //    }
         //}
 
-        public override bool Finished()
-        {
-            return shotCount <= 0;
-        }
+        //public override bool Finished()
+        //{
+        //    return shotCount <= 0;
+        //}
     }
 }

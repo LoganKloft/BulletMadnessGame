@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Car_Chase_Bullet_Hell_Game.Controller;
+using Car_Chase_Bullet_Hell_Game.Model.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
@@ -83,6 +84,16 @@ namespace Car_Chase_Bullet_Hell_Game.View.Sprite
         public void OriginChangedHandler(Vector2 origin)
         {
             Origin = origin;
+        }
+
+        public void DestroyEventHandler(Entity entity)
+        {
+            Destroy();
+        }
+
+        public void Destroy()
+        {
+            DrawController.Remove(this);
         }
     }
 }
