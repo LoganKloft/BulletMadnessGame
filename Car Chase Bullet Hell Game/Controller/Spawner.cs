@@ -40,7 +40,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             si = new SpawnItem("Motorcycle", 0, 15, Content);
             si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
             si.AddMovementItem("LeftMovementPattern", 15);
-            si.AddShotItem(0, 15, 1, "CircleShotPattern", "02", 16);
+            si.AddShotItem(0f, 15f, 1f, "CircleShotPattern", "02", 16);
             inactiveSpawnItems.Add(si);
 
             si = new SpawnItem("Police", 30, 15, Content);
