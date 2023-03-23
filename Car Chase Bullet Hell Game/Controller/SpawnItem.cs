@@ -27,6 +27,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public Sprite sprite;
         public Enemy enemy;
         public ContentManager content;
+        public bool offscreenOccurence = false;
 
         public SpawnItem(string asset, float start, float duration, ContentManager content)
         {
@@ -77,6 +78,10 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                         if (movementItems[0].duration<0.025 && movementItems[0].movementPattern is not OffScreenMovementPattern)
                         {
                             movementItems.RemoveAt(0);
+                        }
+                        if (movementItems[0].movementPattern is OffScreenMovementPattern)
+                        {
+                            this.offscreenOccurence = true;
                         }
                         movementItems[0].Update(gameTime);
                     }
