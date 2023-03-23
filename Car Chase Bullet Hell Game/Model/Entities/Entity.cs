@@ -36,7 +36,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             HitBoxRectangle = DestinationRectangle;
         }
 
-        public Entity(double x_boundsHitBox, double y_boundsHitBox)
+        public Entity(int x_boundsHitBox, int y_boundsHitBox)
         {
             DestinationRectangle = new Rectangle();
             HitBoxRectangle = new Rectangle(0, 0, x_boundsHitBox, y_boundsHitBox);
