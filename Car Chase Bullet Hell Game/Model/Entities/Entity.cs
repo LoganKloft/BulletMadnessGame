@@ -65,11 +65,20 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             //HitBoxRectangle.Y = center.Y - (DestinationRectangle.Height / 2);
             HitBoxRectangle = DestinationRectangle;
 
-            DestinationRectangleChanged?.Invoke(DestinationRectangle);
-
             // change the location of hitbox while also maintaining the percentage size
-            HitBoxRectangle.X = Convert.ToInt32(DestinationRectangle.X * percent);
-            HitBoxRectangle.Y = Convert.ToInt32(DestinationRectangle.Y * percent);
+
+            // if hitbox is 80% of destination rectangle we would have to shift the x and y inwards by 10% of prior width and height
+            // if hitbox is 120% of destination rectangle, we would have to shift the x and y outwards by 10% of prior width and height
+            double shift = (1d - percent) / 2d;
+            HitBoxRectangle.Width = Convert.ToInt32(percent * DestinationRectangle.Width);
+            HitBoxRectangle.Height = Convert.ToInt32(percent * DestinationRectangle.Height);
+            HitBoxRectangle.X = HitBoxRectangle.X + Convert.ToInt32(DestinationRectangle.Width * shift);
+            HitBoxRectangle.Y = HitBoxRectangle.Y + Convert.ToInt32(DestinationRectangle.Height * shift);
+
+            //HitBoxRectangle.X = Convert.ToInt32(DestinationRectangle.X * percent);
+            //HitBoxRectangle.Y = Convert.ToInt32(DestinationRectangle.Y * percent);
+
+            DestinationRectangleChanged?.Invoke(DestinationRectangle);
         }
 
         public float Rotation

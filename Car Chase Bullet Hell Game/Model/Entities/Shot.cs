@@ -25,6 +25,9 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
         public MovementPattern MovementPattern;
 
+        public Shot() : base() { }
+        public Shot(double percentHitBoxSize) : base(percentHitBoxSize) { }
+
         // the behavior for the movement of the bullet
         public void Update(GameTime gameTime)
         {

@@ -27,7 +27,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
         public override event DestroyEventHandler DestroyEvent;
 
-        Player() { }
+        Player() : base(.5) { }
         public static Player Instance
         {
             get

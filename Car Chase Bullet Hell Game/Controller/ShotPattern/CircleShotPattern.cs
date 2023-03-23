@@ -38,7 +38,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             double shotOffset = Math.PI * 2d / _shotCount;
             for (int i = 0; i < _shotCount; i++)
             {
-                Shot shot = new Shot();
+                Shot shot = new Shot(.5);
                 MovementPattern.MovementPattern movementPattern = new StraightShot(shotOffset * i);
                 shot.MovementPattern = movementPattern;
                 Sprite shotSprite = new Sprite();
