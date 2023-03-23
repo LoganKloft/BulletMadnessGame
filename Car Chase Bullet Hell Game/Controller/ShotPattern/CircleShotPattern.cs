@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
-using Car_Chase_Bullet_Hell_Game.Model.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
@@ -26,7 +26,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 
         // potential to be called multiple times if bullet is both offscreen and collides with enemy at the same time
         // or if bullet collides with enemy and lifetime runs outs, etc - some design improvements to make
-        private void BulletEndEventHandler(object sender)
+        private void BulletOffscreenHandler(Shot shot)
         {
             _shotCount--;
         }
@@ -41,7 +41,9 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             double shotOffset = Math.PI * 2d / _shotCount;
             for (int i = 0; i < _shotCount; i++)
             {
-                StraightShot shot = new StraightShot();
+                Shot shot = new Shot();
+                MovementPattern.MovementPattern movementPattern = new StraightShot(shotOffset * i);
+                shot.MovementPattern = movementPattern;
                 Sprite shotSprite = new Sprite();
                 shotSprite.LoadContent(content, asset);
                 shot.DestinationRectangle = shotSprite.DestinationRectangle;
@@ -50,12 +52,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
                 shot.OriginChanged += shotSprite.OriginChangedHandler;
                 DrawController.AddSprite(shotSprite);
 
-                shot.Direction = shotOffset * i;
                 shot.DestinationRectangle.X = point.X;
                 shot.DestinationRectangle.Y = point.Y;
                 shot.NotifyOfDestinationRectangleChange();
                 shots.Add(shot);
-                shot.BulletEndEvent += BulletEndEventHandler;
+                shot.BulletOffscreenEvent += BulletOffscreenHandler;
             }
         }
 
@@ -64,17 +65,9 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             time += (float)gameTime.ElapsedGameTime.TotalSeconds;
             foreach (Shot shot in shots)
             {
-                shot.Move(gameTime);
+                shot.Update(gameTime);
             }
         }
-
-        //public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        //{
-        //    foreach (Shot shot in shots)
-        //    {
-        //        shot.Draw(spriteBatch, gameTime);
-        //    }
-        //}
 
         public override bool Finished()
         {

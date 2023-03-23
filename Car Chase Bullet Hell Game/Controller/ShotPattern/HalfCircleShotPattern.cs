@@ -1,5 +1,5 @@
 ﻿using Car_Chase_Bullet_Hell_Game.Model.Entities;
-using Car_Chase_Bullet_Hell_Game.Model.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,7 +24,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 
         // potential to be called multiple times if bullet is both offscreen and collides with enemy at the same time
         // or if bullet collides with enemy and lifetime runs outs, etc - some design improvements to make
-        private void BulletEndEventHandler(object sender)
+        private void BulletOffscreenHandler(object sender)
         {
             shotCount--;
         }
@@ -39,9 +39,10 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             double offset = Math.PI * 1d / shotCount;
             for (int i = 0; i < shotCount; i++)
             {
-                StraightShot shot = new StraightShot();
+                Shot shot = new Shot();
+                MovementPattern.MovementPattern movementPattern = new StraightShot(offset * i);
+                shot.MovementPattern = movementPattern;
                 //shot.LoadContent(content, asset);
-                shot.Direction = offset * i;
                 shot.DestinationRectangle.X = point.X - shot.DestinationRectangle.Width / 2;
                 shot.DestinationRectangle.Y = point.Y - shot.DestinationRectangle.Height / 2;
 
@@ -50,7 +51,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
                 shot.NotifyOfDestinationRectangleChange();
 
                 shots.Add(shot);
-                shot.BulletEndEvent += BulletEndEventHandler;
+                shot.BulletOffscreenEvent += BulletOffscreenHandler;
             }
         }
 
@@ -58,7 +59,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
         {
             foreach (Shot shot in shots)
             {
-                shot.Move(gameTime);
+                shot.Update(gameTime);
             }
         }
 

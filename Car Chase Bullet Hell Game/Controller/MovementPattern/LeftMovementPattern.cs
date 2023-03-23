@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
+namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
-    internal class RightMovementPattern : MovementPattern
+    internal class LeftMovementPattern : MovementPattern
     {
         //float speed = 100f;
         Queue<Point> waypoints = new Queue<Point>();
@@ -16,7 +16,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
         public bool repeat = false;
         private int curRun = 0;
 
-        private bool moveRight = true;
+        private bool moveLeft = true;
 
         public void AddPoint(Point p)
         {
@@ -29,16 +29,16 @@ namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
             {
                 ++curRun;
                 entity.DestinationRectangle.Y = 100;
-                entity.DestinationRectangle.X = 0;
+                entity.DestinationRectangle.X = 1120;
             }
 
-            if (moveRight)
-                entity.DestinationRectangle.X += 5;
-            else
+            if (moveLeft)
                 entity.DestinationRectangle.X -= 5;
+            else
+                entity.DestinationRectangle.X += 5;
 
-            if (entity.DestinationRectangle.X > 550 || entity.DestinationRectangle.X < 0)
-                moveRight = !moveRight;
+            if (entity.DestinationRectangle.X < 580 || entity.DestinationRectangle.X > 1130)
+                moveLeft = !moveLeft;
 
             entity.NotifyOfDestinationRectangleChange();
         }

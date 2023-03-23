@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
-using Car_Chase_Bullet_Hell_Game.Model.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 
 namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 {

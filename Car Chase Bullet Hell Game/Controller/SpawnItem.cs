@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
-using Car_Chase_Bullet_Hell_Game.Model.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Microsoft.Xna.Framework;
@@ -103,7 +103,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
         public void AddMovementItem(string type, float duration)
         {
-            movementItems.Add(new MovementItem(duration, MovementPattern.Parse(type), this));
+            movementItems.Add(new MovementItem(duration, MovementPattern.MovementPattern.Parse(type), this));
         }
 
         public void AddShotItem(float start, float duration, float shootSpeed, string type, string asset)

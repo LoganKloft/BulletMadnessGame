@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
-using Car_Chase_Bullet_Hell_Game.Model.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Car_Chase_Bullet_Hell_Game.Controller;

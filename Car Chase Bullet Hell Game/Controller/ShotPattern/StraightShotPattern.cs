@@ -1,5 +1,5 @@
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
-using Car_Chase_Bullet_Hell_Game.Model.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,14 +24,16 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 
         // potential to be called multiple times if bullet is both offscreen and collides with enemy at the same time
         // or if bullet collides with enemy and lifetime runs outs, etc - some design improvements to make
-        private void BulletEndEventHandler(object sender)
+        private void BulletOffscreenHandler(object sender)
         {
             shotCount--;
         }
 
         internal void CreateShots(ContentManager content, string asset, Point point, double dir)
         {
-            StraightShot shot = new StraightShot();
+            Shot shot = new Shot();
+            MovementPattern.MovementPattern movementPattern = new StraightShot(0);
+            shot.MovementPattern = movementPattern;
             //shot.LoadContent(content, asset);
             //shot.Direction = dir;
             shot.DestinationRectangle.X = point.X - shot.DestinationRectangle.Width / 2;
@@ -42,14 +44,14 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             //shot.DestinationRectangle.Height = 50;
 
             shots.Add(shot);
-            shot.BulletEndEvent += BulletEndEventHandler;
+            shot.BulletOffscreenEvent += BulletOffscreenHandler;
         }
 
         public override void Update(GameTime gameTime)
         {
             foreach (Shot shot in shots)
             {
-                shot.Move(gameTime);
+                shot.Update(gameTime);
             }
         }
 

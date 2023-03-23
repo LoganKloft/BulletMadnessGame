@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
-using Car_Chase_Bullet_Hell_Game.Model.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Microsoft.Xna.Framework;
@@ -17,11 +17,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
     internal class MovementItem
     {
         public float duration;
-        public MovementPattern movementPattern;
+        public MovementPattern.MovementPattern movementPattern;
         public SpawnItem spawnItem;
         private bool active = false;
 
-        public MovementItem(float duration, MovementPattern movementPattern, SpawnItem spawnItem)
+        public MovementItem(float duration, MovementPattern.MovementPattern movementPattern, SpawnItem spawnItem)
         {
             this.duration = duration;
             this.spawnItem = spawnItem;
