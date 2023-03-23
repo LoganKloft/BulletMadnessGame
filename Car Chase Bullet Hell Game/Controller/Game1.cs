@@ -75,8 +75,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             Player.Instance.DestinationRectangle.Y = heightSize / 2 - 250 / 2 / 2;
 
             // make the player smaller
-            Player.Instance.DestinationRectangle.Width = Player.Instance.DestinationRectangle.Width / 2;
-            Player.Instance.DestinationRectangle.Height = Player.Instance.DestinationRectangle.Height / 2;
+            Player.Instance.DestinationRectangle.Width = playerWidth / 2;
+            Player.Instance.DestinationRectangle.Height = playerHeight / 2;
             Player.Instance.NotifyOfDestinationRectangleChange();
 
             // add the same image two times for the background
