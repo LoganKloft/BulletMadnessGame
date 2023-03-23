@@ -9,14 +9,19 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
 
-namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
+namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
-    internal class StraightShot : Shot
+    internal class StraightShot : MovementPattern
     {
         private double _direction = 0d;
         private double _xDirection = 1d;
         private double _yDirection = 0d;
         private double _speed = 5f;
+
+        public StraightShot(double direction)
+        {
+            Direction = direction;
+        }
 
         public double Direction
         {
@@ -28,14 +33,13 @@ namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
             }
         }
 
-        public override void Move(GameTime gameTime)
+        public override void Move(GameTime gameTime, Entity entity)
         {
-            Origin = new Vector2(DestinationRectangle.Width / 2, DestinationRectangle.Height / 2);
-            Rotation = (float)_direction;
-            DestinationRectangle.X += (int)(_xDirection * _speed);
-            DestinationRectangle.Y += (int)(_yDirection * _speed);
-            NotifyOfDestinationRectangleChange();
-            Offscreen();
+            //entity.Origin = new Vector2(entity.DestinationRectangle.Width / 2, entity.DestinationRectangle.Height / 2);
+            //entity.Rotation = (float)_direction;
+            entity.DestinationRectangle.X += (int)(_xDirection * _speed);
+            entity.DestinationRectangle.Y += (int)(_yDirection * _speed);
+            entity.NotifyOfDestinationRectangleChange();
         }
     }
 }

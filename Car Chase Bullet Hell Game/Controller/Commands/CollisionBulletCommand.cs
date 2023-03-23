@@ -10,20 +10,20 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
 {
     internal class CollisionBulletCommand : Command
     {
-        private Entity bullet;
+        private Shot bullet;
         private Entity entity2;
 
-        CollisionBulletCommand(Entity x, Entity y)
+        public CollisionBulletCommand(Entity x, Entity y)
         {
             if (x is Shot)
             {
-                bullet = x;
+                bullet = (Shot)x;
                 entity2 = y;
             }
 
-            else
+            else if (y is Shot)
             {
-                bullet = y;
+                bullet = (Shot)y;
                 entity2 = x;
             }
         }
@@ -32,8 +32,18 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
         {
             if (bullet.HitBoxRectangle.Intersects(entity2.HitBoxRectangle))
             {
-                return;
-                // DECREASE THE HEALTH BAR OF THE ENTITY THAT WAS HTI! 
+                if (entity2 is Enemy)
+                {
+                    ((Enemy)entity2).TakeDamage(bullet);
+                    bullet.InvokeDestroyEvent();
+                }
+
+                else if (entity2 is Player)
+                {
+                    ((Player)entity2).TakeDamage(bullet);
+                    bullet.InvokeDestroyEvent();
+                }
+                CollisionDetector.RemoveCommand(this);
             }
         }
     }

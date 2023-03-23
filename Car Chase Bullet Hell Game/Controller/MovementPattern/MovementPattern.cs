@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
+namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
     internal abstract class MovementPattern
     {
@@ -31,6 +31,10 @@ namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
             else if (pattern.Contains("CircleMovementPattern"))
             {
                 return new CircleMovementPattern(new Point(625, 80), 80);
+            }
+            else if (pattern.Contains("OffScreenMovementPattern"))
+            {
+                return new OffScreenMovementPattern();
             }
 
             return null;

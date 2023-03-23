@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
-using Car_Chase_Bullet_Hell_Game.Model.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 
 namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 {
@@ -54,8 +54,17 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         public delegate void OriginChangedHandler(Vector2 origin);
         public event OriginChangedHandler OriginChanged;
 
+        public delegate void DestroyEventHandler(Entity entity);
+        public abstract event DestroyEventHandler DestroyEvent;
+
         public void NotifyOfDestinationRectangleChange()
         {
+            // recalculate hitbox when DestinationRectangle changes - hitbox is centered
+            //Point center = DestinationRectangle.Center;
+            //HitBoxRectangle.X = center.X - (DestinationRectangle.Width / 2);
+            //HitBoxRectangle.Y = center.Y - (DestinationRectangle.Height / 2);
+            HitBoxRectangle = DestinationRectangle;
+
             DestinationRectangleChanged?.Invoke(DestinationRectangle);
 
             // change the location of hitbox while also maintaining the percentage size

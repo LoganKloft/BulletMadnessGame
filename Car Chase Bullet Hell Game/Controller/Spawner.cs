@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
-using Car_Chase_Bullet_Hell_Game.Model.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Microsoft.Xna.Framework;
@@ -34,12 +34,13 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             SpawnItem si = new SpawnItem("Motorcycle", 0, 15, Content);
             si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
             si.AddMovementItem("RightMovementPattern", 15);
-            si.AddShotItem(0, 15, 1, "CircleShotPattern", "01");
+            si.AddShotItem(0f, 15f, 1f, "CircleShotPattern", "01", 16);
             inactiveSpawnItems.Add(si);
 
             si = new SpawnItem("Motorcycle", 0, 15, Content);
             si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
             si.AddMovementItem("LeftMovementPattern", 15);
+            si.AddShotItem(0f, 15f, 1f, "CircleShotPattern", "02", 16);
             inactiveSpawnItems.Add(si);
 
             si = new SpawnItem("Police", 30, 15, Content);
@@ -76,8 +77,14 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
             for (int i = 0; i < activeSpawnItems.Count; i++)
             {
+               
                 int count = activeSpawnItems.Count;
                 SpawnItem activeItem = activeSpawnItems[i];
+                if (activeItem.duration < 0.025 && activeSpawnItems[i].offscreenOccurence is false)
+                {
+                    activeItem.duration += 2;
+                    activeItem.AddMovementItem("OffScreenMovementPattern", 2);
+                }
                 activeItem.Update(gameTime);
                 if (activeSpawnItems.Count < count)
                 {

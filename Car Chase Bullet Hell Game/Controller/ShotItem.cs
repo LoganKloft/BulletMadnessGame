@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
-using Car_Chase_Bullet_Hell_Game.Model.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Microsoft.Xna.Framework;
@@ -22,10 +22,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public float timer;
         public string type;
         public string asset;
+        int shotCount;
         public SpawnItem spawnItem;
         private bool active = false;
 
-        public ShotItem(float start, float duration, float shootSpeed, string type, string asset, SpawnItem spawnItem)
+        public ShotItem(SpawnItem spawnItem, float start, float duration, float shootSpeed, string type, string asset, int shotCount)
         {
             this.start = start;
             this.duration = duration;
@@ -33,6 +34,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             this.type = type;
             this.asset = asset;
             this.spawnItem = spawnItem;
+            this.shotCount = shotCount;
         }
 
         public void Update(GameTime gameTime)
@@ -44,7 +46,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 start -= (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (start <= 0f)
                 {
-                    spawnItem.enemy.ShotPatterns.Enqueue(ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy));
+                    //spawnItem.enemy.ShotPatterns.Enqueue(ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy));
+                    ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy.Center, shotCount, spawnItem.enemy).CreateShots(spawnItem.enemy);
                     active = true;
                 }
             }
@@ -61,7 +64,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 if (timer <= 0f)
                 {
                     timer = shootSpeed;
-                    spawnItem.enemy.ShotPatterns.Enqueue(ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy));
+                    //spawnItem.enemy.ShotPatterns.Enqueue(ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy));
+                    ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy.Center, shotCount, spawnItem.enemy).CreateShots(spawnItem.enemy);
                 }
             }
         }

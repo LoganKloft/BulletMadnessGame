@@ -8,30 +8,27 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
-using Car_Chase_Bullet_Hell_Game.Model.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.Commands;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 {
     internal class CircleShotPattern : ShotPattern
     {
-        List<Shot> shots = new List<Shot>();
         int _shotCount = 0;
         private float time = 0f;
+        Point point;
+        string asset;
 
-        public CircleShotPattern(int shotCount) : base()
+        public CircleShotPattern(string asset, Point point, int shotCount) : base()
         {
             _shotCount = shotCount;
+            this.asset = asset;
+            this.point = point;
         }
 
-        // potential to be called multiple times if bullet is both offscreen and collides with enemy at the same time
-        // or if bullet collides with enemy and lifetime runs outs, etc - some design improvements to make
-        private void BulletEndEventHandler(object sender)
-        {
-            _shotCount--;
-        }
-
-        public void CreateShots(ContentManager content, string asset, Point point)
+        public override void CreateShots(Entity entity)
         {
             if (_shotCount == 0)
             {
@@ -41,49 +38,37 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             double shotOffset = Math.PI * 2d / _shotCount;
             for (int i = 0; i < _shotCount; i++)
             {
-                StraightShot shot = new StraightShot();
+                Shot shot = new Shot();
+                MovementPattern.MovementPattern movementPattern = new StraightShot(shotOffset * i);
+                shot.MovementPattern = movementPattern;
                 Sprite shotSprite = new Sprite();
-                shotSprite.LoadContent(content, asset);
+                shotSprite.LoadContent(Game1.content, asset);
                 shot.DestinationRectangle = shotSprite.DestinationRectangle;
                 shot.DestinationRectangleChanged += shotSprite.DestinationRectangleChangedHandler;
                 shot.RotationChanged += shotSprite.RotationChangedHandler;
                 shot.OriginChanged += shotSprite.OriginChangedHandler;
+                shot.DestroyEvent += shotSprite.DestroyEventHandler;
                 DrawController.AddSprite(shotSprite);
 
-                shot.Direction = shotOffset * i;
                 shot.DestinationRectangle.X = point.X;
                 shot.DestinationRectangle.Y = point.Y;
                 shot.NotifyOfDestinationRectangleChange();
-                shots.Add(shot);
-                shot.BulletEndEvent += BulletEndEventHandler;
+                shot.DestroyEvent += ShotController.DestroyEventHandler;
+                ShotController.AddShot(shot);
+
+                // create proper command
+                if (entity is Enemy)
+                {
+                    // then shots should collide with player
+                    CollisionBulletCommand command = new CollisionBulletCommand(shot, Player.Instance);
+                    CollisionDetector.AddCommand(command);
+                }
+
+                if (entity is Player)
+                {
+                    // then shots should collide with enemies - player won't use CircleShotPattern (probably)
+                }
             }
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            time += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            foreach (Shot shot in shots)
-            {
-                shot.Move(gameTime);
-            }
-        }
-
-        //public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        //{
-        //    foreach (Shot shot in shots)
-        //    {
-        //        shot.Draw(spriteBatch, gameTime);
-        //    }
-        //}
-
-        public override bool Finished()
-        {
-            if (_shotCount <= 0)
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 }

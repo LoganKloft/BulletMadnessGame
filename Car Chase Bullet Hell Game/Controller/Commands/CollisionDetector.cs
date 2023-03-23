@@ -8,18 +8,26 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
 {
     internal class CollisionDetector
     {
-        private List<Command> _commands = new List<Command>();
+        private static List<Command> _commands = new List<Command>();
 
-        public void AddCommand(Command command)
+        public static void AddCommand(Command command)
         {
             _commands.Add(command);
         }
 
-        public void DetectCollisions()
+        public static void RemoveCommand(Command command)
         {
-            foreach (Command command in _commands)
+            _commands.Remove(command);
+        }
+
+        public static void DetectCollisions()
+        {
+            for (int i = 0; i < _commands.Count; i++)
             {
+                int count = _commands.Count;
+                Command command = _commands[i];
                 command.execute();
+                if (_commands.Count < count) i--;
             }
         }
     }

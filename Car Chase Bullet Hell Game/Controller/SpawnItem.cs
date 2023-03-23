@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
-using Car_Chase_Bullet_Hell_Game.Model.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Microsoft.Xna.Framework;
@@ -27,6 +27,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public Sprite sprite;
         public Enemy enemy;
         public ContentManager content;
+        public bool offscreenOccurence = false;
 
         public SpawnItem(string asset, float start, float duration, ContentManager content)
         {
@@ -74,8 +75,18 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 {
                     if (movementItems.Count > 0)
                     {
+                        if (movementItems[0].duration<0.025 && movementItems[0].movementPattern is not OffScreenMovementPattern)
+                        {
+                            movementItems.RemoveAt(0);
+                        }
+                        if (movementItems[0].movementPattern is OffScreenMovementPattern)
+                        {
+                            this.offscreenOccurence = true;
+                        }
                         movementItems[0].Update(gameTime);
                     }
+
+                    enemy.Update(gameTime);
 
                     for (int i = 0; i < shotItems.Count; i++)
                     {
@@ -87,8 +98,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                             i--;
                         }
                     }
-
-                    enemy.Update(gameTime);
                 }
             }
             else if (start <= 0)
@@ -103,12 +112,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
         public void AddMovementItem(string type, float duration)
         {
-            movementItems.Add(new MovementItem(duration, MovementPattern.Parse(type), this));
+            movementItems.Add(new MovementItem(duration, MovementPattern.MovementPattern.Parse(type), this));
         }
 
-        public void AddShotItem(float start, float duration, float shootSpeed, string type, string asset)
+        public void AddShotItem(float start, float duration, float shootSpeed, string type, string asset,int shotCount)
         {
-            shotItems.Add(new ShotItem(start, duration, shootSpeed, type, asset, this));
+            shotItems.Add(new ShotItem(this, start, duration, shootSpeed, type, asset, shotCount));
         }
     }
 }

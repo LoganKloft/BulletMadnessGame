@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:01.png
 
+#begin 02.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:02.png
+
 #begin Boss.png
 /importer:TextureImporter
 /processor:TextureProcessor
