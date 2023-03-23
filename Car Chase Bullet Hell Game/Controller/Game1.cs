@@ -4,6 +4,7 @@ using System.Reflection;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
 using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.Commands;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -98,7 +99,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
             spawner.Update(gameTime);
             ShotController.Update(gameTime);
-
+            CollisionDetector.DetectCollisions();
             Player.Instance.Update(gameTime);
             _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);
 

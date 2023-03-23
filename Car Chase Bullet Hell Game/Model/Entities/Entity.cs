@@ -58,6 +58,12 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
         public void NotifyOfDestinationRectangleChange()
         {
+            // recalculate hitbox when DestinationRectangle changes - hitbox is centered
+            //Point center = DestinationRectangle.Center;
+            //HitBoxRectangle.X = center.X - (DestinationRectangle.Width / 2);
+            //HitBoxRectangle.Y = center.Y - (DestinationRectangle.Height / 2);
+            HitBoxRectangle = DestinationRectangle;
+
             DestinationRectangleChanged?.Invoke(DestinationRectangle);
         }
 

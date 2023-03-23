@@ -35,8 +35,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 
         public override void Move(GameTime gameTime, Entity entity)
         {
-            entity.Origin = new Vector2(entity.DestinationRectangle.Width / 2, entity.DestinationRectangle.Height / 2);
-            entity.Rotation = (float)_direction;
+            //entity.Origin = new Vector2(entity.DestinationRectangle.Width / 2, entity.DestinationRectangle.Height / 2);
+            //entity.Rotation = (float)_direction;
             entity.DestinationRectangle.X += (int)(_xDirection * _speed);
             entity.DestinationRectangle.Y += (int)(_yDirection * _speed);
             entity.NotifyOfDestinationRectangleChange();

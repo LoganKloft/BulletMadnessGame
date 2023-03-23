@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
 using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.Commands;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
@@ -27,7 +28,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             this.point = point;
         }
 
-        public override void CreateShots()
+        public override void CreateShots(Entity entity)
         {
             if (_shotCount == 0)
             {
@@ -54,6 +55,19 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
                 shot.NotifyOfDestinationRectangleChange();
                 shot.DestroyEvent += ShotController.DestroyEventHandler;
                 ShotController.AddShot(shot);
+
+                // create proper command
+                if (entity is Enemy)
+                {
+                    // then shots should collide with player
+                    CollisionBulletCommand command = new CollisionBulletCommand(shot, Player.Instance);
+                    CollisionDetector.AddCommand(command);
+                }
+
+                if (entity is Player)
+                {
+                    // then shots should collide with enemies - player won't use CircleShotPattern (probably)
+                }
             }
         }
     }

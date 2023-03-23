@@ -47,7 +47,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 if (start <= 0f)
                 {
                     //spawnItem.enemy.ShotPatterns.Enqueue(ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy));
-                    ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy.Center, shotCount, spawnItem.enemy).CreateShots();
+                    ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy.Center, shotCount, spawnItem.enemy).CreateShots(spawnItem.enemy);
                     active = true;
                 }
             }
@@ -65,7 +65,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 {
                     timer = shootSpeed;
                     //spawnItem.enemy.ShotPatterns.Enqueue(ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy));
-                    ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy.Center, shotCount, spawnItem.enemy).CreateShots();
+                    ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy.Center, shotCount, spawnItem.enemy).CreateShots(spawnItem.enemy);
                 }
             }
         }

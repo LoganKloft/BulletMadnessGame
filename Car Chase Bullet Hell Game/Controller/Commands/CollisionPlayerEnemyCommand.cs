@@ -12,7 +12,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
         private Entity enemy;
         private Entity player;
 
-        CollisionPlayerEnemyCommand(Entity x, Entity y)
+        public CollisionPlayerEnemyCommand(Entity x, Entity y)
         {
             if (x is Enemy)
             {
