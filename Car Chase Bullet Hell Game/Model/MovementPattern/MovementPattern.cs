@@ -32,6 +32,10 @@ namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
             {
                 return new CircleMovementPattern(new Point(625, 80), 80);
             }
+            else if (pattern.Contains("OffScreenMovementPattern"))
+            {
+                return new OffScreenMovementPattern();
+            }
 
             return null;
         }

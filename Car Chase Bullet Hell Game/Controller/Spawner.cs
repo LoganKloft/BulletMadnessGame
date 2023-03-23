@@ -78,6 +78,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             {
                 int count = activeSpawnItems.Count;
                 SpawnItem activeItem = activeSpawnItems[i];
+                if(activeItem.duration<0.025)
+                {
+                    activeItem.duration += 2;
+                    activeItem.AddMovementItem("OffScreenMovementPattern", 2);
+                }
                 activeItem.Update(gameTime);
                 if (activeSpawnItems.Count < count)
                 {

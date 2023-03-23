@@ -74,6 +74,10 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 {
                     if (movementItems.Count > 0)
                     {
+                        if (movementItems[0].duration<0.025 && movementItems[0].movementPattern is not OffScreenMovementPattern)
+                        {
+                            movementItems.RemoveAt(0);
+                        }
                         movementItems[0].Update(gameTime);
                     }
 
