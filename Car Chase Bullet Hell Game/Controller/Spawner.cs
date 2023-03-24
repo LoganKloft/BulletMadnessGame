@@ -59,12 +59,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
             si = new SpawnItem("Tank", 15, 15, Content);
             si.AddMovementItem("TriangleMovementPattern", 15);
-            si.AddShotItem(0, 2.5f, 0.5f, "CircleShotPattern", "bullet2", 16);
-            si.AddShotItem(2.5f, 5f, 0.5f, "HalfCircleShotPattern", "bullet1", 8);
-            si.AddShotItem(5, 7.5f, 0.5f, "CircleShotPattern", "bullet2", 16);
-            si.AddShotItem(7.5f, 10f, 0.5f, "HalfCircleShotPattern", "bullet1", 8);
-            si.AddShotItem(10, 12.5f, 0.5f, "CircleShotPattern", "bullet2", 16);
-            si.AddShotItem(12.5f, 15f, 0.5f, "HalfCircleShotPattern", "bullet1", 8);
+            si.AddShotItem(0, 2.5f, 0.9f, "CircleShotPattern", "bullet2", 16);
+            si.AddShotItem(2.5f, 5f, 0.9f, "HalfCircleShotPattern", "bullet1", 8);
+            si.AddShotItem(5, 7.5f, 0.9f, "CircleShotPattern", "bullet2", 16);
+            si.AddShotItem(7.5f, 10f, 0.9f, "HalfCircleShotPattern", "bullet1", 8);
+            si.AddShotItem(10, 12.5f, 0.9f, "CircleShotPattern", "bullet2", 16);
+            si.AddShotItem(12.5f, 15f, 0.9f, "HalfCircleShotPattern", "bullet1", 8);
 
 
             inactiveSpawnItems.Add(si);
