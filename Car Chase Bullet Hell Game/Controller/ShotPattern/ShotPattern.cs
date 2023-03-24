@@ -33,11 +33,15 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             }
             else if (type == "HalfCircleShotPattern")
             {
-
+                HalfCircleShotPattern hcsp = new HalfCircleShotPattern(asset, point, shotCount);
+                hcsp.CreateShots();
+                return hcsp;
             }
             else if (type == "StraightShotPattern")
             {
-
+                StraightShotPattern shp = new StraightShotPattern(asset, point, shotCount);
+                shp.CreateShots();
+                return shp;
             }
 
             return null;

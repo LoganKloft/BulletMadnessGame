@@ -16,14 +16,15 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
         private int shotCount = 0;
         string asset;
         Point point;
-        double dir;
+        //double dir; - Never used and hard to make work with current parser. If needed, we need to update parameters passed into parser.
 
-        public StraightShotPattern(string asset, Point point, double dir, int shotCount) : base()
+        //public StraightShotPattern(string asset, Point point, double dir, int shotCount) : base()
+        public StraightShotPattern(string asset, Point point, int shotCount) : base()
         {
             this.shotCount = shotCount;
             this.asset = asset;
             this.point = point;
-            this.dir = dir;
+            //this.dir = dir;
         }
 
         // potential to be called multiple times if bullet is both offscreen and collides with enemy at the same time
