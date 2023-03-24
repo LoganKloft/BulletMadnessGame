@@ -27,6 +27,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         private Spawner spawner;
         private Sprite _playerSprite;
         private Background _background;
+        private LifeItem _lives;
 
         public static ContentManager content;
 
@@ -57,6 +58,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             Player.Instance.DestinationRectangleChanged += _playerSprite.DestinationRectangleChangedHandler;
             Player.Instance.RotationChanged += _playerSprite.RotationChangedHandler;
             Player.Instance.OriginChanged += _playerSprite.OriginChangedHandler;
+            _lives = new LifeItem(Content, "heart");
 
             spawner = new Spawner(Content);
             spawner.Initialize();

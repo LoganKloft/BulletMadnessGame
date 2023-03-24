@@ -27,6 +27,9 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
         public override event DestroyEventHandler DestroyEvent;
 
+        public delegate void LostLifeEventHandler();
+        public event LostLifeEventHandler LostLife;
+
         Player() : base(.5) { }
         public static Player Instance
         {
@@ -43,7 +46,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             }
         }
 
-        private float Health
+        public float Health
         {
             get { return health; }
             set
@@ -52,6 +55,10 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                 if (health <= 0f)
                 {
                     DestroyEvent?.Invoke(this);
+                }
+                else
+                {
+                    LostLife?.Invoke();
                 }
             }
         }
