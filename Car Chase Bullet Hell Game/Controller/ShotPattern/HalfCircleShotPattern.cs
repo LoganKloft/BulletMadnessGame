@@ -33,7 +33,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
         //    shotCount--;
         //}
 
-        public override void CreateShots()
+        public override void CreateShots(Entity entity)
         {
             if (shotCount == 0)
             {

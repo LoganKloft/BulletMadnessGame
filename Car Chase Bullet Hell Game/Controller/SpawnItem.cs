@@ -86,6 +86,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                         movementItems[0].Update(gameTime);
                     }
 
+                    enemy.Update(gameTime);
+
                     for (int i = 0; i < shotItems.Count; i++)
                     {
                         int count = shotItems.Count;
@@ -96,8 +98,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                             i--;
                         }
                     }
-
-                    enemy.Update(gameTime);
                 }
             }
             else if (start <= 0)

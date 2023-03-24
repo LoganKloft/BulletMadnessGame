@@ -17,13 +17,16 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 {
     internal class Shot : Entity
     {
-        public float Damage;
+        public float Damage = 1f;
         public float LifeTime = 0f;
         public bool hasLifeTime = false;
         private bool _offscreen = false; // prevent multiple offscreen event calls
         private bool _collided = false; // prevent multiple collided event calls
 
         public MovementPattern MovementPattern;
+
+        public Shot() : base() { }
+        public Shot(double percentHitBoxSize) : base(percentHitBoxSize) { }
 
         // the behavior for the movement of the bullet
         public void Update(GameTime gameTime)
@@ -50,9 +53,14 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                 || DestinationRectangle.Bottom < Game1.gd.Viewport.Bounds.Top)
             {
                 //BulletOffscreenEvent?.Invoke(this);
-                DestroyEvent?.Invoke(this);
+                InvokeDestroyEvent();
                 _offscreen = true;
             }
+        }
+
+        public void InvokeDestroyEvent()
+        {
+            DestroyEvent?.Invoke(this);
         }
     }
 }

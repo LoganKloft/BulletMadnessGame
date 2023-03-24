@@ -23,10 +23,11 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         private float leftSideMax = 0.0f + Game1.playerWidth / 2;
         private float topSideMax = 0.0f + Game1.playerHeight / 2;
         private float bottomSideMax = screenSize.Height - Game1.playerHeight / 2;
+        private float health = 3f;
 
         public override event DestroyEventHandler DestroyEvent;
 
-        Player() { }
+        Player() : base(.5) { }
         public static Player Instance
         {
             get
@@ -39,6 +40,33 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                     }
                     return _instance;
                 }
+            }
+        }
+
+        private float Health
+        {
+            get { return health; }
+            set
+            {
+                health -= value;
+                if (health <= 0f)
+                {
+                    DestroyEvent?.Invoke(this);
+                }
+            }
+        }
+
+        public void TakeDamage(Entity entity)
+        {
+            if (entity is Shot)
+            {
+                Shot shot = (Shot)entity;
+                Health = Health - shot.Damage;
+            }
+
+            if (entity is Enemy)
+            {
+                Health = Health - 1;
             }
         }
 

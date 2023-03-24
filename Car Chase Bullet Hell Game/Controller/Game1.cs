@@ -4,6 +4,7 @@ using System.Reflection;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
 using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.Commands;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -75,8 +76,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             Player.Instance.DestinationRectangle.Y = heightSize / 2 - 250 / 2 / 2;
 
             // make the player smaller
-            Player.Instance.DestinationRectangle.Width = Player.Instance.DestinationRectangle.Width / 2;
-            Player.Instance.DestinationRectangle.Height = Player.Instance.DestinationRectangle.Height / 2;
+            Player.Instance.DestinationRectangle.Width = playerWidth / 2;
+            Player.Instance.DestinationRectangle.Height = playerHeight / 2;
             Player.Instance.NotifyOfDestinationRectangleChange();
 
             // add the same image two times for the background
@@ -98,7 +99,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
             spawner.Update(gameTime);
             ShotController.Update(gameTime);
-
+            CollisionDetector.DetectCollisions();
             Player.Instance.Update(gameTime);
             _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);
 
