@@ -32,6 +32,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         private void LostLifeItem()
         {
             DrawController.RemoveLife();
+            Player.Instance.IsInvincible = true;
         }
 
     }

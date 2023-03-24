@@ -24,6 +24,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         private float topSideMax = 0.0f + Game1.playerHeight / 2;
         private float bottomSideMax = screenSize.Height - Game1.playerHeight / 2;
         private float health = 3f;
+        private bool invincibility = false;
 
         public override event DestroyEventHandler DestroyEvent;
 
@@ -63,17 +64,26 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             }
         }
 
+        public bool IsInvincible
+        {
+            get { return invincibility; }
+            set { invincibility = value; }
+        }
+
         public void TakeDamage(Entity entity)
         {
-            if (entity is Shot)
+            if(invincibility==false)
             {
-                Shot shot = (Shot)entity;
-                Health = Health - shot.Damage;
-            }
+                if (entity is Shot)
+                {
+                    Shot shot = (Shot)entity;
+                    Health = Health - shot.Damage;
+                }
 
-            if (entity is Enemy)
-            {
-                Health = Health - 1;
+                if (entity is Enemy)
+                {
+                    Health = Health - 1;
+                }
             }
         }
 

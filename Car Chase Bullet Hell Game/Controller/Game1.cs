@@ -24,6 +24,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public const int playerWidth = 70;
         public const int playerHeight = 125;
 
+        public double invincibilityTime = 2;
+
         private Spawner spawner;
         private Sprite _playerSprite;
         private Background _background;
@@ -104,6 +106,15 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             CollisionDetector.DetectCollisions();
             Player.Instance.Update(gameTime);
             _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);
+            if(Player.Instance.IsInvincible)
+            {
+                invincibilityTime -= gameTime.ElapsedGameTime.TotalSeconds;
+                if(invincibilityTime<=0)
+                {
+                    Player.Instance.IsInvincible = false;
+                    invincibilityTime = 2;
+                }
+            }
 
             base.Update(gameTime);
         }
