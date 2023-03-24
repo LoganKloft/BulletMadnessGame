@@ -18,9 +18,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
     {
         public static Background background;
         public static Sprite playerSprite;
+        public static Sprite gameComplete;
         public static List<Sprite> sprites = new List<Sprite>();
         public static List<Sprite> lives = new List<Sprite>();
         public static float death = 1f;
+        private static bool gameOver = false;
 
         public static void AddSprite(Sprite sprite)
         {
@@ -34,23 +36,30 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            // draw background first so everything else appears on top
-            background.Draw(spriteBatch, gameTime);
-
-            for(int i=0; i<lives.Count; ++i)
+            if(!gameOver)
             {
-                lives[i].Draw(spriteBatch, gameTime);
-            }
-            
+                // draw background first so everything else appears on top
+                background.Draw(spriteBatch, gameTime);
 
-            foreach (Sprite sprite in sprites)
+                for (int i = 0; i < lives.Count; ++i)
+                {
+                    lives[i].Draw(spriteBatch, gameTime);
+                }
+
+
+                foreach (Sprite sprite in sprites)
+                {
+                    sprite.Draw(spriteBatch, gameTime);
+                }
+
+                // draw player last so it appears on top of everything else
+                //Player.Instance.Draw(_spriteBatch, gameTime);
+                playerSprite.Draw(spriteBatch, gameTime);
+            }
+            else
             {
-                sprite.Draw(spriteBatch, gameTime);
+                GameOver(spriteBatch, gameTime);
             }
-
-            // draw player last so it appears on top of everything else
-            //Player.Instance.Draw(_spriteBatch, gameTime);
-            playerSprite.Draw(spriteBatch, gameTime);
         }
 
         public static void Remove(Sprite sprite)
@@ -60,7 +69,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
         public static void RemoveLife()
         {
-            if (lives.Count>0)
+            if (lives.Count>1)
             {
                 lives.RemoveAt(lives.Count - 1);
                 // center main player
@@ -72,7 +81,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             }
             else
             {
-                
+                gameOver = true;
             }
         }
 
@@ -83,6 +92,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 lives[i].DestinationRectangle.X = (int)(1250 /1.25) - 157 / 2 / 2 + i*60;
                 lives[i].DestinationRectangle.Y = 20;
             }
+        }
+
+        public static void GameOver(SpriteBatch spriteBatch, GameTime gameTime)
+        {
+            gameComplete.Draw(spriteBatch, gameTime);
         }
     }
 }
