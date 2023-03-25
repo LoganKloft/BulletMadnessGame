@@ -17,7 +17,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
     internal sealed class Player : Entity
     {
         private static float slow = 250.0f, normal = 500.0f, fast = 750.0f, godMode = 1000.0f;
-        private static Player _instance;
+        private static Player _instance = null;
         private static float speed = normal;
         private static readonly object _lock = new object();
         private static Rectangle screenSize = Game1.gd.Viewport.Bounds;
@@ -40,14 +40,18 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         {
             get
             {
-                lock (_lock)
+                if (_instance == null)
                 {
-                    if (_instance == null)
+                    lock (_lock)
                     {
-                        _instance = new Player();
+                        if (_instance == null)
+                        {
+                            _instance = new Player();
+                        }
+                        return _instance;
                     }
-                    return _instance;
                 }
+                return _instance;
             }
         }
 
