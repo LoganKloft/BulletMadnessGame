@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Car_Chase_Bullet_Hell_Game.Model.Entities;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
     internal class RightMovementPatternFactory : MovementFactory
     {
-        protected override MovementPattern CreateMovementPattern([Optional] Point point, [Optional] int radius)
+        protected override MovementPattern CreateMovementPattern([Optional] Point point, [Optional] int radius, [Optional] Entity entity)
         {
             return new RightMovementPattern();
         }
