@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 
-namespace Car_Chase_Bullet_Hell_Game.Controller
+namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
 {
     internal class SpawnItem
     {
@@ -90,13 +90,13 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 {
                     if (movementItems.Count > 0)
                     {
-                        if (movementItems[0].duration<0.025 && movementItems[0].movementPattern is not OffScreenMovementPattern)
+                        if (movementItems[0].duration < 0.025 && movementItems[0].movementPattern is not OffScreenMovementPattern)
                         {
                             movementItems.RemoveAt(0);
                         }
                         if (movementItems[0].movementPattern is OffScreenMovementPattern)
                         {
-                            this.offscreenOccurence = true;
+                            offscreenOccurence = true;
                         }
                         movementItems[0].Update(gameTime);
                     }

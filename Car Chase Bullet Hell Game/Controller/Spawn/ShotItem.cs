@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 
-namespace Car_Chase_Bullet_Hell_Game.Controller
+namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
 {
     internal class ShotItem
     {
@@ -31,7 +31,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         {
             this.start = start;
             this.duration = duration;
-            this.shootSpeed = this.timer = shootSpeed;
+            this.shootSpeed = timer = shootSpeed;
             //this.type = type;
             //this.asset = asset;
             this.spawnItem = spawnItem;

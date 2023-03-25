@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Car_Chase_Bullet_Hell_Game.Controller.Spawn;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller
 {

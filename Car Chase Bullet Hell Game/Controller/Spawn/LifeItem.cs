@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Car_Chase_Bullet_Hell_Game.Controller
+namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
 {
     internal class LifeItem
     {
@@ -17,12 +17,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
         public LifeItem(ContentManager content, string asset)
         {
-            Player.Instance.LostLife += this.LostLifeItem;
+            Player.Instance.LostLife += LostLifeItem;
             this.content = content;
             this.asset = asset;
             for (int i = 0; i < (int)Player.Instance.Health; ++i)
             {
-                this.sprite = new Sprite();
+                sprite = new Sprite();
                 sprite.LoadContent(content, asset);
                 DrawController.AddLives(sprite);
             }

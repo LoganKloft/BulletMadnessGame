@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 
-namespace Car_Chase_Bullet_Hell_Game.Controller
+namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
 {
     internal class Spawner
     {
@@ -24,7 +24,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         private LeftMovementPatternFactory leftFactory = new LeftMovementPatternFactory();
         private CircleMovementPatternFactory circleFactory = new CircleMovementPatternFactory();
         private TriangleMovementPatternFactory triangleFactory = new TriangleMovementPatternFactory();
-        
+
         private CircleShotPatternFactory circleShotPatternFactory = new CircleShotPatternFactory();
         private HalfCircleShotPatternFactory halfCircleShotPatternFactory = new HalfCircleShotPatternFactory();
         private StraightShotPatternFactory straightShotPatternFactory = new StraightShotPatternFactory();
@@ -115,11 +115,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
             si = new SpawnItem("Tank", 15, 15);
             si.AddMovementItem(triangleFactory.createMovement(), 15);
-            si.AddShotItem(0, 2.5f, 1.5f, circleShotPatternFactory.CreateShots(asset: "bullet2",shotCount: 16));
-            si.AddShotItem(2.5f, 5f, 1.5f, halfCircleShotPatternFactory.CreateShots(asset: "bullet1",shotCount: 8));
+            si.AddShotItem(0, 2.5f, 1.5f, circleShotPatternFactory.CreateShots(asset: "bullet2", shotCount: 16));
+            si.AddShotItem(2.5f, 5f, 1.5f, halfCircleShotPatternFactory.CreateShots(asset: "bullet1", shotCount: 8));
             si.AddShotItem(5, 7.5f, 1.5f, circleShotPatternFactory.CreateShots(asset: "bullet2", shotCount: 16));
             si.AddShotItem(7.5f, 10f, 1.5f, halfCircleShotPatternFactory.CreateShots(asset: "bullet1", shotCount: 8));
-            si.AddShotItem(10, 12.5f, 1.5f, circleShotPatternFactory.CreateShots(asset: "bullet2",shotCount: 16));
+            si.AddShotItem(10, 12.5f, 1.5f, circleShotPatternFactory.CreateShots(asset: "bullet2", shotCount: 16));
             si.AddShotItem(12.5f, 15f, 1.5f, halfCircleShotPatternFactory.CreateShots(asset: "bullet1", shotCount: 8));
             AddInactiveSpawnItem(si);
         }
