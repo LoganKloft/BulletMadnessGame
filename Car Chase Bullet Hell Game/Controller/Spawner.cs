@@ -19,7 +19,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public static List<SpawnItem> inactiveSpawnItems = new List<SpawnItem>();
         public static List<SpawnItem> activeSpawnItems = new List<SpawnItem>();
 
-        private OffScreenMovementPattern offScreen = new OffScreenMovementPattern();
+        private OffScreenMovementFactory offScreenMovementFactory = new OffScreenMovementFactory();
+        private RightMovementPatternFactory rightMovementPatternFactory = new RightMovementPatternFactory();
+        private LeftMovementPatternFactory leftFactory = new LeftMovementPatternFactory();
+        private CircleMovementPatternFactory circleFactory = new CircleMovementPatternFactory();
+        private TriangleMovementPatternFactory triangleFactory = new TriangleMovementPatternFactory();
 
         public const int widthSize = 1250, heightSize = 800;
 
@@ -78,32 +82,32 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
             si = new SpawnItem("Motorcycle", 0, 15);
             si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
-            si.AddMovementItem("RightMovementPattern", 15);
+            si.AddMovementItem(rightMovementPatternFactory.createMovement(), 15);
             si.AddShotItem(0f, 15f, 5f, "CircleShotPattern", "01", 16);
             AddInactiveSpawnItem(si);
 
             si = new SpawnItem("Motorcycle", 0, 15);
             si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
-            si.AddMovementItem("LeftMovementPattern", 15);
+            si.AddMovementItem(leftFactory.createMovement(), 15);
             si.AddShotItem(0f, 15f, 5f, "CircleShotPattern", "02", 16);
             AddInactiveSpawnItem(si);
 
             si = new SpawnItem("Police", 30, 15);
             si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
-            si.AddMovementItem("RightMovementPattern", 15);
+            si.AddMovementItem(rightMovementPatternFactory.createMovement(), 15);
             AddInactiveSpawnItem(si);
 
             si = new SpawnItem("Police", 30, 15);
             si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
-            si.AddMovementItem("LeftMovementPattern", 15);
+            si.AddMovementItem(leftFactory.createMovement(), 15);
             AddInactiveSpawnItem(si);
 
             si = new SpawnItem("Boss", 45, 15);
-            si.AddMovementItem("CircleMovementPattern", 15);
+            si.AddMovementItem(circleFactory.createMovement(point: new Point(625, 80), radius: 80), 15);
             AddInactiveSpawnItem(si);
 
             si = new SpawnItem("Tank", 15, 15);
-            si.AddMovementItem("TriangleMovementPattern", 15);
+            si.AddMovementItem(triangleFactory.createMovement(), 15);
             si.AddShotItem(0, 2.5f, 1.5f, "CircleShotPattern", "bullet2", 16);
             si.AddShotItem(2.5f, 5f, 1.5f, "HalfCircleShotPattern", "bullet1", 8);
             si.AddShotItem(5, 7.5f, 1.5f, "CircleShotPattern", "bullet2", 16);
@@ -123,7 +127,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 if (activeItem.duration < 0.025 && activeSpawnItems[i].offscreenOccurence is false)
                 {
                     activeItem.duration += 2;
-                    activeItem.AddMovementItem("OffScreenMovementPattern", 2);
+                    activeItem.AddMovementItem(offScreenMovementFactory.createMovement(), 2);
                 }
                 activeItem.Update(gameTime);
                 if (activeSpawnItems.Count < count)

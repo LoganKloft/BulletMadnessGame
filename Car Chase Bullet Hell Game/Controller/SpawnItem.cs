@@ -125,9 +125,9 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             }
         }
 
-        public void AddMovementItem(string type, float duration)
+        public void AddMovementItem(MovementPattern.MovementPattern movement, float duration)
         {
-            movementItems.Add(new MovementItem(duration, MovementPattern.MovementPattern.Parse(type), this));
+            movementItems.Add(new MovementItem(duration, movement, this));
         }
 
         public void AddShotItem(float start, float duration, float shootSpeed, string type, string asset,int shotCount)
