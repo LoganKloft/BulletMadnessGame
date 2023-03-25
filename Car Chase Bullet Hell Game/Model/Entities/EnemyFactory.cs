@@ -26,6 +26,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             enemy.DestinationRectangleChanged += sprite.DestinationRectangleChangedHandler;
             enemy.RotationChanged += sprite.RotationChangedHandler;
             enemy.OriginChanged += sprite.OriginChangedHandler;
+            enemy.DestroyEvent += sprite.DestroyEventHandler;
 
             return (enemy, sprite);
         }

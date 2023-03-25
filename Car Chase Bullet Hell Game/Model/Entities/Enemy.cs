@@ -22,7 +22,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         //public Queue<ShotPattern> ShotPatterns = new Queue<ShotPattern>();
         float health;
 
-        public Enemy(float health = 1f)
+        public Enemy(float health = 5f)
         {
             this.health = health;
         }
@@ -32,7 +32,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             get { return health; }
             set
             {
-                health -= value;
+                health = value;
                 if (health <= 0f)
                 {
                     InvokeDestroyEvent();

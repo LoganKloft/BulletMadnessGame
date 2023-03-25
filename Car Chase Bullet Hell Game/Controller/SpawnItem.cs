@@ -28,6 +28,9 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public Enemy enemy;
         public bool offscreenOccurence = false;
 
+        public delegate void DestroySpawnItemEventHandler(SpawnItem spawnItem);
+        public event DestroySpawnItemEventHandler DestroySpawnItemEvent;
+
         public SpawnItem(string asset, float start, float duration)
         {
             this.asset = asset;
@@ -51,11 +54,23 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 sprite.DestinationRectangle = DestinationRectangle;
             }
 
+            this.enemy.DestroyEvent += DestroyEnemyEventHandler;
+
             DrawController.AddSprite(sprite);
-            Spawner.inactiveSpawnItems.Remove(this);
-            Spawner.activeSpawnItems.Add(this);
+            Spawner.RemoveInactiveSpawnItem(this);
+            Spawner.AddActiveSpawnItem(this);
 
             spawned = true;
+        }
+
+        public void DestroyEnemyEventHandler(Entity entity)
+        {
+            InvokeDestroySpawnItemEvent();
+        }
+
+        public void InvokeDestroySpawnItemEvent()
+        {
+            DestroySpawnItemEvent?.Invoke(this);
         }
 
         public void Update(GameTime gameTime)
@@ -67,7 +82,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 if (duration <= 0f)
                 {
                     enemy.InvokeDestroyEvent();
-                    Spawner.activeSpawnItems.Remove(this);
                 }
                 else
                 {

@@ -35,14 +35,31 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             return enemies;
         }
 
-        public void AddInactiveSpawnItem()
+        public static void AddInactiveSpawnItem(SpawnItem spawnItem)
         {
-
+            inactiveSpawnItems.Add(spawnItem);
         }
 
-        public void AddActiveSpawnItems()
+        public static void RemoveInactiveSpawnItem(SpawnItem spawnItem)
         {
+            inactiveSpawnItems.Remove(spawnItem);
+        }
 
+        public static void AddActiveSpawnItem(SpawnItem spawnItem)
+        {
+            activeSpawnItems.Add(spawnItem);
+            spawnItem.DestroySpawnItemEvent += DestroySpawnItemEventHandler;
+        }
+
+        public static void RemoveActiveSpawnItem(SpawnItem spawnitem)
+        {
+            spawnitem.DestroySpawnItemEvent -= DestroySpawnItemEventHandler;
+            activeSpawnItems.Remove(spawnitem);
+        }
+
+        public static void DestroySpawnItemEventHandler(SpawnItem spawnItem)
+        {
+            RemoveActiveSpawnItem(spawnItem);
         }
 
         public void Initialize()
@@ -53,27 +70,27 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
             si.AddMovementItem("RightMovementPattern", 15);
             si.AddShotItem(0f, 15f, 5f, "CircleShotPattern", "01", 16);
-            inactiveSpawnItems.Add(si);
+            AddInactiveSpawnItem(si);
 
             si = new SpawnItem("Motorcycle", 0, 15);
             si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
             si.AddMovementItem("LeftMovementPattern", 15);
             si.AddShotItem(0f, 15f, 5f, "CircleShotPattern", "02", 16);
-            inactiveSpawnItems.Add(si);
+            AddInactiveSpawnItem(si);
 
             si = new SpawnItem("Police", 30, 15);
             si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
             si.AddMovementItem("RightMovementPattern", 15);
-            inactiveSpawnItems.Add(si);
+            AddInactiveSpawnItem(si);
 
             si = new SpawnItem("Police", 30, 15);
             si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
             si.AddMovementItem("LeftMovementPattern", 15);
-            inactiveSpawnItems.Add(si);
+            AddInactiveSpawnItem(si);
 
             si = new SpawnItem("Boss", 45, 15);
             si.AddMovementItem("CircleMovementPattern", 15);
-            inactiveSpawnItems.Add(si);
+            AddInactiveSpawnItem(si);
 
             si = new SpawnItem("Tank", 15, 15);
             si.AddMovementItem("TriangleMovementPattern", 15);
@@ -83,9 +100,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             si.AddShotItem(7.5f, 10f, 1.5f, "HalfCircleShotPattern", "bullet1", 8);
             si.AddShotItem(10, 12.5f, 1.5f, "CircleShotPattern", "bullet2", 16);
             si.AddShotItem(12.5f, 15f, 1.5f, "HalfCircleShotPattern", "bullet1", 8);
-
-
-            inactiveSpawnItems.Add(si);
+            AddInactiveSpawnItem(si);
         }
 
         public void Update(GameTime gameTime)
