@@ -11,7 +11,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
     internal class TriangleMovementPatternFactory : MovementFactory
     {
-        protected override MovementPattern CreateMovementPattern([Optional] Point point, [Optional] int radius, [Optional] Entity entity)
+        protected override MovementPattern CreateMovementPattern([Optional] Point point, [Optional] int radius, [Optional] Entity entity, [Optional] double direction, [Optional] double speed)
         {
             return new TriangleMovementPattern();
         }
