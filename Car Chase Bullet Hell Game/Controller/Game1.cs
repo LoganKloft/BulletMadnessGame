@@ -123,6 +123,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 }
             }
 
+            if (spawner.CheckGameOver() == true)
+            {
+                return;
+            }
+
             base.Update(gameTime);
         }
 
@@ -132,7 +137,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
             _spriteBatch.Begin();
 
-            DrawController.Draw(_spriteBatch, gameTime);
+            DrawController.Draw(_spriteBatch, gameTime, spawner);
             
             _spriteBatch.End();
 
