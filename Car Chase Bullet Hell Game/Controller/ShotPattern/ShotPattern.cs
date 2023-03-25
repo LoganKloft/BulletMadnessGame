@@ -21,26 +21,26 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 
         //public abstract bool Finished();
 
-        public abstract void CreateShots(Entity entity);
+        public abstract void CreateShots(Entity entity, GameTime gameTime = null);
 
         public static ShotPattern Parse(string type, string asset, Point point, int shotCount, Entity entity)
         {
             if (type == "CircleShotPattern")
             {
                 CircleShotPattern csp = new CircleShotPattern(asset, point, shotCount);
-                csp.CreateShots(entity);
+                csp.CreateShots(entity, null);
                 return csp;
             }
             else if (type == "HalfCircleShotPattern")
             {
                 HalfCircleShotPattern hcsp = new HalfCircleShotPattern(asset, point, shotCount);
-                hcsp.CreateShots(entity);
+                hcsp.CreateShots(entity, null);
                 return hcsp;
             }
             else if (type == "StraightShotPattern")
             {
                 StraightShotPattern shp = new StraightShotPattern(asset, point, shotCount);
-                shp.CreateShots(entity);
+                shp.CreateShots(entity, null);
                 return shp;
             }
 

@@ -28,7 +28,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             this.point = point;
         }
 
-        public override void CreateShots(Entity entity)
+        public override void CreateShots(Entity entity, GameTime gameTime)
         {
             if (_shotCount == 0)
             {
