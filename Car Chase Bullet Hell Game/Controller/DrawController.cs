@@ -22,6 +22,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public static void AddSprite(Sprite sprite)
         {
             sprites.Add(sprite);
+            sprite.DestroyEvent += DestroyEventHandler;
         }
 
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -39,8 +40,14 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             playerSprite.Draw(spriteBatch, gameTime);
         }
 
+        public static void DestroyEventHandler(Sprite sprite)
+        {
+            Remove(sprite);
+        }
+
         public static void Remove(Sprite sprite)
         {
+            sprite.DestroyEvent -= DestroyEventHandler;
             sprites.Remove(sprite);
         }
     }

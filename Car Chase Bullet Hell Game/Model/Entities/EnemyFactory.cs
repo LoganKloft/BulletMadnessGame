@@ -15,10 +15,10 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 {
     internal class EnemyFactory
     {
-        public static (Enemy, Sprite) CreateEnemy(ContentManager content, string asset)
+        public static (Enemy, Sprite) CreateEnemy(string asset)
         {
             Sprite sprite = new Sprite();
-            sprite.LoadContent(content, asset);
+            sprite.LoadContent(Game1.content, asset);
 
             Enemy enemy = new Enemy();
             enemy.DestinationRectangle = sprite.DestinationRectangle;

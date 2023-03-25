@@ -50,10 +50,9 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
                 shot.DestroyEvent += shotSprite.DestroyEventHandler;
                 DrawController.AddSprite(shotSprite);
 
-                shot.DestinationRectangle.X = point.X;
-                shot.DestinationRectangle.Y = point.Y;
+                shot.DestinationRectangle.X = point.X - (shot.DestinationRectangle.Width / 2);
+                shot.DestinationRectangle.Y = point.Y - (shot.DestinationRectangle.Height / 2);
                 shot.NotifyOfDestinationRectangleChange();
-                shot.DestroyEvent += ShotController.DestroyEventHandler;
                 ShotController.AddShot(shot);
 
                 // create proper command

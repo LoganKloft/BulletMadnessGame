@@ -30,6 +30,9 @@ namespace Car_Chase_Bullet_Hell_Game.View.Sprite
 
         private Texture2D _texture;
 
+        public delegate void SpriteDestroyEventHandler(Sprite sprite);
+        public event SpriteDestroyEventHandler DestroyEvent;
+
         // call this function to load an asset image for the sprite
         public void LoadContent(ContentManager content, string asset)
         {
@@ -88,12 +91,7 @@ namespace Car_Chase_Bullet_Hell_Game.View.Sprite
 
         public void DestroyEventHandler(Entity entity)
         {
-            Destroy();
-        }
-
-        public void Destroy()
-        {
-            DrawController.Remove(this);
+            DestroyEvent?.Invoke(this);
         }
     }
 }

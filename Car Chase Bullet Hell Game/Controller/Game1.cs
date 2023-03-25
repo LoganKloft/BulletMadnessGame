@@ -58,7 +58,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             Player.Instance.RotationChanged += _playerSprite.RotationChangedHandler;
             Player.Instance.OriginChanged += _playerSprite.OriginChangedHandler;
 
-            spawner = new Spawner(Content);
+            spawner = new Spawner();
             spawner.Initialize();
 
             base.Initialize();
@@ -98,9 +98,9 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 Exit();
 
             spawner.Update(gameTime);
+            Player.Instance.Update(gameTime);
             ShotController.Update(gameTime);
             CollisionDetector.DetectCollisions();
-            Player.Instance.Update(gameTime);
             _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             base.Update(gameTime);

@@ -26,15 +26,13 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public List<ShotItem> shotItems = new List<ShotItem>();
         public Sprite sprite;
         public Enemy enemy;
-        public ContentManager content;
         public bool offscreenOccurence = false;
 
-        public SpawnItem(string asset, float start, float duration, ContentManager content)
+        public SpawnItem(string asset, float start, float duration)
         {
             this.asset = asset;
             this.start = start;
             this.duration = duration;
-            this.content = content;
         }
 
         // instantiate all objects for the enemy
@@ -42,7 +40,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         // add sprite to DrawController to be drawn
         public void Spawn()
         {
-            (Enemy enemy, Sprite sprite) = EnemyFactory.CreateEnemy(content, asset);
+            (Enemy enemy, Sprite sprite) = EnemyFactory.CreateEnemy(asset);
 
             this.enemy = enemy;
             this.sprite = sprite;
@@ -68,7 +66,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
                 if (duration <= 0f)
                 {
-                    DrawController.Remove(sprite);
+                    enemy.InvokeDestroyEvent();
                     Spawner.activeSpawnItems.Remove(this);
                 }
                 else

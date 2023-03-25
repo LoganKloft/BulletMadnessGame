@@ -17,6 +17,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public static void AddShot(Shot shot)
         {
             shots.Add(shot);
+            shot.DestroyEvent += DestroyEventHandler;
         }
 
         public static void Update(GameTime gameTime)
@@ -35,8 +36,14 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             if (entity is Shot)
             {
                 Shot shot = (Shot)entity;
-                shots.Remove(shot);
+                Remove(shot);
             }
+        }
+
+        public static void Remove(Shot shot)
+        {
+            shot.DestroyEvent -= DestroyEventHandler;
+            shots.Remove(shot);
         }
     }
 }

@@ -20,6 +20,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
             _commands.Remove(command);
         }
 
+        public static void DestroyCommandEventHandler(Command command)
+        {
+
+        }
+
         public static void DetectCollisions()
         {
             for (int i = 0; i < _commands.Count; i++)

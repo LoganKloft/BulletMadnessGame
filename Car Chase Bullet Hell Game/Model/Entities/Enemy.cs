@@ -35,7 +35,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                 health -= value;
                 if (health <= 0f)
                 {
-                    DestroyEvent?.Invoke(this);
+                    InvokeDestroyEvent();
                 }
             }
         }
@@ -47,6 +47,11 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                 Shot shot = (Shot)entity;
                 Health = Health - shot.Damage;
             }
+        }
+
+        public void InvokeDestroyEvent()
+        {
+            DestroyEvent?.Invoke(this);
         }
 
         public void Update(GameTime gameTime)

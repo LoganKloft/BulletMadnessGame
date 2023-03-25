@@ -18,9 +18,10 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
         private double _yDirection = 0d;
         private double _speed = 5f;
 
-        public StraightShot(double direction)
+        public StraightShot(double direction, double speed = 5f)
         {
             Direction = direction;
+            _speed = speed;
         }
 
         public double Direction
