@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Car_Chase_Bullet_Hell_Game.Controller;
+using Car_Chase_Bullet_Hell_Game.Model.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
@@ -28,6 +29,9 @@ namespace Car_Chase_Bullet_Hell_Game.View.Sprite
         private int animationIndex = 0;
 
         private Texture2D _texture;
+
+        public delegate void SpriteDestroyEventHandler(Sprite sprite);
+        public event SpriteDestroyEventHandler DestroyEvent;
 
         // call this function to load an asset image for the sprite
         public void LoadContent(ContentManager content, string asset)
@@ -68,6 +72,26 @@ namespace Car_Chase_Bullet_Hell_Game.View.Sprite
             {
                 return new Point(DestinationRectangle.X + DestinationRectangle.Width / 2, DestinationRectangle.Y + DestinationRectangle.Height / 2);
             }
+        }
+
+        public void DestinationRectangleChangedHandler(Rectangle destinationRectangle)
+        {
+            DestinationRectangle = destinationRectangle;
+        }
+
+        public void RotationChangedHandler(float rotation)
+        {
+            Rotation = rotation;
+        }
+
+        public void OriginChangedHandler(Vector2 origin)
+        {
+            Origin = origin;
+        }
+
+        public void DestroyEventHandler(Entity entity)
+        {
+            DestroyEvent?.Invoke(this);
         }
     }
 }

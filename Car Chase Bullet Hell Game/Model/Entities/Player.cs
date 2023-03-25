@@ -8,11 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.Commands;
 
 namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 {
     // singleton pattern
-    internal sealed class Player : Sprite
+    internal sealed class Player : Entity
     {
         private static float slow = 250.0f, normal = 500.0f, fast = 750.0f, godMode = 1000.0f;
         private static Player _instance = null;
@@ -23,9 +25,17 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         private float leftSideMax = 0.0f + Game1.playerWidth / 2;
         private float topSideMax = 0.0f + Game1.playerHeight / 2;
         private float bottomSideMax = screenSize.Height - Game1.playerHeight / 2;
+        private float health = 3f;
+        private float shotSpeed = .25f;
+        private float shotTimer = 0f;
+        private bool invincibility = false;
 
-        Player() { }
+        public override event DestroyEventHandler DestroyEvent;
 
+        public delegate void LostLifeEventHandler();
+        public event LostLifeEventHandler LostLife;
+
+        Player() : base(.5) { }
         public static Player Instance
         {
             get
@@ -45,9 +55,95 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             }
         }
 
+        public float Health
+        {
+            get { return health; }
+            set
+            {
+                health = value;
+                LostLife?.Invoke();
+                if (health <= 0f)
+                {
+                    InvokeDestroyEvent();
+                }
+            }
+        }
+
+        public bool IsInvincible
+        {
+            get { return invincibility; }
+            set { invincibility = value; }
+        }
+
+        public void TakeDamage(Entity entity)
+        {
+            if(invincibility==false)
+            {
+                if (entity is Shot)
+                {
+                    Shot shot = (Shot)entity;
+                    Health = Health - shot.Damage;
+                }
+
+                if (entity is Enemy)
+                {
+                    Health = Health - 1;
+                }
+            }
+        }
+
+        public void TakeDamage(float damage)
+        {
+            if (invincibility == false)
+            {
+                Health = Health - damage;
+            }
+        }
+
+        public void InvokeDestroyEvent()
+        {
+            DestroyEvent?.Invoke(this);
+        }
+
         public void Update(GameTime gameTime)
         {
             Point current = _instance.Center;
+            shotTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (shotTimer > shotSpeed)
+            {
+                shotTimer = shotSpeed;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                if (shotTimer >= shotSpeed)
+                {
+                    Shot shot = new Shot(.5);
+                    MovementPattern movementPattern = new StraightShot(-Math.PI / 2, 10);
+                    shot.MovementPattern = movementPattern;
+                    Sprite shotSprite = new Sprite();
+                    shotSprite.LoadContent(Game1.content, "01");
+                    shot.DestinationRectangle = shotSprite.DestinationRectangle;
+                    shot.DestinationRectangleChanged += shotSprite.DestinationRectangleChangedHandler;
+                    shot.RotationChanged += shotSprite.RotationChangedHandler;
+                    shot.OriginChanged += shotSprite.OriginChangedHandler;
+                    shot.DestroyEvent += shotSprite.DestroyEventHandler;
+                    DrawController.AddSprite(shotSprite);
+
+                    shot.DestinationRectangle.X = Center.X - shot.DestinationRectangle.Width / 2;
+                    shot.DestinationRectangle.Y = Center.Y - shot.DestinationRectangle.Height / 2;
+                    shot.NotifyOfDestinationRectangleChange();
+                    shot.DestroyEvent += ShotController.DestroyEventHandler;
+                    ShotController.AddShot(shot);
+                    Command command = new CollisionBulletEnemyCommand(shot);
+                    CollisionDetector.AddCommand(command);
+
+
+                    shotTimer = 0f;
+                }
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.Right) || Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) || Keyboard.GetState().IsKeyDown(Keys.RightShift))
@@ -62,6 +158,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                         v.X = rightSideMax - current.X;
 
                     _instance.DestinationRectangle.Offset(v);
+                    _instance.NotifyOfDestinationRectangleChange();
 
                     speed = normal;
                 }
@@ -75,6 +172,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                         v.X = rightSideMax - current.X;
 
                     _instance.DestinationRectangle.Offset(v);
+                    _instance.NotifyOfDestinationRectangleChange();
                 }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Left) || Keyboard.GetState().IsKeyDown(Keys.A))
@@ -91,6 +189,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                         v.X = leftSideMax - current.X;
 
                     _instance.DestinationRectangle.Offset(v);
+                    _instance.NotifyOfDestinationRectangleChange();
 
                     speed = normal;
                 }
@@ -106,6 +205,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                     }
 
                     _instance.DestinationRectangle.Offset(v);
+                    _instance.NotifyOfDestinationRectangleChange();
                 }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Up) || Keyboard.GetState().IsKeyDown(Keys.W))
@@ -122,6 +222,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                         v.Y = topSideMax - current.Y;
 
                     _instance.DestinationRectangle.Offset(v);
+                    _instance.NotifyOfDestinationRectangleChange();
 
                     speed = normal;
                 }
@@ -134,6 +235,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                     if (current.Y + temp * speed <= topSideMax)
                         v.Y = topSideMax - current.Y;
                     _instance.DestinationRectangle.Offset(v);
+                    _instance.NotifyOfDestinationRectangleChange();
                 }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Down) || Keyboard.GetState().IsKeyDown(Keys.S))
@@ -150,6 +252,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                         v.Y = bottomSideMax - current.Y;
 
                     _instance.DestinationRectangle.Offset(v);
+                    _instance.NotifyOfDestinationRectangleChange();
 
                     speed = normal;
                 }
@@ -165,6 +268,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                         v.Y = bottomSideMax - current.Y;
 
                     _instance.DestinationRectangle.Offset(v);
+                    _instance.NotifyOfDestinationRectangleChange();
                 }
             }
 
@@ -186,6 +290,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                             v.X = rightSideMax - current.X;
 
                         _instance.DestinationRectangle.Offset(v);
+                        _instance.NotifyOfDestinationRectangleChange();
                     }
                     if (state.ThumbSticks.Left.X < 0)
                     {
@@ -197,6 +302,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                             v.X = leftSideMax - current.X;
 
                         _instance.DestinationRectangle.Offset(v);
+                        _instance.NotifyOfDestinationRectangleChange();
                     }
                 }
                 if (capabilities.HasLeftYThumbStick)
@@ -211,6 +317,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                             v.Y = topSideMax - current.Y;
 
                         _instance.DestinationRectangle.Offset(v);
+                        _instance.NotifyOfDestinationRectangleChange();
                     }
                     if (state.ThumbSticks.Left.Y < 0)
                     {
@@ -222,14 +329,15 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                             v.Y = bottomSideMax - current.Y;
 
                         _instance.DestinationRectangle.Offset(v);
+                        _instance.NotifyOfDestinationRectangleChange();
                     }
                 }
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {
-            base.Draw(spriteBatch, gameTime);
-        }
+        //public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        //{
+        //    base.Draw(spriteBatch, gameTime);
+        //}
     }
 }

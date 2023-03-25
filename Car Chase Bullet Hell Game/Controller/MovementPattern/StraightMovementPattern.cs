@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
+namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
     internal class StraightMovementPattern : MovementPattern
     {
@@ -20,12 +20,12 @@ namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
             waypoints.Enqueue(p);
         }
 
-        public override void Move(GameTime gameTime, Enemy enemy)
+        public override void Move(GameTime gameTime, Entity entity)
         {
             if (waypoints.Count > 0)
             {
                 Point target = waypoints.Peek();
-                Point current = enemy.Center;
+                Point current = entity.Center;
 
                 // move the enemy closer to the target
                 // 1 - create unit vector
@@ -43,10 +43,11 @@ namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
                 yDistance = v.Y < 0 ? -yDistance : yDistance;
 
                 Point offset = new Point(xDistance, yDistance);
-                enemy.DestinationRectangle.Offset(offset);
+                entity.DestinationRectangle.Offset(offset);
+                entity.NotifyOfDestinationRectangleChange();
 
                 // check if we've reached the target
-                if (enemy.Center == target)
+                if (entity.Center == target)
                 {
                     // we've reached the taget, time to move towards the next waypoint
                     discarded.Enqueue(waypoints.Dequeue());

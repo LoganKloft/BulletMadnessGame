@@ -6,20 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
+namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
-    internal class TargetingShot : Shot
+    internal class TargetingShot : MovementPattern
     {
-        public float LifeTime = 10f; // lifetime in seconds
         public double _direction = 0d;
         private double _xDirection = 1d;
         private double _yDirection = 0d;
         private double _speed = 10f;
         private double _rotationSpeed = .05f;
 
-        public TargetingShot()
+        public TargetingShot(Entity entity)
         {
-            Origin = new Vector2(DestinationRectangle.Width / 2, DestinationRectangle.Height / 2);
+            entity.Origin = new Vector2(entity.DestinationRectangle.Width / 2, entity.DestinationRectangle.Height / 2);
         }
 
         public delegate void BulletLifetimeExpiredEventHandler(object sender);
@@ -39,10 +38,10 @@ namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
             }
         }
 
-        public override void Move(GameTime gameTime)
+        public override void Move(GameTime gameTime, Entity entity)
         {
             Point target = Player.Instance.Center;
-            Point current = Center;
+            Point current = entity.Center;
 
             // v = unit vector from current to target
             Vector2 v = new Vector2(target.X - current.X, target.Y - current.Y);
@@ -90,17 +89,10 @@ namespace Car_Chase_Bullet_Hell_Game.Model.MovementPattern
             offset *= _rotationSpeed;
             Direction += offset;
 
-            Rotation = (float)Direction;
-            DestinationRectangle.X += (int)(_xDirection * _speed);
-            DestinationRectangle.Y += (int)(_yDirection * _speed);
-
-            LifeTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (LifeTime < 0)
-            {
-                BulletLifetimeExpiredEvent?.Invoke(this);
-                InvokeBulletEnd();
-            }
+            entity.Rotation = (float)Direction;
+            entity.DestinationRectangle.X += (int)(_xDirection * _speed);
+            entity.DestinationRectangle.Y += (int)(_yDirection * _speed);
+            entity.NotifyOfDestinationRectangleChange();
         }
     }
 }
