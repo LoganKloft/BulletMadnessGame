@@ -62,6 +62,16 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             RemoveActiveSpawnItem(spawnItem);
         }
 
+        public bool CheckGameOver()
+        {
+            if (inactiveSpawnItems.Count == 0 & activeSpawnItems.Count == 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public void Initialize()
         {
             SpawnItem si;

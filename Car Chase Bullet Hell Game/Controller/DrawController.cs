@@ -37,7 +37,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             lives.Add(sprite);
         }
 
-        public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        public static void Draw(SpriteBatch spriteBatch, GameTime gameTime, Spawner spawn)
         {
             if(!gameOverLost && !gameOverWin)
             {
@@ -55,7 +55,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                     sprite.Draw(spriteBatch, gameTime);
                 }
 
-                if(sprites.Count==0)
+                if(spawn.CheckGameOver() == true)
                 {
                     gameOverWin = true;
                 }
