@@ -28,8 +28,12 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         private float health = 3f;
         private float shotSpeed = .25f;
         private float shotTimer = 0f;
+        private bool invincibility = false;
 
         public override event DestroyEventHandler DestroyEvent;
+
+        public delegate void LostLifeEventHandler();
+        public event LostLifeEventHandler LostLife;
 
         Player() : base(.5) { }
         public static Player Instance
@@ -47,7 +51,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             }
         }
 
-        private float Health
+        public float Health
         {
             get { return health; }
             set
@@ -57,20 +61,33 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                 {
                     InvokeDestroyEvent();
                 }
+                else
+                {
+                    LostLife?.Invoke();
+                }
             }
+        }
+
+        public bool IsInvincible
+        {
+            get { return invincibility; }
+            set { invincibility = value; }
         }
 
         public void TakeDamage(Entity entity)
         {
-            if (entity is Shot)
+            if(invincibility==false)
             {
-                Shot shot = (Shot)entity;
-                Health = Health - shot.Damage;
-            }
+                if (entity is Shot)
+                {
+                    Shot shot = (Shot)entity;
+                    Health = Health - shot.Damage;
+                }
 
-            if (entity is Enemy)
-            {
-                Health = Health - 1;
+                if (entity is Enemy)
+                {
+                    Health = Health - 1;
+                }
             }
         }
 

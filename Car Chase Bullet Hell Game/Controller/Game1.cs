@@ -24,9 +24,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public const int playerWidth = 70;
         public const int playerHeight = 125;
 
+        public double invincibilityTime = 2;
+
         private Spawner spawner;
         private Sprite _playerSprite;
         private Background _background;
+        private LifeItem _lives;
 
         public static ContentManager content;
 
@@ -57,6 +60,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             Player.Instance.DestinationRectangleChanged += _playerSprite.DestinationRectangleChangedHandler;
             Player.Instance.RotationChanged += _playerSprite.RotationChangedHandler;
             Player.Instance.OriginChanged += _playerSprite.OriginChangedHandler;
+            _lives = new LifeItem(Content, "heart");
 
             spawner = new Spawner();
             spawner.Initialize();
@@ -87,7 +91,14 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 sprite.LoadContent(Content, "Road");
                 _background.AddBackground(sprite);
             }
+            Sprite gameLost = new Sprite();
+            gameLost.LoadContent(Content, "GameOver");
 
+            Sprite gameWon = new Sprite();
+            gameWon.LoadContent(Content, "win");
+
+            DrawController.gameLost = gameLost;
+            DrawController.gameWon = gameWon;
             DrawController.background = _background;
             DrawController.playerSprite = _playerSprite;
         }
@@ -102,6 +113,15 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             ShotController.Update(gameTime);
             CollisionDetector.DetectCollisions();
             _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);
+            if(Player.Instance.IsInvincible)
+            {
+                invincibilityTime -= gameTime.ElapsedGameTime.TotalSeconds;
+                if(invincibilityTime<=0)
+                {
+                    Player.Instance.IsInvincible = false;
+                    invincibilityTime = 2;
+                }
+            }
 
             base.Update(gameTime);
         }

@@ -26,7 +26,10 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         public MovementPattern MovementPattern;
 
         public Shot() : base() { }
-        public Shot(double percentHitBoxSize) : base(percentHitBoxSize) { }
+        public Shot(double percentHitBoxSize) : base(percentHitBoxSize)
+        {
+            Player.Instance.LostLife += this.PlayerLostLife;
+        }
 
         // the behavior for the movement of the bullet
         public void Update(GameTime gameTime)
@@ -61,6 +64,11 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         public void InvokeDestroyEvent()
         {
             DestroyEvent?.Invoke(this);
+        }
+
+        public void PlayerLostLife()
+        {
+            InvokeDestroyEvent();
         }
     }
 }
