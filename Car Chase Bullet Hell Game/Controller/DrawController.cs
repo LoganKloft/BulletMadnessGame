@@ -62,7 +62,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
                 // draw player last so it appears on top of everything else
                 //Player.Instance.Draw(_spriteBatch, gameTime);
-                playerSprite.Draw(spriteBatch, gameTime);
+                playerSprite?.Draw(spriteBatch, gameTime);
             }
             else if(gameOverLost)
             {
@@ -119,6 +119,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public static void GameOverWon(SpriteBatch spriteBatch, GameTime gameTime)
         {
             gameWon.Draw(spriteBatch, gameTime);
+        }
+
+        public static void DestroyPlayerEventHandler(Entity entity)
+        {
+            playerSprite = null;
         }
     }
 }

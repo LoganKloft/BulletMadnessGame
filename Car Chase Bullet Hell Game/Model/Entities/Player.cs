@@ -56,14 +56,11 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             get { return health; }
             set
             {
-                health -= value;
+                health = value;
+                LostLife?.Invoke();
                 if (health <= 0f)
                 {
                     InvokeDestroyEvent();
-                }
-                else
-                {
-                    LostLife?.Invoke();
                 }
             }
         }
@@ -88,6 +85,14 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                 {
                     Health = Health - 1;
                 }
+            }
+        }
+
+        public void TakeDamage(float damage)
+        {
+            if (invincibility == false)
+            {
+                Health = Health - damage;
             }
         }
 

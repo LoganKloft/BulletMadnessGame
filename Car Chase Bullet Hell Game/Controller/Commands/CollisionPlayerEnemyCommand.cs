@@ -14,8 +14,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
 
         public CollisionPlayerEnemyCommand(Entity x, Entity y)
         {
-            x.DestroyEvent += DestroyEventHandler;
-            y.DestroyEvent += DestroyEventHandler;
+            //x.DestroyEvent += DestroyEventHandler;
+            //y.DestroyEvent += DestroyEventHandler;
 
             if (x is Enemy)
             {
@@ -28,6 +28,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
                 enemy = y;
                 player = x;
             }
+
+            enemy.DestroyEvent += DestroyEventHandler;
         }
 
         public override event DestroyCommandEventHandler DestroyEvent;
@@ -36,12 +38,16 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
         {
             if (enemy.HitBoxRectangle.Intersects(player.HitBoxRectangle))
             {
-                return;
-                // DECREASE THE HEALTH BAR OF THE BOTH OF THE ENTITIES THAT WERE HTI! 
+                ((Player)player).TakeDamage(enemy);
             }
         }
 
         public void DestroyEventHandler(Entity entity)
+        {
+            InvokeDestroyEvent();
+        }
+
+        public void InvokeDestroyEvent()
         {
             DestroyEvent?.Invoke(this);
         }

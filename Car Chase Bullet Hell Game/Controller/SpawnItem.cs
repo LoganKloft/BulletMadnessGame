@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
 using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.Commands;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -55,6 +56,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             }
 
             this.enemy.DestroyEvent += DestroyEnemyEventHandler;
+            Command command = new CollisionPlayerEnemyCommand(this.enemy, Player.Instance);
+            CollisionDetector.AddCommand(command);
 
             DrawController.AddSprite(sprite);
             Spawner.RemoveInactiveSpawnItem(this);

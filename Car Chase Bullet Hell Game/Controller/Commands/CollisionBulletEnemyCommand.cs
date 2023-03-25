@@ -28,13 +28,17 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
                 {
                     enemy.TakeDamage(_shot);
                     _shot.InvokeDestroyEvent();
-                    CollisionDetector.RemoveCommand(this);
                     break;
                 }
             }
         }
 
         public void DestroyEventHandler(Entity entity)
+        {
+            InvokeDestroyEvent();
+        }
+
+        public void InvokeDestroyEvent()
         {
             DestroyEvent?.Invoke(this);
         }
