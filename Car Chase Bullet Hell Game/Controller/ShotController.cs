@@ -30,13 +30,15 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             }
         }
 
-        public static void DestroyEventHandler(Entity entity)
-        {
-            if (entity is Shot)
-            {
-                Shot shot = (Shot)entity;
-                shots.Remove(shot);
-            }
-        }
+        //public static void DestroyEventHandler(Entity entity)
+        //{
+        //    if (entity is Shot)
+        //    {
+        //        Shot shot = (Shot)entity;
+        //        shots.Remove(shot);
+        //    }
+        //} - Issue with deleting shots from list before they are actuall removed. This is causing issues with collision detection as they 
+        // appear to still be present in the background, which causes player to lose a life when no bullets are on the screen.
+
     }
 }

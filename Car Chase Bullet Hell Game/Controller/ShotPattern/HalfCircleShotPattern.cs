@@ -45,7 +45,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             double offset = Math.PI * 1d / shotCount;
             for (int i = 0; i < shotCount; i++)
             {
-                Shot shot = new Shot();
+                Shot shot = new Shot(.75);
                 MovementPattern.MovementPattern movementPattern = new StraightShot(offset * i);
                 shot.MovementPattern = movementPattern;
                 Sprite shotSprite = new Sprite();
@@ -62,7 +62,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
                 shot.DestinationRectangle.Width = 50;
                 shot.DestinationRectangle.Height = 50;
                 shot.NotifyOfDestinationRectangleChange();
-
+                //shot.DestroyEvent += ShotController.DestroyEventHandler;
                 ShotController.AddShot(shot);
 
                 // create proper command

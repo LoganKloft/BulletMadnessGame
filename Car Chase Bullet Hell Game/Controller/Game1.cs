@@ -91,10 +91,14 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 sprite.LoadContent(Content, "Road");
                 _background.AddBackground(sprite);
             }
-            Sprite gameOver = new Sprite();
-            gameOver.LoadContent(Content, "GameOver");
+            Sprite gameLost = new Sprite();
+            gameLost.LoadContent(Content, "GameOver");
 
-            DrawController.gameComplete = gameOver;
+            Sprite gameWon = new Sprite();
+            gameWon.LoadContent(Content, "win");
+
+            DrawController.gameLost = gameLost;
+            DrawController.gameWon = gameWon;
             DrawController.background = _background;
             DrawController.playerSprite = _playerSprite;
         }

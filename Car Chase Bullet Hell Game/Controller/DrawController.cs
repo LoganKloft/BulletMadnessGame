@@ -18,11 +18,13 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
     {
         public static Background background;
         public static Sprite playerSprite;
-        public static Sprite gameComplete;
+        public static Sprite gameLost;
+        public static Sprite gameWon;
         public static List<Sprite> sprites = new List<Sprite>();
         public static List<Sprite> lives = new List<Sprite>();
         public static float death = 1f;
-        private static bool gameOver = false;
+        private static bool gameOverLost = false;
+        private static bool gameOverWin = false;
 
         public static void AddSprite(Sprite sprite)
         {
@@ -36,7 +38,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            if(!gameOver)
+            if(!gameOverLost && !gameOverWin)
             {
                 // draw background first so everything else appears on top
                 background.Draw(spriteBatch, gameTime);
@@ -52,13 +54,22 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                     sprite.Draw(spriteBatch, gameTime);
                 }
 
+                if(sprites.Count==0)
+                {
+                    gameOverWin = true;
+                }
+
                 // draw player last so it appears on top of everything else
                 //Player.Instance.Draw(_spriteBatch, gameTime);
                 playerSprite.Draw(spriteBatch, gameTime);
             }
+            else if(gameOverLost)
+            {
+                GameOverLost(spriteBatch, gameTime);
+            }
             else
             {
-                GameOver(spriteBatch, gameTime);
+                GameOverWon(spriteBatch, gameTime);
             }
         }
 
@@ -81,7 +92,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             }
             else
             {
-                gameOver = true;
+                gameOverLost = true;
             }
         }
 
@@ -94,9 +105,13 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             }
         }
 
-        public static void GameOver(SpriteBatch spriteBatch, GameTime gameTime)
+        public static void GameOverLost(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            gameComplete.Draw(spriteBatch, gameTime);
+            gameLost.Draw(spriteBatch, gameTime);
+        }
+        public static void GameOverWon(SpriteBatch spriteBatch, GameTime gameTime)
+        {
+            gameWon.Draw(spriteBatch, gameTime);
         }
     }
 }
