@@ -24,6 +24,10 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         private LeftMovementPatternFactory leftFactory = new LeftMovementPatternFactory();
         private CircleMovementPatternFactory circleFactory = new CircleMovementPatternFactory();
         private TriangleMovementPatternFactory triangleFactory = new TriangleMovementPatternFactory();
+        
+        private CircleShotPatternFactory circleShotPatternFactory = new CircleShotPatternFactory();
+        private HalfCircleShotPatternFactory halfCircleShotPatternFactory = new HalfCircleShotPatternFactory();
+        private StraightShotPatternFactory straightShotPatternFactory = new StraightShotPatternFactory();
 
         public const int widthSize = 1250, heightSize = 800;
 
@@ -83,37 +87,40 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             si = new SpawnItem("Motorcycle", 0, 15);
             si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
             si.AddMovementItem(rightMovementPatternFactory.createMovement(), 15);
-            si.AddShotItem(0f, 15f, 5f, "CircleShotPattern", "01", 16);
+            si.AddShotItem(0f, 15f, 5f, circleShotPatternFactory.CreateShots(asset: "01", shotCount: 16));
             AddInactiveSpawnItem(si);
 
             si = new SpawnItem("Motorcycle", 0, 15);
             si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
             si.AddMovementItem(leftFactory.createMovement(), 15);
-            si.AddShotItem(0f, 15f, 5f, "CircleShotPattern", "02", 16);
+            si.AddShotItem(0f, 15f, 5f, circleShotPatternFactory.CreateShots(asset: "02", shotCount: 16));
             AddInactiveSpawnItem(si);
 
             si = new SpawnItem("Police", 30, 15);
             si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
             si.AddMovementItem(rightMovementPatternFactory.createMovement(), 15);
+            si.AddShotItem(0, 15f, .5f, straightShotPatternFactory.CreateShots(asset: "KirbyBullet01", shotCount: 1));
             AddInactiveSpawnItem(si);
 
             si = new SpawnItem("Police", 30, 15);
             si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
             si.AddMovementItem(leftFactory.createMovement(), 15);
+            si.AddShotItem(0, 15f, .5f, straightShotPatternFactory.CreateShots(asset: "KirbyBullet01", shotCount: 1));
             AddInactiveSpawnItem(si);
 
             si = new SpawnItem("Boss", 45, 15);
             si.AddMovementItem(circleFactory.createMovement(point: new Point(625, 80), radius: 80), 15);
+            si.AddShotItem(0, 15f, 0.75f, circleShotPatternFactory.CreateShots(asset: "01", shotCount: 32));
             AddInactiveSpawnItem(si);
 
             si = new SpawnItem("Tank", 15, 15);
             si.AddMovementItem(triangleFactory.createMovement(), 15);
-            si.AddShotItem(0, 2.5f, 1.5f, "CircleShotPattern", "bullet2", 16);
-            si.AddShotItem(2.5f, 5f, 1.5f, "HalfCircleShotPattern", "bullet1", 8);
-            si.AddShotItem(5, 7.5f, 1.5f, "CircleShotPattern", "bullet2", 16);
-            si.AddShotItem(7.5f, 10f, 1.5f, "HalfCircleShotPattern", "bullet1", 8);
-            si.AddShotItem(10, 12.5f, 1.5f, "CircleShotPattern", "bullet2", 16);
-            si.AddShotItem(12.5f, 15f, 1.5f, "HalfCircleShotPattern", "bullet1", 8);
+            si.AddShotItem(0, 2.5f, 1.5f, circleShotPatternFactory.CreateShots(asset: "bullet2",shotCount: 16));
+            si.AddShotItem(2.5f, 5f, 1.5f, halfCircleShotPatternFactory.CreateShots(asset: "bullet1",shotCount: 8));
+            si.AddShotItem(5, 7.5f, 1.5f, circleShotPatternFactory.CreateShots(asset: "bullet2", shotCount: 16));
+            si.AddShotItem(7.5f, 10f, 1.5f, halfCircleShotPatternFactory.CreateShots(asset: "bullet1", shotCount: 8));
+            si.AddShotItem(10, 12.5f, 1.5f, circleShotPatternFactory.CreateShots(asset: "bullet2",shotCount: 16));
+            si.AddShotItem(12.5f, 15f, 1.5f, halfCircleShotPatternFactory.CreateShots(asset: "bullet1", shotCount: 8));
             AddInactiveSpawnItem(si);
         }
 

@@ -12,15 +12,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
     {
         protected abstract ShotPattern CreateShotPattern(string asset, Point point, int shotCount);
 
-        public ShotPattern CreateShots(string asset, Point point, int shotCount, Entity entity)
+        public ShotPattern CreateShots(string asset, int shotCount, Point point = default(Point))
         {
-            if(entity is Player)
-            {
-                return CreateShotPattern(asset, point, shotCount);
-            }
-            ShotPattern shotPattern = CreateShotPattern(asset, point, shotCount);
-            shotPattern.CreateShots(entity: entity);
-            return shotPattern;
+            return CreateShotPattern(asset, point, shotCount);
+            //ShotPattern shotPattern = CreateShotPattern(asset, point, shotCount);
+            //shotPattern.CreateShots(entity: entity);
+            //return shotPattern;
         }
     }
 }

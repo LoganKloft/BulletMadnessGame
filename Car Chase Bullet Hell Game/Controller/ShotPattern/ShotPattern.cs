@@ -20,7 +20,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
         //public abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime);
 
         //public abstract bool Finished();
-
+        public Point point;
         public abstract void CreateShots(Entity entity, GameTime gameTime = null);
 
         public static ShotPattern Parse(string type, string asset, Point point, int shotCount, Entity entity)

@@ -24,17 +24,19 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public string asset;
         int shotCount;
         public SpawnItem spawnItem;
+        private ShotPattern.ShotPattern shotPattern;
         private bool active = false;
 
-        public ShotItem(SpawnItem spawnItem, float start, float duration, float shootSpeed, string type, string asset, int shotCount)
+        public ShotItem(SpawnItem spawnItem, float start, float duration, float shootSpeed, ShotPattern.ShotPattern shotPattern)
         {
             this.start = start;
             this.duration = duration;
             this.shootSpeed = this.timer = shootSpeed;
-            this.type = type;
-            this.asset = asset;
+            //this.type = type;
+            //this.asset = asset;
             this.spawnItem = spawnItem;
-            this.shotCount = shotCount;
+            //this.shotCount = shotCount;
+            this.shotPattern = shotPattern;
         }
 
         public void Update(GameTime gameTime)
@@ -47,7 +49,9 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 if (start <= 0f)
                 {
                     //spawnItem.enemy.ShotPatterns.Enqueue(ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy));
-                    ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy.Center, shotCount, spawnItem.enemy).CreateShots(spawnItem.enemy);
+                    shotPattern.point = spawnItem.enemy.Center;
+                    shotPattern.CreateShots(spawnItem.enemy);
+                    //ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy.Center, shotCount, spawnItem.enemy).CreateShots(spawnItem.enemy);
                     active = true;
                 }
             }
@@ -65,7 +69,9 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 {
                     timer = shootSpeed;
                     //spawnItem.enemy.ShotPatterns.Enqueue(ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy));
-                    ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy.Center, shotCount, spawnItem.enemy).CreateShots(spawnItem.enemy);
+                    // ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy.Center, shotCount, spawnItem.enemy).CreateShots(spawnItem.enemy);
+                    shotPattern.point = spawnItem.enemy.Center;
+                    shotPattern.CreateShots(spawnItem.enemy);
                 }
             }
         }
