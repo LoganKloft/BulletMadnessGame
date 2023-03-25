@@ -18,7 +18,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
     {
         public static List<SpawnItem> inactiveSpawnItems = new List<SpawnItem>();
         public static List<SpawnItem> activeSpawnItems = new List<SpawnItem>();
-        public ContentManager Content;
 
         private OffScreenMovementPattern offScreen = new OffScreenMovementPattern();
 

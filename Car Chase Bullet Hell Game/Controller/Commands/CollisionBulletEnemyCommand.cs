@@ -13,8 +13,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
         private Shot _shot;
         public CollisionBulletEnemyCommand(Shot shot)
         {
+            shot.DestroyEvent += DestroyEventHandler;
+
             _shot = shot;
         }
+
+        public override event DestroyCommandEventHandler DestroyEvent;
 
         public override void execute()
         {
@@ -26,6 +30,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
                     _shot.InvokeDestroyEvent();
                 }
             }
+        }
+
+        public void DestroyEventHandler(Entity entity)
+        {
+            DestroyEvent?.Invoke(this);
         }
     }
 }
