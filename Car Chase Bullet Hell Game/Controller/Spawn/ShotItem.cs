@@ -46,33 +46,36 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
             if (active == false)
             {
                 start -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (start <= 0f)
+                if (Player.Instance.IsInvincible == false)
                 {
-                    //spawnItem.enemy.ShotPatterns.Enqueue(ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy));
-                    shotPattern.point = spawnItem.enemy.Center;
-                    shotPattern.CreateShots(spawnItem.enemy);
-                    //ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy.Center, shotCount, spawnItem.enemy).CreateShots(spawnItem.enemy);
-                    active = true;
+                    if (start <= 0f)
+                    {
+                        shotPattern.point = spawnItem.enemy.Center;
+                        shotPattern.CreateShots(spawnItem.enemy);
+                        active = true;
+                    }
                 }
             }
 
             if (active)
             {
-                timer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                if (duration <= 0f)
+                if(Player.Instance.IsInvincible==false)
                 {
-                    spawnItem.shotItems.Remove(this);
-                }
+                    timer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                if (timer <= 0f)
-                {
-                    timer = shootSpeed;
-                    //spawnItem.enemy.ShotPatterns.Enqueue(ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy));
-                    // ShotPattern.ShotPattern.Parse(type, asset, spawnItem.enemy.Center, shotCount, spawnItem.enemy).CreateShots(spawnItem.enemy);
-                    shotPattern.point = spawnItem.enemy.Center;
-                    shotPattern.CreateShots(spawnItem.enemy);
+                    if (duration <= 0f)
+                    {
+                        spawnItem.shotItems.Remove(this);
+                    }
+
+                    if (timer <= 0f)
+                    {
+                        timer = shootSpeed;
+                        shotPattern.point = spawnItem.enemy.Center;
+                        shotPattern.CreateShots(spawnItem.enemy);
+                    }
                 }
+                
             }
         }
     }
