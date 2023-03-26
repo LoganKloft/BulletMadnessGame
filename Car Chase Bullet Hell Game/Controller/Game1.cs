@@ -15,6 +15,21 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 {
     public class Game1 : Game
     {
+        public enum GameState
+        {
+            StartMenu,
+            Playing,
+            Pause,
+            Exit
+        }
+
+        private Button _startButton;
+        private Button _startMenu;
+        private Vector2 _startMenuPosition;
+        private Vector2 _startButtonPosition;
+        private MouseState _mouseState;
+        private bool _mouseLeftPressed;
+
         private GraphicsDeviceManager _graphics;
         public static SpriteBatch _spriteBatch;
 
@@ -26,6 +41,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
         public double invincibilityTime = 2;
 
+        private MainMenuBackground _mainMenuBackground;
         private Spawner spawner;
         private Sprite _playerSprite;
         private Background _background;
@@ -33,11 +49,14 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
         public static ContentManager content;
 
+        public static GameState gameState;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            gameState = GameState.StartMenu;
 
             System.Diagnostics.Debug.WriteLine("Starting Game");
         }
@@ -48,12 +67,17 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             gd = GraphicsDevice;
             content = Content;
 
+            _startButtonPosition = new Vector2(170, 400);
+            _mouseState = MouseButtons.GetState();
+            _mouseLeftPressed = false;
+
             // increase size of the game window
             _graphics.PreferredBackBufferWidth = widthSize;
             _graphics.PreferredBackBufferHeight = heightSize;
             _graphics.ApplyChanges();
 
             _background = new Background(gd);
+            _mainMenuBackground = new MainMenuBackground(gd);
 
             _playerSprite = new Sprite();
             //DrawController.AddSprite(_playerSprite);
@@ -70,6 +94,10 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
         protected override void LoadContent()
         {
+            _startButton = new Button(Content.Load<Texture2D>("StartButton"), Content.Load<Texture2D>("StartButton"), new Point(916, 289), _startButtonPosition, "Start Button", 33, true, 1.0f);
+
+            gameState = GameState.StartMenu;
+
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //Player.Instance.LoadContent(Content, "Cars", new Rectangle(0, 0, playerWidth, playerHeight));
@@ -91,6 +119,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 sprite.LoadContent(Content, "Road");
                 _background.AddBackground(sprite);
             }
+
+            Sprite temp = new Sprite();
+            temp.LoadContent(Content, "MainMenuBackground");
+            _mainMenuBackground.AddBackground(temp);
+
             Sprite gameLost = new Sprite();
             gameLost.LoadContent(Content, "GameOver");
 
@@ -103,29 +136,82 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             DrawController.playerSprite = _playerSprite;
         }
 
+        public void HandleInput(GameTime gameTime)
+        {
+            _mouseState = MouseButtons.GetState();
+
+            if (_mouseState.LeftButton == ButtonState.Pressed)
+            {
+                if (MouseButtons.HasNotBeenPressed(true))
+                {
+                    _mouseLeftPressed = true;
+                }
+            }
+        }
+
+        private bool CheckIfButtonWasClicked()
+        {
+            if (_mouseState.X >= _startButton.Position.X && _mouseState.X <= (_startButton.Position.X + _startButton.Dimensions.X))
+            {
+                if (_mouseState.Y >= _startButton.Position.Y && _mouseState.Y <= (_startButton.Position.Y + _startButton.Dimensions.Y) && _startButton.Visible)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            spawner.Update(gameTime);
-            Player.Instance.Update(gameTime);
-            ShotController.Update(gameTime);
-            CollisionDetector.DetectCollisions();
-            _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);
-            if(Player.Instance.IsInvincible)
+            /*if (Keyboard.GetState().IsKeyDown(Keys.P))
             {
-                invincibilityTime -= gameTime.ElapsedGameTime.TotalSeconds;
-                if(invincibilityTime<=0)
+                if (gameState != GameState.Pause && gameState != GameState.StartMenu)
                 {
-                    Player.Instance.IsInvincible = false;
-                    invincibilityTime = 2;
+                    gameState = GameState.Pause;
+                }
+                else if (gameState != GameState.Pause && gameState != GameState.StartMenu)
+                {
+                    gameState = GameState.Playing;
+                }
+            }*/
+            HandleInput(gameTime);
+            _startButton.UpdateButton();
+
+            if (gameState == GameState.StartMenu)
+            {
+                if (_mouseLeftPressed)
+                {
+                    _mouseLeftPressed = false;
+
+                    if (CheckIfButtonWasClicked())
+                    {
+                        _startButton.Clicked();
+                    }
                 }
             }
-
-            if (spawner.CheckGameOver() == true)
+            else if (gameState == GameState.Playing)
             {
-                return;
+                spawner.Update(gameTime);
+                Player.Instance.Update(gameTime);
+                ShotController.Update(gameTime);
+                CollisionDetector.DetectCollisions();
+                _background.Scroll((float)gameTime.ElapsedGameTime.TotalSeconds);
+                if (Player.Instance.IsInvincible)
+                {
+                    invincibilityTime -= gameTime.ElapsedGameTime.TotalSeconds;
+                    if (invincibilityTime <= 0)
+                    {
+                        Player.Instance.IsInvincible = false;
+                        invincibilityTime = 2;
+                    }
+                }
+
+                if (spawner.CheckGameOver() == true)
+                {
+                    return;
+                }
             }
 
             base.Update(gameTime);
@@ -135,9 +221,21 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            Rectangle sourceRectangle = new Rectangle(0, 0, _startButton.CellWidth, _startButton.CellHeight);
+            Rectangle destinationRectangle = new Rectangle((int)_startButton.Position.X, (int)_startButton.Position.Y, _startButton.CellWidth, _startButton.CellHeight);
+
             _spriteBatch.Begin();
 
-            DrawController.Draw(_spriteBatch, gameTime, spawner);
+            if (gameState == GameState.StartMenu)
+            {
+                _mainMenuBackground.Draw(_spriteBatch, gameTime);
+                _spriteBatch.Draw(_startButton.Texture, destinationRectangle, sourceRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
+            }
+            else if (gameState == GameState.Playing)
+            {
+                DrawController.Draw(_spriteBatch, gameTime, spawner);
+            }
+
             
             _spriteBatch.End();
 
