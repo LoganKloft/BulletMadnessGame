@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 
-namespace Car_Chase_Bullet_Hell_Game.Controller
+namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
 {
     internal class MovementItem
     {
@@ -30,7 +30,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
         public void Update(GameTime gameTime)
         {
-            duration -= (float) gameTime.ElapsedGameTime.TotalSeconds;
+            duration -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (active == false)
             {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
-using Car_Chase_Bullet_Hell_Game.Controller;
+using Car_Chase_Bullet_Hell_Game.Controller.Spawn;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
 {

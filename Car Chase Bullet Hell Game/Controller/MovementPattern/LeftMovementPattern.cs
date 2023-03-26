@@ -10,18 +10,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
     internal class LeftMovementPattern : MovementPattern
     {
-        //float speed = 100f;
-        Queue<Point> waypoints = new Queue<Point>();
-        Queue<Point> discarded = new Queue<Point>();
-        public bool repeat = false;
         private int curRun = 0;
-
         private bool moveLeft = true;
-
-        public void AddPoint(Point p)
-        {
-            waypoints.Enqueue(p);
-        }
 
         public override void Move(GameTime gameTime, Entity entity)
         {

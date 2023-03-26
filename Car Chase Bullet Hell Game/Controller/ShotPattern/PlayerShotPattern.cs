@@ -17,6 +17,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
     {
         private float shotSpeed = .25f;
         private float shotTimer = 0f;
+        private StraightShotFactory straight = new StraightShotFactory();
 
         public delegate void LostLifeEventHandler();
         
@@ -35,7 +36,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
                 if (shotTimer >= shotSpeed)
                 {
                     Shot shot = new Shot(.5);
-                    MovementPattern.MovementPattern movementPattern = new StraightShot(-Math.PI / 2, 10);
+                    MovementPattern.MovementPattern movementPattern = straight.createMovement(direction: (-Math.PI / 2), speed: 10);
                     shot.MovementPattern = movementPattern;
                     Sprite shotSprite = new Sprite();
                     shotSprite.LoadContent(Game1.content, "01");

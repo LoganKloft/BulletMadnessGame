@@ -17,8 +17,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
     internal class CircleShotPattern : ShotPattern
     {
         int _shotCount = 0;
-        private float time = 0f;
-        Point point;
+        private StraightShotFactory factory = new StraightShotFactory();
         string asset;
 
         public CircleShotPattern(string asset, Point point, int shotCount) : base()
@@ -39,7 +38,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             for (int i = 0; i < _shotCount; i++)
             {
                 Shot shot = new Shot(.5);
-                MovementPattern.MovementPattern movementPattern = new StraightShot(shotOffset * i);
+                MovementPattern.MovementPattern movementPattern = factory.createMovement(direction: shotOffset * i);
                 shot.MovementPattern = movementPattern;
                 Sprite shotSprite = new Sprite();
                 shotSprite.LoadContent(Game1.content, asset);
