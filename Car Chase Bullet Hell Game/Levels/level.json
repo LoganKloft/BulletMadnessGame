@@ -1,0 +1,110 @@
+{
+    "waves":
+    [
+    {
+        "id": 1,
+        "enemies":
+        [
+            {
+            "asset": "Motorcycle",
+            "health": 1,
+            "id": 0,
+            "start": 0,
+            "duration": 45,
+            "movementItems": [
+                {
+                    "movementPattern": "LeftMovementPattern",
+                    "point": [0, 1],
+                    "radius": 0,
+                    "entity": 0,
+                    "direction": 0.0,
+                    "speed": 1.0,
+                    "duration": 3.0
+                }
+            ],
+            "shotItems": [
+                {
+                    "shotPattern": "CicleShotPattern",
+                    "asset": "01",
+                    "point": [0, 0],
+                    "shotCount": 5,
+                    "start": 0.0,
+                    "duration": 5.0,
+                    "shootSpeed": 3.0
+                }
+            ]
+        } 
+        ]
+    },
+    {
+        "id": 2,
+        "enemies":
+        [
+            {
+            "asset": "Tank",
+            "health": 1,
+            "id": 1,
+            "start": 0.0,
+            "duration": 45.0,
+            "movementItems": [
+                {
+                    "point": [0, 0],
+                    "radius": 0,
+                    "entity": 1,
+                    "direction": 0,
+                    "speed": 1.0,
+                    "duration": 45.0,
+                    "movementPattern": "TriangleMovementPattern"
+                }
+            ],
+            "shotItems": [
+                {
+                    "shotPattern": "CicleShotPattern",
+                    "asset": "bullet1",
+                    "point": [0, 0],
+                    "shotCount": 5,
+                    "start": 0.0,
+                    "duration": 5.0,
+                    "shootSpeed": 3
+                }
+            ]
+        }
+        ]
+    },
+    {
+        "id": 3,
+        "enemies": 
+        [
+            {
+            "asset": "Police",
+            "health": 1,
+            "id": 3,
+            "start": 0.0,
+            "duration": 45.0,
+            "movementItems": [
+                {
+                    "point": [0, 0],
+                    "radius": 0,
+                    "entity": 3,
+                    "direction": 0,
+                    "speed": 1.0,
+                    "duration": 45.0,
+                    "movementPattern": "RightMovementPattern"
+                }
+            ],
+            "shotItems": [
+                {
+                    "shotPattern": "CicleShotPattern",
+                    "asset": "KirbyBullet01",
+                    "point": [0, 0],
+                    "shotCount": 5,
+                    "start": 0,
+                    "duration": 5,
+                    "shootSpeed": 3
+                }
+            ]
+        }
+        ]
+    }
+    ]
+}

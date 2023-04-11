@@ -11,6 +11,9 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Car_Chase_Bullet_Hell_Game.Controller.Spawn;
+using System.Text.Json;
+using System.IO;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller
 {
@@ -72,7 +75,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             _mouseState = MouseButtons.GetState();
             _mouseLeftPressed = false;
 
-            // increase size of the game window
+            // set size of the game window
             _graphics.PreferredBackBufferWidth = widthSize;
             _graphics.PreferredBackBufferHeight = heightSize;
             _graphics.ApplyChanges();
@@ -87,7 +90,13 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             Player.Instance.OriginChanged += _playerSprite.OriginChangedHandler;
             _lives = new LifeItem(Content, "heart");
 
-            spawner = new Spawner();
+            // test code for using json to control spawning
+            string cwd = AppDomain.CurrentDomain.BaseDirectory;
+            string fileName = cwd + "../../../Levels/level1.json";
+            string jsonString = File.ReadAllText(fileName);
+            LevelParams levelParams = JsonSerializer.Deserialize<LevelParams>(jsonString);
+
+            spawner = new Spawner(levelParams);
             spawner.Initialize();
 
             base.Initialize();

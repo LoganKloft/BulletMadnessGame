@@ -1,0 +1,128 @@
+{
+  "waves": [
+    {
+      "id": 1,
+      "enemies": [
+        {
+          "asset": "Motorcycle",
+          "health": 5,
+          "id": 0,
+          "start": 0,
+          "duration": 15,
+          "dimensions":  [125, 125],
+          "movementItems": [
+            {
+              "movementPattern": "LeftMovementPattern",
+              "entity": 0,
+              "duration": 15.0
+            }
+          ],
+          "shotItems": [
+            {
+              "shotPattern": "CircleShotPattern",
+              "asset": "02",
+              "shotCount": 16,
+              "start": 0.0,
+              "duration": 15.0,
+              "shootSpeed": 3.0
+            }
+          ]
+        },
+        {
+          "asset": "Motorcycle",
+          "health": 5,
+          "id": 1,
+          "start": 0,
+          "duration": 15,
+          "dimensions":  [125, 125],
+          "movementItems": [
+            {
+              "movementPattern": "RightMovementPattern",
+              "entity": 1,
+              "duration": 15.0
+            }
+          ],
+          "shotItems": [
+            {
+              "shotPattern": "CircleShotPattern",
+              "asset": "01",
+              "shotCount": 16,
+              "start": 0.0,
+              "duration": 15.0,
+              "shootSpeed": 3.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "enemies": [
+        {
+          "asset": "Tank",
+          "health": 5,
+          "id": 2,
+          "start": 15,
+          "duration": 15,
+          "movementItems": [
+            {
+              "movementPattern": "TriangleMovementPattern",
+              "entity": 1,
+              "duration": 15.0
+            }
+          ],
+          "shotItems": [
+            {
+              "shotPattern": "CircleShotPattern",
+              "asset": "bullet2",
+              "shotCount": 16,
+              "start": 0.0,
+              "duration": 2.5,
+              "shootSpeed": 1.5
+            },
+            {
+              "shotPattern": "HalfCircleShotPattern",
+              "asset": "bullet1",
+              "shotCount": 8,
+              "start": 2.5,
+              "duration": 5.0,
+              "shootSpeed": 1.5
+            },
+            {
+              "shotPattern": "CircleShotPattern",
+              "asset": "bullet2",
+              "shotCount": 16,
+              "start": 5.0,
+              "duration": 7.5,
+              "shootSpeed": 1.5
+            },
+            {
+              "shotPattern": "HalfCircleShotPattern",
+              "asset": "bullet1",
+              "shotCount": 8,
+              "start": 7.5,
+              "duration": 10.0,
+              "shootSpeed": 1.5
+            },
+            {
+              "shotPattern": "CircleShotPattern",
+              "asset": "bullet2",
+              "shotCount": 16,
+              "start": 10.0,
+              "duration": 12.5,
+              "shootSpeed": 1.5
+            },
+            {
+              "shotPattern": "HalfCircleShotPattern",
+              "asset": "bullet1",
+              "shotCount": 8,
+              "start": 12.5,
+              "duration": 15.0,
+              "shootSpeed": 1.5
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

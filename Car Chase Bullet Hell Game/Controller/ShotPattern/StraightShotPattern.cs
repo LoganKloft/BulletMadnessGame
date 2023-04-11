@@ -10,8 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Car_Chase_Bullet_Hell_Game.Controller.Commands;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
-
-
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPatternFactories;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 {
@@ -42,7 +42,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
         public override void CreateShots(Entity entity, GameTime gameTime)
         {
             Shot shot = new Shot(.5);
-            MovementPattern.MovementPattern movementPattern = factory.createMovement(direction: 1.5);
+            MovementPattern.MovementPattern movementPattern = factory.CreateMovementPattern(new MovementParams() {direction = 1.5});
             shot.MovementPattern = movementPattern;
             Sprite shotSprite = new Sprite();
             shotSprite.LoadContent(Game1.content, asset);

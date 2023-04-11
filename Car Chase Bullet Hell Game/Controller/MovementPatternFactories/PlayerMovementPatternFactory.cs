@@ -1,5 +1,6 @@
 ﻿using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPatternFactories
 {
     internal class PlayerMovementPatternFactory : MovementFactory
     {
-        protected override MovementPattern.MovementPattern CreateMovementPattern([Optional] Point point, [Optional] int radius, [Optional] Entity entity, [Optional] double direction, [Optional] double speed)
+
+        public override MovementPattern.MovementPattern CreateMovementPattern(MovementParams movementParams)
         {
             return new PlayerMovementPattern();
         }

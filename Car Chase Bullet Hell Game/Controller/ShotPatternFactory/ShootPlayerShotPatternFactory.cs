@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 {
-    internal class StraightShotPatternFactory : ShotPatternFactory
+    internal class ShootPlayerShotPatternFactory : ShotPatternFactory
     {
         public override ShotPattern CreateShotPattern(ShotParams shotParams)
         {
@@ -18,7 +18,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
                 point.X = shotParams.point[0];
                 point.Y = shotParams.point[1];
             }
-            return new StraightShotPattern(shotParams.asset, point, shotParams.shotCount);
+            return new ShootPlayerShotPattern(shotParams.asset, point, shotParams.shotCount);
         }
     }
 }

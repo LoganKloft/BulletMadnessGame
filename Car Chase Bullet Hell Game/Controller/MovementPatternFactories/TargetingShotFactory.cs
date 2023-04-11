@@ -6,14 +6,19 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
-namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
+namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPatternFactories
 {
     internal class TargetingShotFactory : MovementFactory
     {
-        protected override MovementPattern CreateMovementPattern([Optional] Point point, [Optional] int radius, [Optional] Entity entity, [Optional] double direction, [Optional] double speed)
+        public override MovementPattern.MovementPattern CreateMovementPattern(MovementParams movementParams)
         {
-            return new TargetingShot(entity);
+            // need to be able to search an entity based on their id
+            //Entity entity = GetEntity(movementParams.entity);
+            //return new TargetingShot(entity);
+            throw new NotImplementedException();
         }
     }
 }

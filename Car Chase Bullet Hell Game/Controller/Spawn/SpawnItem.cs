@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
 {
@@ -32,11 +33,29 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
         public delegate void DestroySpawnItemEventHandler(SpawnItem spawnItem);
         public event DestroySpawnItemEventHandler DestroySpawnItemEvent;
 
-        public SpawnItem(string asset, float start, float duration)
+        EnemyParams enemyParams;
+
+        public SpawnItem(EnemyParams enemyParams)
         {
-            this.asset = asset;
-            this.start = start;
-            this.duration = duration;
+            this.enemyParams = enemyParams;
+            asset = enemyParams.asset;
+            start = enemyParams.start;
+            duration = enemyParams.duration;
+
+            if (enemyParams.dimensions != null)
+            {
+                DestinationRectangle = new Rectangle(0, 0, enemyParams.dimensions[0], enemyParams.dimensions[1]);
+            }
+
+            foreach (MovementParams movementParams in enemyParams.movementItems)
+            {
+                this.AddMovementItem(movementParams);
+            }
+
+            foreach (ShotParams shotParams in enemyParams.shotItems)
+            {
+                this.AddShotItem(shotParams);
+            }
         }
 
         // instantiate all objects for the enemy
@@ -90,10 +109,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
                 {
                     if (movementItems.Count > 0)
                     {
-                        if (movementItems[0].duration < 0.025 && movementItems[0].movementPattern is not OffScreenMovementPattern)
-                        {
-                            movementItems.RemoveAt(0);
-                        }
                         if (movementItems[0].movementPattern is OffScreenMovementPattern)
                         {
                             offscreenOccurence = true;
@@ -125,14 +140,14 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
             }
         }
 
-        public void AddMovementItem(MovementPattern.MovementPattern movement, float duration)
+        public void AddMovementItem(MovementParams movementParams)
         {
-            movementItems.Add(new MovementItem(duration, movement, this));
+            movementItems.Add(new MovementItem(this, movementParams));
         }
 
-        public void AddShotItem(float start, float duration, float shootSpeed, ShotPattern.ShotPattern shotPattern)
+        public void AddShotItem(ShotParams shotParams)
         {
-            shotItems.Add(new ShotItem(this, start, duration, shootSpeed, shotPattern));
+            shotItems.Add(new ShotItem(this, shotParams));
         }
     }
 }

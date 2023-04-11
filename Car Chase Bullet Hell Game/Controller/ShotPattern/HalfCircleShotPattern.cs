@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Car_Chase_Bullet_Hell_Game.Controller.Commands;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPatternFactories;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 {
@@ -46,7 +48,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             for (int i = 0; i < shotCount; i++)
             {
                 Shot shot = new Shot(.75);
-                MovementPattern.MovementPattern movementPattern = shotFactory.createMovement(direction: offset * i);
+                MovementPattern.MovementPattern movementPattern = shotFactory.CreateMovementPattern(new MovementParams { direction = offset * i, speed = 5 });
                 shot.MovementPattern = movementPattern;
                 Sprite shotSprite = new Sprite();
                 shotSprite.LoadContent(Game1.content, asset);

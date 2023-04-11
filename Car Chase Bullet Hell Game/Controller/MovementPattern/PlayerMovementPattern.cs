@@ -107,7 +107,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine(current.X + " " + current.Y);
                     float temp = -1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     Vector2 v = new Vector2(0, temp * speed);
@@ -137,7 +136,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine(current.X + " " + current.Y);
 
                     float temp = 1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -156,7 +154,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
             if (capabilities.IsConnected)
             {
                 GamePadState state = GamePad.GetState(PlayerIndex.One);
-                System.Diagnostics.Debug.WriteLine(state.ThumbSticks.Left.X + " " + state.ThumbSticks.Left.Y);
                 if (capabilities.HasLeftXThumbStick)
                 {
                     if (state.ThumbSticks.Left.X > 0)

@@ -21,7 +21,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
     {
         private static Player _instance = null;
         private static PlayerMovementPatternFactory movementFactory = new PlayerMovementPatternFactory();
-        private static MovementPattern movement = movementFactory.createMovement();
+        //private static MovementPattern movement = movementFactory.createMovement();
+        private static MovementPattern movement = movementFactory.CreateMovementPattern(null);
         private static PlayerShotPattern shots = new PlayerShotPattern();
         private static readonly object _lock = new object();
         private float health = 3f;

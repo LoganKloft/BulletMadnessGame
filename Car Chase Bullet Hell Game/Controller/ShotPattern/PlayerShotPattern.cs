@@ -1,5 +1,6 @@
 ﻿using Car_Chase_Bullet_Hell_Game.Controller.Commands;
 using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPatternFactories;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Microsoft.Xna.Framework;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Car_Chase_Bullet_Hell_Game.Model.Entities.Entity;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 {
@@ -36,7 +38,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
                 if (shotTimer >= shotSpeed)
                 {
                     Shot shot = new Shot(.5);
-                    MovementPattern.MovementPattern movementPattern = straight.createMovement(direction: (-Math.PI / 2), speed: 10);
+                    MovementPattern.MovementPattern movementPattern = straight.CreateMovementPattern(new MovementParams { direction = (-Math.PI / 2), speed = 10 });
                     shot.MovementPattern = movementPattern;
                     Sprite shotSprite = new Sprite();
                     shotSprite.LoadContent(Game1.content, "01");

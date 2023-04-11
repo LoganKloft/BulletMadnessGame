@@ -6,18 +6,16 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
-namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
+namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPatternFactories
 {
     internal class StraightShotFactory : MovementFactory
     {
-        protected override MovementPattern CreateMovementPattern([Optional] Point point, [Optional] int radius, [Optional] Entity entity, [Optional] double direction, [Optional] double speed)
+        public override MovementPattern.MovementPattern CreateMovementPattern(MovementParams movementParams)
         {
-            if (speed != double.NaN)
-            {
-                return new StraightShot(direction: direction);
-            }
-            return new StraightShot(direction, speed);
+            return new StraightShot(movementParams.direction, movementParams.speed);
         }
     }
 }

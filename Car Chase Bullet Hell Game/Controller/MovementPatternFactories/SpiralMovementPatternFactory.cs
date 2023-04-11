@@ -11,11 +11,13 @@ using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPatternFactories
 {
-    internal class TriangleMovementPatternFactory : MovementFactory
+    internal class SpiralMovementPatternFactory : MovementPatternFactories.MovementFactory
     {
+
         public override MovementPattern.MovementPattern CreateMovementPattern(MovementParams movementParams)
         {
-            return new TriangleMovementPattern();
+            Point point = new Point(movementParams.point[0], movementParams.point[1]);
+            return new SpiralMovementPattern(point, movementParams.radius, movementParams.endRadius, movementParams.startDegree);
         }
     }
 }

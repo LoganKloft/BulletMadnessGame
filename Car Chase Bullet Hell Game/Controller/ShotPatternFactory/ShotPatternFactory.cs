@@ -5,19 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 {
     internal abstract class ShotPatternFactory
     {
-        protected abstract ShotPattern CreateShotPattern(string asset, Point point, int shotCount);
-
-        public ShotPattern CreateShots(string asset, int shotCount, Point point = default(Point))
-        {
-            return CreateShotPattern(asset, point, shotCount);
-            //ShotPattern shotPattern = CreateShotPattern(asset, point, shotCount);
-            //shotPattern.CreateShots(entity: entity);
-            //return shotPattern;
-        }
+        public abstract ShotPattern CreateShotPattern(ShotParams shotParams);
     }
 }

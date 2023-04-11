@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
 {
@@ -26,23 +27,43 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
         public SpawnItem spawnItem;
         private ShotPattern.ShotPattern shotPattern;
         private bool active = false;
+        private ShotParams shotParams;
 
-        public ShotItem(SpawnItem spawnItem, float start, float duration, float shootSpeed, ShotPattern.ShotPattern shotPattern)
+        private CircleShotPatternFactory circleShotPatternFactory = new CircleShotPatternFactory();
+        private HalfCircleShotPatternFactory halfCircleShotPatternFactory = new HalfCircleShotPatternFactory();
+        private StraightShotPatternFactory straightShotPatternFactory = new StraightShotPatternFactory();
+        private ShootPlayerShotPatternFactory shootPlayerShotPatternFactory = new ShootPlayerShotPatternFactory();
+
+        public ShotItem(SpawnItem spawnItem, ShotParams shotParams)
         {
-            this.start = start;
-            this.duration = duration;
-            this.shootSpeed = timer = shootSpeed;
+            this.shotParams = shotParams;
+            this.start = shotParams.start;
+            this.duration = shotParams.duration;
+            this.shootSpeed = timer = shotParams.shootSpeed;
             //this.type = type;
             //this.asset = asset;
             this.spawnItem = spawnItem;
             //this.shotCount = shotCount;
-            this.shotPattern = shotPattern;
+
+            switch (shotParams.shotPattern)
+            {
+                case "CircleShotPattern":
+                    this.shotPattern = circleShotPatternFactory.CreateShotPattern(shotParams);
+                    break;
+                case "HalfCircleShotPattern":
+                    this.shotPattern = halfCircleShotPatternFactory.CreateShotPattern(shotParams);
+                    break;
+                case "ShootPlayerShotPattern":
+                    this.shotPattern = shootPlayerShotPatternFactory.CreateShotPattern(shotParams);
+                    break;
+                case "StraightShotPattern":
+                    this.shotPattern = straightShotPatternFactory.CreateShotPattern(shotParams);
+                    break;
+            }
         }
 
         public void Update(GameTime gameTime)
         {
-            duration -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-
             if (active == false)
             {
                 start -= (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -59,7 +80,9 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
 
             if (active)
             {
-                if(Player.Instance.IsInvincible==false)
+                duration -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (Player.Instance.IsInvincible==false)
                 {
                     timer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
