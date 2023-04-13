@@ -79,6 +79,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
             CollisionDetector.AddCommand(command);
 
             DrawController.AddSprite(sprite);
+            if (enemyParams.healthBar)
+            {
+                BossHealthBar healthBar = new BossHealthBar(enemy);
+                DrawController.AddSprite(healthBar);
+            }
             Spawner.RemoveInactiveSpawnItem(this);
             Spawner.AddActiveSpawnItem(this);
 

@@ -19,6 +19,9 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
         public override event DestroyEventHandler DestroyEvent;
 
+        public delegate void HealthChangedHandler(float health);
+        public event HealthChangedHandler HealthChangedEvent;
+
         //public Queue<ShotPattern> ShotPatterns = new Queue<ShotPattern>();
         float health;
 
@@ -33,11 +36,17 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             set
             {
                 health = value;
+                InvokeHealthChangedEvent();
                 if (health <= 0f)
                 {
                     InvokeDestroyEvent();
                 }
             }
+        }
+
+        public void InvokeHealthChangedEvent()
+        {
+            HealthChangedEvent?.Invoke(health);
         }
 
         public void TakeDamage(Entity entity)

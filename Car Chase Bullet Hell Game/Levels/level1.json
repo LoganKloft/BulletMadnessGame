@@ -6,6 +6,7 @@
         {
           "asset": "Motorcycle",
           "health": 5,
+          "healthBar": true,
           "id": 0,
           "start": 0,
           "duration": 15,
@@ -60,6 +61,7 @@
       "enemies": [
         {
           "asset": "Tank",
+          "healthBar": true,
           "health": 5,
           "id": 2,
           "start": 15,

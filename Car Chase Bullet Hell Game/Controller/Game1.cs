@@ -26,7 +26,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             Pause,
             Exit
         }
-
         private Button _startButton;
         private Button _startMenu;
         private Vector2 _startMenuPosition;

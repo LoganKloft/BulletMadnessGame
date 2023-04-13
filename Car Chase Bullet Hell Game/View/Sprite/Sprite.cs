@@ -28,7 +28,7 @@ namespace Car_Chase_Bullet_Hell_Game.View.Sprite
         public List<Rectangle> Animations;
         private int animationIndex = 0;
 
-        private Texture2D _texture;
+        protected Texture2D _texture;
 
         public delegate void SpriteDestroyEventHandler(Sprite sprite);
         public event SpriteDestroyEventHandler DestroyEvent;
