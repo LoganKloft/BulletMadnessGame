@@ -27,6 +27,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         private static PlayerShotPattern shots = new PlayerShotPattern(new ShotParams { asset = "01"});
         private static readonly object _lock = new object();
         private float health = 3f;
+        public double invincibilityTime = 2;
+        bool _pauseHasBeenUp = true;
         
         private bool invincibility = false;
 
@@ -54,6 +56,12 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             }
         }
 
+        public bool PauseHasBeenUp
+        {
+            get { return _pauseHasBeenUp; }
+            set { _pauseHasBeenUp = value; }
+        }
+
         public bool IsSlow
         {
             get
@@ -66,6 +74,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                 return false;
             }
         }
+
+        public bool IsCheatMode { get; set; }
 
         public float Health
         {
@@ -89,7 +99,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
         public void TakeDamage(Entity entity)
         {
-            if(invincibility==false)
+            if(!IsInvincible && !IsCheatMode)
             {
                 if (entity is Shot)
                 {
@@ -106,7 +116,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
         public void TakeDamage(float damage)
         {
-            if (invincibility == false)
+            if (!IsInvincible && !IsCheatMode)
             {
                 Health = Health - damage;
             }
@@ -119,6 +129,28 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
         public void Update(GameTime gameTime)
         {
+            if (IsInvincible)
+            {
+                invincibilityTime -= gameTime.ElapsedGameTime.TotalSeconds;
+                if (invincibilityTime <= 0)
+                {
+                    IsInvincible = false;
+                    invincibilityTime = 2;
+                }
+            }
+
+            // enable invulnerability
+            if (Keyboard.GetState().IsKeyDown(Keys.P) && PauseHasBeenUp)
+            {
+                IsCheatMode = !IsCheatMode;
+                PauseHasBeenUp = false;
+            }
+
+            if (Keyboard.GetState().IsKeyUp(Keys.P))
+            {
+                PauseHasBeenUp = true;
+            }
+
             shots.CreateShots(_instance, gameTime);
 
             movement.Move(gameTime, _instance);

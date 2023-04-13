@@ -58,7 +58,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                     sprite.Draw(spriteBatch, gameTime);
                 }
 
-                if(Player.Instance.IsInvincible)
+                if(Player.Instance.IsInvincible || Player.Instance.IsCheatMode)
                 {
                     invulnMode.Draw(spriteBatch, gameTime);
                 }
