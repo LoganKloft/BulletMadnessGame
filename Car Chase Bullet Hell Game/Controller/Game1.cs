@@ -140,10 +140,20 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             Sprite gameWon = new Sprite();
             gameWon.LoadContent(Content, "win");
 
+            Sprite slowMode = new Sprite();
+            slowMode.LoadContent(Content, "Turtle");
+            slowMode.DestinationRectangle = new Rectangle(widthSize - 64, heightSize - 64, 64, 64);
+
+            Sprite invulnMode = new Sprite();
+            invulnMode.LoadContent(Content, "Shield");
+            invulnMode.DestinationRectangle = new Rectangle(widthSize - 64, heightSize - 128, 64, 64);
+
             DrawController.gameLost = gameLost;
             DrawController.gameWon = gameWon;
             DrawController.background = _background;
             DrawController.playerSprite = _playerSprite;
+            DrawController.slowMode = slowMode;
+            DrawController.invulnMode = invulnMode;
         }
 
         public void HandleInput(GameTime gameTime)

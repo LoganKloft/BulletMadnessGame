@@ -54,6 +54,19 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             }
         }
 
+        public bool IsSlow
+        {
+            get
+            {
+                if (movement is PlayerMovementPattern)
+                {
+                    return ((PlayerMovementPattern)movement).IsSlow;
+                }
+
+                return false;
+            }
+        }
+
         public float Health
         {
             get { return health; }

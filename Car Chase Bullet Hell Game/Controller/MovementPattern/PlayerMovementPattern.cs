@@ -21,6 +21,14 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
         private static Rectangle screenSize = Game1.gd.Viewport.Bounds;
         MovementParams _movementParams;
 
+        public bool IsSlow
+        {
+            get
+            {
+                return speed == slow;
+            }
+        }
+
         public PlayerMovementPattern(MovementParams movementParams)
         {
             _movementParams = movementParams;

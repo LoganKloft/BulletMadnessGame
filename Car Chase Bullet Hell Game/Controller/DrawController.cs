@@ -21,6 +21,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public static Sprite playerSprite;
         public static Sprite gameLost;
         public static Sprite gameWon;
+        public static Sprite slowMode;
+        public static Sprite invulnMode;
         public static List<Sprite> sprites = new List<Sprite>();
         public static List<Sprite> lives = new List<Sprite>();
         public static float death = 1f;
@@ -54,6 +56,16 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 foreach (Sprite sprite in sprites)
                 {
                     sprite.Draw(spriteBatch, gameTime);
+                }
+
+                if(Player.Instance.IsInvincible)
+                {
+                    invulnMode.Draw(spriteBatch, gameTime);
+                }
+
+                if (Player.Instance.IsSlow)
+                {
+                    slowMode.Draw(spriteBatch, gameTime);
                 }
 
                 if(spawn.CheckGameOver() == true)
