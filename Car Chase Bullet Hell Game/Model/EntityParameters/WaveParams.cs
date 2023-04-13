@@ -8,7 +8,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.EntityParameters
 {
     internal class WaveParams
     {
-        public int id { get; set; }
+        public int? id { get; set; }
 
         public IList<EnemyParams> enemies { get; set; }
     }

@@ -15,8 +15,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPatternFactories
     {
         public override MovementPattern.MovementPattern CreateMovementPattern(MovementParams movementParams)
         {
-            Point point = new Point(movementParams.point[0], movementParams.point[1]);
-            return new CircleMovementPattern(point, movementParams.radius);
+            return new CircleMovementPattern(movementParams);
         }
     }
 }

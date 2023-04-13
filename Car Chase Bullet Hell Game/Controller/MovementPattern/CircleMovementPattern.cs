@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
@@ -14,11 +15,16 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
         private Point _pivotPoint = new Point(0, 0); // the point to rotate around
         private float _speed = 2f;
         private double _angle = Math.PI / 2d;
+        MovementParams _movementParams;
 
-        public CircleMovementPattern(Point pivotPoint, int radius)
+        public CircleMovementPattern(MovementParams movementParams)
         {
-            _pivotPoint = pivotPoint;
-            _radius = radius;
+            _movementParams = movementParams;
+            _pivotPoint = _movementParams.point != null ? new Point(_movementParams.point[0], _movementParams.point[1])
+                : _pivotPoint;
+
+            _radius = _movementParams.radius != null ? (int)_movementParams.radius : _radius;
+
         }
 
         public Point PivotPoint

@@ -22,12 +22,17 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
         private int shotCount = 0;
         string asset;
         private StraightShotFactory shotFactory = new StraightShotFactory();
+        ShotParams _shotParams;
 
-        public HalfCircleShotPattern(string asset, Point point, int shotCount) : base()
+        public HalfCircleShotPattern(ShotParams shotParams) : base()
         {
-            this.shotCount = shotCount;
-            this.asset = asset;
-            this.point = point;
+            _shotParams = shotParams;
+            shotCount = shotParams.shotCount != null ? (int)shotParams.shotCount : shotCount;
+            this.asset = shotParams.asset;
+            if (shotParams.point != null)
+            {
+                this.point = new Point(shotParams.point[0], shotParams.point[1]);
+            }
         }
 
         // potential to be called multiple times if bullet is both offscreen and collides with enemy at the same time
@@ -47,19 +52,22 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             double offset = Math.PI * 1d / shotCount;
             for (int i = 0; i < shotCount; i++)
             {
-                Shot shot = new Shot(.75);
+                (Shot shot, Sprite sprite) = ShotFactory.CreateShot(_shotParams);
                 MovementPattern.MovementPattern movementPattern = shotFactory.CreateMovementPattern(new MovementParams { direction = offset * i, speed = 5 });
                 shot.MovementPattern = movementPattern;
-                Sprite shotSprite = new Sprite();
-                shotSprite.LoadContent(Game1.content, asset);
-                shot.DestinationRectangle = shotSprite.DestinationRectangle;
-                shot.DestinationRectangleChanged += shotSprite.DestinationRectangleChangedHandler;
-                shot.RotationChanged += shotSprite.RotationChangedHandler;
-                shot.OriginChanged += shotSprite.OriginChangedHandler;
-                shot.DestroyEvent += shotSprite.DestroyEventHandler;
-                DrawController.AddSprite(shotSprite);
-                shot.DestinationRectangle.X = point.X - shot.DestinationRectangle.Width / 2;
-                shot.DestinationRectangle.Y = point.Y - shot.DestinationRectangle.Height / 2;
+                DrawController.AddSprite(sprite);
+
+
+                if (_shotParams.point == null)
+                {
+                    shot.DestinationRectangle.X = entity.Center.X - (shot.DestinationRectangle.Width / 2);
+                    shot.DestinationRectangle.Y = entity.Center.Y - (shot.DestinationRectangle.Height / 2);
+                }
+                else
+                {
+                    shot.DestinationRectangle.X = this.point.X;
+                    shot.DestinationRectangle.Y = this.point.Y;
+                }
 
                 shot.DestinationRectangle.Width = 50;
                 shot.DestinationRectangle.Height = 50;

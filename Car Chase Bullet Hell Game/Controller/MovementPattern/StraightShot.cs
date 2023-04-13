@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
@@ -17,11 +18,13 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
         private double _xDirection = 1d;
         private double _yDirection = 0d;
         private double _speed = 5f;
+        MovementParams _movementParams;
 
-        public StraightShot(double direction, double speed = 5f)
+        public StraightShot(MovementParams movementParams)
         {
-            Direction = direction;
-            _speed = speed;
+            _movementParams = movementParams;
+            Direction = _movementParams.direction != null ? (double)_movementParams.direction : _direction;
+            _speed = _movementParams.speed != null ? (double) _movementParams.speed : _speed;
         }
 
         public double Direction

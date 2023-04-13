@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
@@ -12,6 +13,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
     {
         private int curRun = 0;
         private bool moveRight = true;
+        MovementParams _movementParams;
+
+        public RightMovementPattern(MovementParams movementParams)
+        {
+            _movementParams = movementParams;
+        }
 
         public override void Move(GameTime gameTime, Entity entity)
         {

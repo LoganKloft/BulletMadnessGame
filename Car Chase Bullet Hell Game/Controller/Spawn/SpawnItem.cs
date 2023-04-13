@@ -20,8 +20,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
     {
         public bool spawned = false;
         public string asset;
-        public float start;
-        public float duration;
+        public float start = 0;
+        public float duration = 00;
         public Rectangle DestinationRectangle;
         public Rectangle Hitbox;
         public List<MovementItem> movementItems = new List<MovementItem>();
@@ -39,8 +39,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
         {
             this.enemyParams = enemyParams;
             asset = enemyParams.asset;
-            start = enemyParams.start;
-            duration = enemyParams.duration;
+            start = enemyParams.start != null ? (float)enemyParams.start : start;
+            duration = enemyParams.duration != null ? (float)enemyParams.duration : duration;
 
             if (enemyParams.dimensions != null)
             {

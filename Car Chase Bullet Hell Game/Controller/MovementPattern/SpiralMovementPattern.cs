@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
@@ -15,13 +16,17 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
         private Point _pivotPoint = new Point(0, 0); // the point to rotate around
         private float _speed = 2f;
         private double _angle = Math.PI / 2d;
+        MovementParams _movementParams;
 
-        public SpiralMovementPattern(Point pivotPoint, int radius, int endRadius, int startDegree)
+        public SpiralMovementPattern(MovementParams movementParams)
         {
-            _pivotPoint = pivotPoint;
-            _radius = radius;
-            _endRadius = endRadius;
-            _angle = (Math.PI / 180) * startDegree;
+            _movementParams = movementParams;
+            _pivotPoint = _movementParams.point != null ? new Point(_movementParams.point[0], _movementParams.point[1])
+                : _pivotPoint;
+            _radius = _movementParams.radius != null ? (int)_movementParams.radius : _radius;
+
+            _endRadius = _movementParams.endRadius != null ? (int) _movementParams.endRadius : _endRadius;
+            _angle = _movementParams.startDegree != null ? (double)(Math.PI / 180) * (int)_movementParams.startDegree : 0;
         }
 
         public Point PivotPoint

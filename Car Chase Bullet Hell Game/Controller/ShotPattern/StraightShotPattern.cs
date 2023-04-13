@@ -19,17 +19,20 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
     {
         private int shotCount = 0;
         string asset;
+        ShotParams _shotParams;
         private StraightShotFactory factory = new StraightShotFactory();
         //Point point;
         //double dir; - Never used and hard to make work with current parser. If needed, we need to update parameters passed into parser.
 
         //public StraightShotPattern(string asset, Point point, double dir, int shotCount) : base()
-        public StraightShotPattern(string asset, Point point, int shotCount) : base()
+        public StraightShotPattern(ShotParams shotParams) : base()
         {
-            this.shotCount = shotCount;
-            this.asset = asset;
-            this.point = point;
-            //this.dir = dir;
+            _shotParams = shotParams;
+            shotCount = shotParams.shotCount != null ? (int)shotParams.shotCount : shotCount;
+            if (shotParams.point != null)
+            {
+                this.point = new Point(shotParams.point[0], shotParams.point[1]);
+            }
         }
 
         // potential to be called multiple times if bullet is both offscreen and collides with enemy at the same time
@@ -41,22 +44,22 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 
         public override void CreateShots(Entity entity, GameTime gameTime)
         {
-            Shot shot = new Shot(.5);
+            (Shot shot, Sprite sprite) = ShotFactory.CreateShot(_shotParams);
             MovementPattern.MovementPattern movementPattern = factory.CreateMovementPattern(new MovementParams() {direction = 1.5});
             shot.MovementPattern = movementPattern;
-            Sprite shotSprite = new Sprite();
-            shotSprite.LoadContent(Game1.content, asset);
-            shot.DestinationRectangle = shotSprite.DestinationRectangle;
-            shot.DestinationRectangleChanged += shotSprite.DestinationRectangleChangedHandler;
-            shot.RotationChanged += shotSprite.RotationChangedHandler;
-            shot.OriginChanged += shotSprite.OriginChangedHandler;
-            shot.DestroyEvent += shotSprite.DestroyEventHandler;
-            DrawController.AddSprite(shotSprite);
+            DrawController.AddSprite(sprite);
             //shot.LoadContent(content, asset);
             //shot.Direction = dir;
-            shot.DestinationRectangle.X = point.X - shot.DestinationRectangle.Width / 2;
-            shot.DestinationRectangle.Y = point.Y - shot.DestinationRectangle.Height / 2;
-            shot.NotifyOfDestinationRectangleChange();
+            if (_shotParams.point == null)
+            {
+                shot.DestinationRectangle.X = entity.Center.X - (shot.DestinationRectangle.Width / 2);
+                shot.DestinationRectangle.Y = entity.Center.Y - (shot.DestinationRectangle.Height / 2);
+            }
+            else
+            {
+                shot.DestinationRectangle.X = this.point.X;
+                shot.DestinationRectangle.Y = this.point.Y;
+            }
 
             //shot.DestinationRectangle.Width = 50;
             //shot.DestinationRectangle.Height = 50;

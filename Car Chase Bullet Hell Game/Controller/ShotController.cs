@@ -14,6 +14,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
     {
         static List<Shot> shots = new List<Shot>();
 
+        public static List<Shot> GetShots()
+        {
+            return shots;
+        }
+
         public static void AddShot(Shot shot)
         {
             shots.Add(shot);

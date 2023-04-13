@@ -15,7 +15,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPatternFactories
     {
         public override MovementPattern.MovementPattern CreateMovementPattern(MovementParams movementParams)
         {
-            return new StraightShot(movementParams.direction, movementParams.speed);
+            return new StraightShot(movementParams);
         }
     }
 }

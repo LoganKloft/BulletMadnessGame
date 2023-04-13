@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
@@ -15,10 +16,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
         private double _yDirection = 0d;
         private double _speed = 10f;
         private double _rotationSpeed = .05f;
+        MovementParams _movementParams;
 
-        public TargetingShot(Entity entity)
+        public TargetingShot(MovementParams movementParams)
         {
-            entity.Origin = new Vector2(entity.DestinationRectangle.Width / 2, entity.DestinationRectangle.Height / 2);
+            _movementParams = movementParams;
+            //entity.Origin = new Vector2(entity.DestinationRectangle.Width / 2, entity.DestinationRectangle.Height / 2);
         }
 
         public delegate void BulletLifetimeExpiredEventHandler(object sender);

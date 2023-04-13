@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
@@ -18,197 +19,137 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
         private float topSideMax = 0.0f + Game1.playerHeight / 2;
         private float bottomSideMax = screenSize.Height - Game1.playerHeight / 2;
         private static Rectangle screenSize = Game1.gd.Viewport.Bounds;
+        MovementParams _movementParams;
+
+        public PlayerMovementPattern(MovementParams movementParams)
+        {
+            _movementParams = movementParams;
+        }
 
         public override void Move(GameTime gameTime, Entity entity)
         {
             Point current = entity.Center;
 
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) || Keyboard.GetState().IsKeyDown(Keys.RightShift))
+            {
+                speed = slow;
+            }
+            else
+            {
+                speed = normal;
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.Right) || Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) || Keyboard.GetState().IsKeyDown(Keys.RightShift))
-                {
-                    float temp = 1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                float temp = 1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    speed = slow;
+                Vector2 v = new Vector2(temp * speed, 0);
 
-                    Vector2 v = new Vector2(temp * speed, 0);
+                if (current.X + temp * speed >= rightSideMax)
+                    v.X = rightSideMax - current.X;
 
-                    if (current.X + temp * speed >= rightSideMax)
-                        v.X = rightSideMax - current.X;
-
-                    entity.DestinationRectangle.Offset(v);
-                    entity.NotifyOfDestinationRectangleChange();
-
-                    speed = normal;
-                }
-                else
-                {
-                    float temp = 1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                    Vector2 v = new Vector2(temp * speed, 0);
-
-                    if (current.X + temp * speed >= rightSideMax)
-                        v.X = rightSideMax - current.X;
-
-                    entity.DestinationRectangle.Offset(v);
-                    entity.NotifyOfDestinationRectangleChange();
-                }
+                entity.DestinationRectangle.Offset(v);
+                entity.NotifyOfDestinationRectangleChange();
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Left) || Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) || Keyboard.GetState().IsKeyDown(Keys.RightShift))
+                float temp = -1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                Vector2 v = new Vector2(temp * speed, 0);
+
+                if (current.X + temp * speed <= leftSideMax)
                 {
-                    float temp = -1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                    speed = slow;
-
-                    Vector2 v = new Vector2(temp * speed, 0);
-
-                    if (current.X + temp * speed <= leftSideMax)
-                        v.X = leftSideMax - current.X;
-
-                    entity.DestinationRectangle.Offset(v);
-                    entity.NotifyOfDestinationRectangleChange();
-
-                    speed = normal;
+                    v.X = leftSideMax - current.X;
                 }
-                else
-                {
-                    float temp = -1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    Vector2 v = new Vector2(temp * speed, 0);
-
-                    if (current.X + temp * speed <= leftSideMax)
-                    {
-                        v.X = leftSideMax - current.X;
-                    }
-
-                    entity.DestinationRectangle.Offset(v);
-                    entity.NotifyOfDestinationRectangleChange();
-                }
+                entity.DestinationRectangle.Offset(v);
+                entity.NotifyOfDestinationRectangleChange();
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Up) || Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) || Keyboard.GetState().IsKeyDown(Keys.RightShift))
-                {
-                    float temp = -1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                float temp = -1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    speed = slow;
-
-                    Vector2 v = new Vector2(0, temp * speed);
-
-                    if (current.Y + temp * speed <= topSideMax)
-                        v.Y = topSideMax - current.Y;
-
-                    entity.DestinationRectangle.Offset(v);
-                    entity.NotifyOfDestinationRectangleChange();
-
-                    speed = normal;
-                }
-                else
-                {
-                    float temp = -1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                    Vector2 v = new Vector2(0, temp * speed);
-                    if (current.Y + temp * speed <= topSideMax)
-                        v.Y = topSideMax - current.Y;
-                    entity.DestinationRectangle.Offset(v);
-                    entity.NotifyOfDestinationRectangleChange();
-                }
+                Vector2 v = new Vector2(0, temp * speed);
+                if (current.Y + temp * speed <= topSideMax)
+                    v.Y = topSideMax - current.Y;
+                entity.DestinationRectangle.Offset(v);
+                entity.NotifyOfDestinationRectangleChange();
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Down) || Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) || Keyboard.GetState().IsKeyDown(Keys.RightShift))
-                {
-                    float temp = 1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                float temp = 1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    speed = slow;
+                Vector2 v = new Vector2(0, temp * speed);
 
-                    Vector2 v = new Vector2(0, temp * speed);
+                if (current.Y + temp * speed > bottomSideMax)
+                    v.Y = bottomSideMax - current.Y;
 
-                    if (current.Y + temp * speed > bottomSideMax)
-                        v.Y = bottomSideMax - current.Y;
-
-                    entity.DestinationRectangle.Offset(v);
-                    entity.NotifyOfDestinationRectangleChange();
-
-                    speed = normal;
-                }
-                else
-                {
-
-                    float temp = 1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                    Vector2 v = new Vector2(0, temp * speed);
-
-                    if (current.Y + temp * speed > bottomSideMax)
-                        v.Y = bottomSideMax - current.Y;
-
-                    entity.DestinationRectangle.Offset(v);
-                    entity.NotifyOfDestinationRectangleChange();
-                }
+                entity.DestinationRectangle.Offset(v);
+                entity.NotifyOfDestinationRectangleChange();
             }
 
-            GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
+            // consider only making this call once, when Player is initialized in the program startup
+            // I think it causes stuterring in the movement
+            //GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
 
-            if (capabilities.IsConnected)
-            {
-                GamePadState state = GamePad.GetState(PlayerIndex.One);
-                if (capabilities.HasLeftXThumbStick)
-                {
-                    if (state.ThumbSticks.Left.X > 0)
-                    {
-                        float temp = 1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //if (capabilities.IsConnected)
+            //{
+            //    GamePadState state = GamePad.GetState(PlayerIndex.One);
+            //    if (capabilities.HasLeftXThumbStick)
+            //    {
+            //        if (state.ThumbSticks.Left.X > 0)
+            //        {
+            //            float temp = 1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                        Vector2 v = new Vector2(temp * speed, 0);
+            //            Vector2 v = new Vector2(temp * speed, 0);
 
-                        if (current.X + temp * speed >= rightSideMax)
-                            v.X = rightSideMax - current.X;
+            //            if (current.X + temp * speed >= rightSideMax)
+            //                v.X = rightSideMax - current.X;
 
-                        entity.DestinationRectangle.Offset(v);
-                        entity.NotifyOfDestinationRectangleChange();
-                    }
-                    if (state.ThumbSticks.Left.X < 0)
-                    {
-                        float temp = -1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //            entity.DestinationRectangle.Offset(v);
+            //            entity.NotifyOfDestinationRectangleChange();
+            //        }
+            //        if (state.ThumbSticks.Left.X < 0)
+            //        {
+            //            float temp = -1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                        Vector2 v = new Vector2(temp * speed, 0);
+            //            Vector2 v = new Vector2(temp * speed, 0);
 
-                        if (current.X + temp * speed <= leftSideMax)
-                            v.X = leftSideMax - current.X;
+            //            if (current.X + temp * speed <= leftSideMax)
+            //                v.X = leftSideMax - current.X;
 
-                        entity.DestinationRectangle.Offset(v);
-                        entity.NotifyOfDestinationRectangleChange();
-                    }
-                }
-                if (capabilities.HasLeftYThumbStick)
-                {
-                    if (state.ThumbSticks.Left.Y > 0)
-                    {
-                        float temp = -1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //            entity.DestinationRectangle.Offset(v);
+            //            entity.NotifyOfDestinationRectangleChange();
+            //        }
+            //    }
+            //    if (capabilities.HasLeftYThumbStick)
+            //    {
+            //        if (state.ThumbSticks.Left.Y > 0)
+            //        {
+            //            float temp = -1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                        Vector2 v = new Vector2(0, temp * speed);
+            //            Vector2 v = new Vector2(0, temp * speed);
 
-                        if (current.Y + temp * speed <= topSideMax)
-                            v.Y = topSideMax - current.Y;
+            //            if (current.Y + temp * speed <= topSideMax)
+            //                v.Y = topSideMax - current.Y;
 
-                        entity.DestinationRectangle.Offset(v);
-                        entity.NotifyOfDestinationRectangleChange();
-                    }
-                    if (state.ThumbSticks.Left.Y < 0)
-                    {
-                        float temp = 1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //            entity.DestinationRectangle.Offset(v);
+            //            entity.NotifyOfDestinationRectangleChange();
+            //        }
+            //        if (state.ThumbSticks.Left.Y < 0)
+            //        {
+            //            float temp = 1.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                        Vector2 v = new Vector2(0, temp * speed);
+            //            Vector2 v = new Vector2(0, temp * speed);
 
-                        if (current.Y + temp * speed > bottomSideMax)
-                            v.Y = bottomSideMax - current.Y;
+            //            if (current.Y + temp * speed > bottomSideMax)
+            //                v.Y = bottomSideMax - current.Y;
 
-                        entity.DestinationRectangle.Offset(v);
-                        entity.NotifyOfDestinationRectangleChange();
-                    }
-                }
-            }
+            //            entity.DestinationRectangle.Offset(v);
+            //            entity.NotifyOfDestinationRectangleChange();
+            //        }
+            //    }
+            //}
         }
     }
 }

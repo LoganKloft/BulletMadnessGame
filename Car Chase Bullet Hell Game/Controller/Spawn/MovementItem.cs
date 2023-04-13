@@ -33,7 +33,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
         public MovementItem(SpawnItem spawnItem, MovementParams movementParams)
         {
             this.movementParams = movementParams;
-            this.duration = movementParams.duration;
+            this.duration = movementParams.duration != null ? (float)movementParams.duration : duration;
             this.spawnItem = spawnItem;
 
             switch (movementParams.movementPattern)

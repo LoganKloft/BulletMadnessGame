@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
@@ -19,6 +20,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
         private int lap = 0;
         private double x_move = 0, y_move = 0, distance = 0, direction = 0;
         private bool pause = false;
+        MovementParams _movementParams;
+
+        public TriangleMovementPattern(MovementParams movementParams)
+        {
+            _movementParams = movementParams;
+        }
 
         public override void Move(GameTime gameTime, Entity entity)
         {

@@ -17,13 +17,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
     {
         string _asset;
         int _shotCount;
+        ShotParams _shotParams;
         private StraightShotFactory factory = new StraightShotFactory();
 
-        public ShootPlayerShotPattern(string asset, Point point, int shotCount) : base()
+        public ShootPlayerShotPattern(ShotParams shotParams) : base()
         {
-            base.point = point;
-            _asset = asset;
-            _shotCount = shotCount;
+            _shotParams = shotParams;
         }
         public override void CreateShots(Entity entity, GameTime gameTime)
         {
@@ -39,20 +38,13 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             // angle based on x-axis
             double angle = Math.Atan2(v.Y, v.X);
 
-            Shot shot = new Shot(.5);
+            (Shot shot, Sprite sprite) = ShotFactory.CreateShot(_shotParams);
             MovementPattern.MovementPattern movementPattern = factory.CreateMovementPattern(new MovementParams { direction = angle });
             shot.MovementPattern = movementPattern;
-            Sprite shotSprite = new Sprite();
-            shotSprite.LoadContent(Game1.content, _asset);
-            shot.DestinationRectangle = shotSprite.DestinationRectangle;
-            shot.DestinationRectangleChanged += shotSprite.DestinationRectangleChangedHandler;
-            shot.RotationChanged += shotSprite.RotationChangedHandler;
-            shot.OriginChanged += shotSprite.OriginChangedHandler;
-            shot.DestroyEvent += shotSprite.DestroyEventHandler;
-            DrawController.AddSprite(shotSprite);
+            DrawController.AddSprite(sprite);
 
-            shot.DestinationRectangle.X = point.X - (shot.DestinationRectangle.Width / 2);
-            shot.DestinationRectangle.Y = point.Y - (shot.DestinationRectangle.Height / 2);
+            shot.DestinationRectangle.X = entity.Center.X - (shot.DestinationRectangle.Width / 2);
+            shot.DestinationRectangle.Y = entity.Center.Y - (shot.DestinationRectangle.Height / 2);
             shot.NotifyOfDestinationRectangleChange();
             ShotController.AddShot(shot);
 

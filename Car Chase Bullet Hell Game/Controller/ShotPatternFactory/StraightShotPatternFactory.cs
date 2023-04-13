@@ -12,13 +12,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
     {
         public override ShotPattern CreateShotPattern(ShotParams shotParams)
         {
-            Point point = new Point(0, 0);
-            if (shotParams.point != null)
-            {
-                point.X = shotParams.point[0];
-                point.Y = shotParams.point[1];
-            }
-            return new StraightShotPattern(shotParams.asset, point, shotParams.shotCount);
+            return new StraightShotPattern(shotParams);
         }
     }
 }

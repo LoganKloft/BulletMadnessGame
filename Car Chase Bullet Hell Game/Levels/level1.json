@@ -9,7 +9,7 @@
           "id": 0,
           "start": 0,
           "duration": 15,
-          "dimensions":  [125, 125],
+          "dimensions": [ 125, 125 ],
           "movementItems": [
             {
               "movementPattern": "LeftMovementPattern",

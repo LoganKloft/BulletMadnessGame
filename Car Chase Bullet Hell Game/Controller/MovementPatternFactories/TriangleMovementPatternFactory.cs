@@ -15,7 +15,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPatternFactories
     {
         public override MovementPattern.MovementPattern CreateMovementPattern(MovementParams movementParams)
         {
-            return new TriangleMovementPattern();
+            return new TriangleMovementPattern(movementParams);
         }
     }
 }

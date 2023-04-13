@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
@@ -13,6 +14,13 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
         private float speed = 5f;
         private Point location = new Point(545, -1000);
         private double x_move = 0, y_move = 0, distance = 0, direction = 0;
+        MovementParams _movementParams;
+
+        public OffScreenMovementPattern(MovementParams movementParams)
+        {
+            _movementParams = movementParams;
+        }
+
         public override void Move(GameTime gameTime, Entity entity)
         {
 

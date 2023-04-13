@@ -17,10 +17,10 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
 {
     internal class ShotItem
     {
-        public float start;
-        public float duration;
-        public float shootSpeed;
-        public float timer;
+        public float start = 0;
+        public float duration = 0;
+        public float shootSpeed = 0;
+        public float timer = 0;
         public string type;
         public string asset;
         int shotCount;
@@ -37,9 +37,9 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
         public ShotItem(SpawnItem spawnItem, ShotParams shotParams)
         {
             this.shotParams = shotParams;
-            this.start = shotParams.start;
-            this.duration = shotParams.duration;
-            this.shootSpeed = timer = shotParams.shootSpeed;
+            this.start = shotParams.start != null ? (float)shotParams.start : start;
+            this.duration = shotParams.duration != null ? (float)shotParams.duration : duration;
+            this.shootSpeed = timer = shotParams.shootSpeed != null ? (float)shotParams.shootSpeed : timer;
             //this.type = type;
             //this.asset = asset;
             this.spawnItem = spawnItem;
@@ -71,7 +71,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
                 {
                     if (start <= 0f)
                     {
-                        shotPattern.point = spawnItem.enemy.Center;
+                        //shotPattern.point = spawnItem.enemy.Center;
                         shotPattern.CreateShots(spawnItem.enemy);
                         active = true;
                     }
@@ -94,7 +94,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
                     if (timer <= 0f)
                     {
                         timer = shootSpeed;
-                        shotPattern.point = spawnItem.enemy.Center;
+                        //shotPattern.point = spawnItem.enemy.Center;
                         shotPattern.CreateShots(spawnItem.enemy);
                     }
                 }

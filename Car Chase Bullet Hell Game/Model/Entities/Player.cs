@@ -13,6 +13,7 @@ using Car_Chase_Bullet_Hell_Game.Controller.MovementPatternFactories;
 using Car_Chase_Bullet_Hell_Game.Controller.Commands;
 using static Car_Chase_Bullet_Hell_Game.Controller.ShotPattern.PlayerShotPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 {
@@ -23,7 +24,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         private static PlayerMovementPatternFactory movementFactory = new PlayerMovementPatternFactory();
         //private static MovementPattern movement = movementFactory.createMovement();
         private static MovementPattern movement = movementFactory.CreateMovementPattern(null);
-        private static PlayerShotPattern shots = new PlayerShotPattern();
+        private static PlayerShotPattern shots = new PlayerShotPattern(new ShotParams { asset = "01"});
         private static readonly object _lock = new object();
         private float health = 3f;
         

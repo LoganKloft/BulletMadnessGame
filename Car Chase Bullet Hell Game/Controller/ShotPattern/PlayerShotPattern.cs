@@ -20,9 +20,15 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
         private float shotSpeed = .25f;
         private float shotTimer = 0f;
         private StraightShotFactory straight = new StraightShotFactory();
+        ShotParams _shotParams;
 
         public delegate void LostLifeEventHandler();
-        
+
+        public PlayerShotPattern(ShotParams shotParams)
+        {
+            _shotParams = shotParams;
+        }
+
         public override void CreateShots(Entity entity, GameTime gameTime)
         {
             Point current = entity.Center;
@@ -37,22 +43,14 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             {
                 if (shotTimer >= shotSpeed)
                 {
-                    Shot shot = new Shot(.5);
+                    (Shot shot, Sprite sprite) = ShotFactory.CreateShot(_shotParams);
                     MovementPattern.MovementPattern movementPattern = straight.CreateMovementPattern(new MovementParams { direction = (-Math.PI / 2), speed = 10 });
                     shot.MovementPattern = movementPattern;
-                    Sprite shotSprite = new Sprite();
-                    shotSprite.LoadContent(Game1.content, "01");
-                    shot.DestinationRectangle = shotSprite.DestinationRectangle;
-                    shot.DestinationRectangleChanged += shotSprite.DestinationRectangleChangedHandler;
-                    shot.RotationChanged += shotSprite.RotationChangedHandler;
-                    shot.OriginChanged += shotSprite.OriginChangedHandler;
-                    shot.DestroyEvent += shotSprite.DestroyEventHandler;
-                    DrawController.AddSprite(shotSprite);
+                    DrawController.AddSprite(sprite);
 
                     shot.DestinationRectangle.X = entity.Center.X - shot.DestinationRectangle.Width / 2;
                     shot.DestinationRectangle.Y = entity.Center.Y - shot.DestinationRectangle.Height / 2;
                     shot.NotifyOfDestinationRectangleChange();
-                    shot.DestroyEvent += ShotController.DestroyEventHandler;
                     ShotController.AddShot(shot);
                     Command command = new CollisionBulletEnemyCommand(shot);
                     CollisionDetector.AddCommand(command);

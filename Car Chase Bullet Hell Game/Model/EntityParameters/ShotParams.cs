@@ -11,9 +11,9 @@ namespace Car_Chase_Bullet_Hell_Game.Model.EntityParameters
         public string shotPattern { get; set; }
         public string asset { get; set; }
         public IList<int> point { get; set; }
-        public int shotCount { get; set; }
-        public float start { get; set; }
-        public float duration { get; set; }
-        public float shootSpeed { get; set; }
+        public int? shotCount { get; set; }
+        public float? start { get; set; }
+        public float? duration { get; set; }
+        public float? shootSpeed { get; set; }
     }
 }

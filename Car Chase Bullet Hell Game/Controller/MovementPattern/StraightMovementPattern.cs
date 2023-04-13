@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
@@ -14,6 +15,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
         Queue<Point> waypoints = new Queue<Point>();
         Queue<Point> discarded = new Queue<Point>();
         public bool repeat = false;
+        MovementParams _movementParams;
+
+        public StraightMovementPattern(MovementParams movementParams)
+        {
+            _movementParams = movementParams;
+        }
 
         public void AddPoint(Point p)
         {

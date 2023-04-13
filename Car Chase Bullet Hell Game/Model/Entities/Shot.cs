@@ -41,8 +41,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             }
         }
 
-        public delegate void BulletOffscreenEventHandler(Shot shot);
-        public event BulletOffscreenEventHandler BulletOffscreenEvent;
+        //public delegate void BulletOffscreenEventHandler(Shot shot);
+        //public event BulletOffscreenEventHandler BulletOffscreenEvent;
 
         public override event DestroyEventHandler DestroyEvent;
 
@@ -70,5 +70,13 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         {
             InvokeDestroyEvent();
         }
+
+        //public void CollisionHandler(Entity entity)
+        //{
+        //    if (entity is Shot)
+        //    {
+
+        //    }
+        //}
     }
 }
