@@ -30,6 +30,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         public double invincibilityTime = 2;
         bool _pauseHasBeenUp = true;
         
+        private Powerup powerup = null; 
+
         private bool invincibility = false;
 
         public override event DestroyEventHandler DestroyEvent;
@@ -155,6 +157,29 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
             movement.Move(gameTime, _instance);
             
+        }
+
+        public void ApplyPowerUp(Powerup p)
+        {
+            powerup = p;
+
+            Tuple<string, int> powerUpTuple = new(null, 0);
+
+            if (powerup != null)
+            {
+
+                powerUpTuple = powerup.powerUpDeterminer();
+            }
+
+            if (powerUpTuple.Item1 == "ExtraHealth")
+            {
+                health += (float)powerUpTuple.Item2;
+            }
+
+            else
+            {
+                return; // FIX THIS TO APPLY EXTRA DAMAGE TO SHOTS
+            }
         }
     }
 }
