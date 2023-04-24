@@ -12,7 +12,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
     {
         public override ShotPattern CreateShotPattern(ShotParams shotParams)
         {
-            return new PlayerShotPattern(shotParams);
+            return new PlayerShotPattern(shotParams, 1f);
         }
     }
 }

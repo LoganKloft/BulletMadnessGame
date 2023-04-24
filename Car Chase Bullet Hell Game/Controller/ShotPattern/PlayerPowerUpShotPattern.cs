@@ -1,4 +1,4 @@
-﻿using Car_Chase_Bullet_Hell_Game.Controller.Commands;
+using Car_Chase_Bullet_Hell_Game.Controller.Commands;
 using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.MovementPatternFactories;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
@@ -15,18 +15,16 @@ using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 {
-    internal class PlayerShotPattern : ShotPattern
+    internal class PlayerPowerUpShotPattern : ShotPattern
     {
+        private float dmg = 2f;
         private float shotSpeed = .25f;
         private float shotTimer = 0f;
         private StraightShotFactory straight = new StraightShotFactory();
         ShotParams _shotParams;
-        float dmg = 0f;
-        public delegate void LostLifeEventHandler();
 
-        public PlayerShotPattern(ShotParams shotParams, float damage)
+        public PlayerPowerUpShotPattern(ShotParams shotParams)
         {
-            dmg = damage;
             _shotParams = shotParams;
         }
 
@@ -45,9 +43,9 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
                 if (shotTimer >= shotSpeed)
                 {
                     (Shot shot, Sprite sprite) = ShotFactory.CreateShot(_shotParams);
+                    shot.Damage = 2f;
                     MovementPattern.MovementPattern movementPattern = straight.CreateMovementPattern(new MovementParams { direction = (-Math.PI / 2), speed = 10 });
                     shot.MovementPattern = movementPattern;
-                    shot.Damage = dmg;
                     DrawController.AddSprite(sprite);
 
                     shot.DestinationRectangle.X = entity.Center.X - shot.DestinationRectangle.Width / 2;

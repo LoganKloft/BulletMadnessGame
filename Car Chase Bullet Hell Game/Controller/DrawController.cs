@@ -25,6 +25,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public static Sprite invulnMode;
         public static List<Sprite> sprites = new List<Sprite>();
         public static List<Sprite> lives = new List<Sprite>();
+        public static List<Sprite> powerUps = new List<Sprite>();
         public static float death = 1f;
         private static bool gameOverLost = false;
         private static bool gameOverWin = false;
