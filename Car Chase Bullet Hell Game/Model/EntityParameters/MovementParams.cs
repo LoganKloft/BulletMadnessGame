@@ -17,5 +17,24 @@ namespace Car_Chase_Bullet_Hell_Game.Model.EntityParameters
         public double? direction { get; set; }
         public double? speed { get; set; }
         public float? duration { get; set; }
+
+        public static MovementParams DeepCopy(MovementParams old)
+        {
+            MovementParams obj = new MovementParams();
+            obj.movementPattern = old.movementPattern;
+            if (old.point != null)
+            {
+                obj.point = new List<int>(old.point);
+            }
+            obj.radius = old.radius;
+            obj.endRadius = old.endRadius;
+            obj.startDegree = old.startDegree;
+            obj.entity = old.entity;
+            obj.direction = old.direction;
+            obj.speed = old.speed;
+            obj.duration = old.duration;
+
+            return obj;
+        }
     }
 }

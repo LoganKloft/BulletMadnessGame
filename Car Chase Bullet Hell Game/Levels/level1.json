@@ -6,11 +6,12 @@
         {
           "asset": "Motorcycle",
           "health": 5,
-          "healthBar": true,
           "id": 0,
           "start": 0,
           "duration": 15,
           "dimensions": [ 125, 125 ],
+          "interval": 1.0,
+          "intervals": 4,
           "movementItems": [
             {
               "movementPattern": "LeftMovementPattern",
@@ -22,7 +23,7 @@
             {
               "shotPattern": "CircleShotPattern",
               "asset": "02",
-              "shotCount": 16,
+              "shotCount": 12,
               "start": 0.0,
               "duration": 15.0,
               "shootSpeed": 3.0
@@ -35,7 +36,9 @@
           "id": 1,
           "start": 0,
           "duration": 15,
-          "dimensions":  [125, 125],
+          "dimensions": [ 125, 125 ],
+          "interval": 1.0,
+          "intervals": 4,
           "movementItems": [
             {
               "movementPattern": "RightMovementPattern",
@@ -47,7 +50,7 @@
             {
               "shotPattern": "CircleShotPattern",
               "asset": "01",
-              "shotCount": 16,
+              "shotCount": 12,
               "start": 0.0,
               "duration": 15.0,
               "shootSpeed": 3.0
@@ -121,6 +124,57 @@
               "start": 12.5,
               "duration": 15.0,
               "shootSpeed": 1.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "enemies": [
+        {
+          "asset": "Police",
+          "health": 5,
+          "start": 30,
+          "duration": 15,
+          "dimensions": [ 125, 125 ],
+          "movementItems": [
+            {
+              "movementPattern": "RightMovementPattern",
+              "entity": 1,
+              "duration": 15.0
+            }
+          ],
+          "shotItems": [
+            {
+              "shotPattern": "StraightShotPattern",
+              "asset": "KirbyBullet01",
+              "start": 0.0,
+              "duration": 15.0,
+              "shootSpeed": 0.5
+            }
+          ]
+        },
+        {
+          "asset": "Police",
+          "health": 5,
+          "start": 30,
+          "duration": 15,
+          "dimensions": [ 125, 125 ],
+          "movementItems": [
+            {
+              "movementPattern": "LeftMovementPattern",
+              "entity": 1,
+              "duration": 15.0
+            }
+          ],
+          "shotItems": [
+            {
+              "shotPattern": "StraightShotPattern",
+              "asset": "KirbyBullet01",
+              "start": 0.0,
+              "duration": 15.0,
+              "shootSpeed": 0.5
             }
           ]
         }

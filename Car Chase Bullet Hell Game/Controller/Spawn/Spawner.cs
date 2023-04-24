@@ -80,35 +80,34 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
             {
                 foreach (EnemyParams enemyParams in waveParams.enemies)
                 {
+                    // handles the original enemyParams
                     SpawnItem spawnItem = new SpawnItem(enemyParams);
                     AddInactiveSpawnItem(spawnItem);
+
+                    // handles extra enemies that can be spawned every interval for intervals
+                    if (enemyParams.interval != null && enemyParams.intervals != null)
+                    {
+                        float start = enemyParams.start != null ? (float)enemyParams.start : 0;
+                        float duration = enemyParams.duration != null ? (float)enemyParams.duration : 0;
+                        int intervals = enemyParams.intervals != null ? (int)enemyParams.intervals : 0;
+                        float interval = enemyParams.interval != null ? (float)enemyParams.interval : 0;
+                        for (int i = 0; i < intervals; i++)
+                        {
+                            start += interval;
+                            duration += interval;
+
+                            // create deep copy and change start time
+                            EnemyParams deepCopy = EnemyParams.DeepCopy(enemyParams);
+                            deepCopy.start = start;
+                            deepCopy.duration = duration;
+
+                            // create spawnitem and add to spawner
+                            spawnItem = new SpawnItem(deepCopy);
+                            AddInactiveSpawnItem(spawnItem);
+                        }
+                    }
                 }
             }
-
-            //si = new SpawnItem("Motorcycle", 0, 15);
-            //si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
-            //si.AddMovementItem(rightMovementPatternFactory.createMovement(), 15);
-            //si.AddShotItem(0f, 15f, 5f, circleShotPatternFactory.CreateShots(asset: "01", shotCount: 16));
-            //AddInactiveSpawnItem(si);
-
-            //SpawnItem si;
-            //si = new SpawnItem("Motorcycle", 0, 15);
-            //si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
-            //si.AddMovementItem(leftFactory.createMovement(), 15);
-            //si.AddShotItem(0f, 15f, 5f, circleShotPatternFactory.CreateShots(asset: "02", shotCount: 16));
-            //AddInactiveSpawnItem(si);
-
-            //si = new SpawnItem("Police", 30, 15);
-            //si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
-            //si.AddMovementItem(rightMovementPatternFactory.createMovement(), 15);
-            //si.AddShotItem(0, 15f, .5f, straightShotPatternFactory.CreateShots(asset: "KirbyBullet01", shotCount: 1));
-            //AddInactiveSpawnItem(si);
-
-            //si = new SpawnItem("Police", 30, 15);
-            //si.DestinationRectangle = new Rectangle(0, 0, 125, 125);
-            //si.AddMovementItem(leftFactory.createMovement(), 15);
-            //si.AddShotItem(0, 15f, .5f, straightShotPatternFactory.CreateShots(asset: "KirbyBullet01", shotCount: 1));
-            //AddInactiveSpawnItem(si);
 
             //si = new SpawnItem("02", 0, 15);
             //MovementPattern.MovementPattern mp1 = SpiralMovementPatternFactory.Create(new Point(500, 80), 1, 120, 180);
@@ -124,16 +123,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
             //si.AddShotItem(0, 3f, 0.1f, shootPlayerShotPatternFactory.CreateShots(asset: "01", shotCount: 1));
             //si.AddShotItem(5, 3f, 0.1f, shootPlayerShotPatternFactory.CreateShots(asset: "01", shotCount: 1));
             //si.AddShotItem(10, 3f, 0.1f, shootPlayerShotPatternFactory.CreateShots(asset: "01", shotCount: 1));
-            //AddInactiveSpawnItem(si);
-
-            //si = new SpawnItem("Tank", 15, 15);
-            //si.AddMovementItem(triangleFactory.createMovement(), 15);
-            //si.AddShotItem(0, 2.5f, 1.5f, circleShotPatternFactory.CreateShots(asset: "bullet2", shotCount: 16));
-            //si.AddShotItem(2.5f, 5f, 1.5f, halfCircleShotPatternFactory.CreateShots(asset: "bullet1", shotCount: 8));
-            //si.AddShotItem(5, 7.5f, 1.5f, circleShotPatternFactory.CreateShots(asset: "bullet2", shotCount: 16));
-            //si.AddShotItem(7.5f, 10f, 1.5f, halfCircleShotPatternFactory.CreateShots(asset: "bullet1", shotCount: 8));
-            //si.AddShotItem(10, 12.5f, 1.5f, circleShotPatternFactory.CreateShots(asset: "bullet2", shotCount: 16));
-            //si.AddShotItem(12.5f, 15f, 1.5f, halfCircleShotPatternFactory.CreateShots(asset: "bullet1", shotCount: 8));
             //AddInactiveSpawnItem(si);
         }
 
