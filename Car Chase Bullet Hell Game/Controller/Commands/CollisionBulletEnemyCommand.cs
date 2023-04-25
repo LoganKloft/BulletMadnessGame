@@ -24,7 +24,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
         {
             foreach (Enemy enemy in Spawner.GetActiveEnemies())
             {
-                if (_shot.DestinationRectangle.Intersects(enemy.DestinationRectangle))
+                if (_shot.HitBoxRectangle.Intersects(enemy.HitBoxRectangle))
                 {
                     enemy.TakeDamage(_shot);
                     _shot.InvokeDestroyEvent();
