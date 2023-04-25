@@ -23,11 +23,13 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         public bool hasLifeTime = false;
         private bool _offscreen = false; // prevent multiple offscreen event calls
         private bool _collided = false; // prevent multiple collided event calls
+        public ShotParams shotParams;
 
         public MovementPattern MovementPattern;
 
         public Shot(ShotParams shotParams) : base(shotParams?.hitboxPercent)
         {
+            this.shotParams = shotParams;
             Player.Instance.LostLife += this.PlayerLostLife;
         }
 

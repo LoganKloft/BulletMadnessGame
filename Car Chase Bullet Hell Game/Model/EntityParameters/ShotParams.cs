@@ -15,6 +15,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.EntityParameters
         public float? start { get; set; }
         public float? duration { get; set; }
         public float? shootSpeed { get; set; }
+        public bool? sticky { get; set; } 
         public double? hitboxPercent { get; set; } // ideally a double in range [0 - 1]
 
         public static ShotParams DeepCopy(ShotParams old)
@@ -31,6 +32,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.EntityParameters
             obj.duration = old.duration;
             obj.shootSpeed = old.shootSpeed;
             obj.hitboxPercent = old.hitboxPercent;
+            obj.sticky = old.sticky;
 
             return obj;
         }
