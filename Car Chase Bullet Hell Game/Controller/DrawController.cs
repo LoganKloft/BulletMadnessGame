@@ -12,6 +12,7 @@ using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
 using Car_Chase_Bullet_Hell_Game.Controller.Spawn;
+using Microsoft.Xna.Framework.Media;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller
 {
@@ -79,10 +80,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             }
             else if(gameOverLost)
             {
+                MediaPlayer.Stop();
                 GameOverLost(spriteBatch, gameTime);
             }
             else
             {
+                MediaPlayer.Stop();
                 GameOverWon(spriteBatch, gameTime);
             }
         }

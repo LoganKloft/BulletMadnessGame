@@ -126,8 +126,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             Player.Instance.NotifyOfDestinationRectangleChange();
 
             song = Content.Load<Song>("song");
-            MediaPlayer.Play(song);
-            MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
+            
+            //MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
 
             //soundEffects.Add(Content.Load<SoundEffect>("bulletNoise"));
 
@@ -170,10 +170,10 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             DrawController.invulnMode = invulnMode;
         }
 
-        void MediaPlayer_MediaStateChanged(object sender, System.EventArgs e)
-        {
-            MediaPlayer.Play(song);
-        }
+        //void MediaPlayer_MediaStateChanged(object sender, System.EventArgs e)
+        //{
+        //    MediaPlayer.Play(song);
+        //}
 
         public void HandleInput(GameTime gameTime)
         {
@@ -227,6 +227,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                     if (CheckIfButtonWasClicked())
                     {
                         _startButton.Clicked();
+                        MediaPlayer.Play(song);
                     }
                 }
             }
@@ -240,6 +241,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
                 if (spawner.CheckGameOver() == true)
                 {
+                    MediaPlayer.Stop();
                     return;
                 }
             }
