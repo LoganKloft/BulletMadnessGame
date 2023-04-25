@@ -68,11 +68,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
 
             if(!enemyParams.underlyingEnemy)
             {
-                (enemy, sprite) = EnemyFactory.CreateEnemy(asset);
+                (enemy, sprite) = EnemyFactory.CreateEnemy(enemyParams);
             }
             else
             {
-                (enemy, sprite) = SpiralSpawnerFactory.CreateEnemy(asset);
+                (enemy, sprite) = SpiralSpawnerFactory.CreateEnemy(enemyParams);
             }
             
 
