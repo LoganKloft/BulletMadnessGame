@@ -10,17 +10,18 @@ using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Controller;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 {
     internal class EnemyFactory
     {
-        public static (Enemy, Sprite) CreateEnemy(string asset)
+        public static (Enemy, Sprite) CreateEnemy(EnemyParams enemyParams)
         {
             Sprite sprite = new Sprite();
-            sprite.LoadContent(Game1.content, asset);
+            sprite.LoadContent(Game1.content, enemyParams.asset);
 
-            Enemy enemy = new Enemy();
+            Enemy enemy = new Enemy(enemyParams);
             enemy.DestinationRectangle = sprite.DestinationRectangle;
 
             enemy.DestinationRectangleChanged += sprite.DestinationRectangleChangedHandler;

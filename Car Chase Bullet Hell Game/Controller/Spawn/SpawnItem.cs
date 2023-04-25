@@ -63,7 +63,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
         // add sprite to DrawController to be drawn
         public void Spawn()
         {
-            (Enemy enemy, Sprite sprite) = EnemyFactory.CreateEnemy(asset);
+            (Enemy enemy, Sprite sprite) = EnemyFactory.CreateEnemy(enemyParams);
 
             this.enemy = enemy;
             this.sprite = sprite;

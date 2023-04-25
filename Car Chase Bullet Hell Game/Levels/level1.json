@@ -12,6 +12,7 @@
           "dimensions": [ 125, 125 ],
           "interval": 1.0,
           "intervals": 4,
+          "hitboxPercent": 0.5,
           "movementItems": [
             {
               "movementPattern": "LeftMovementPattern",
@@ -26,7 +27,8 @@
               "shotCount": 12,
               "start": 0.0,
               "duration": 15.0,
-              "shootSpeed": 3.0
+              "shootSpeed": 3.0,
+              "hitboxPercent": 0.5
             }
           ]
         },

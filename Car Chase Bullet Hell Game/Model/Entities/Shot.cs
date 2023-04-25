@@ -11,6 +11,7 @@ using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Controller;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 
 namespace Car_Chase_Bullet_Hell_Game.Model.Entities
@@ -25,8 +26,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
         public MovementPattern MovementPattern;
 
-        public Shot() : base() { }
-        public Shot(double percentHitBoxSize) : base(percentHitBoxSize)
+        public Shot(ShotParams shotParams) : base(shotParams?.hitboxPercent)
         {
             Player.Instance.LostLife += this.PlayerLostLife;
         }
