@@ -192,7 +192,7 @@
           "duration": 30,
           "dimensions": [ 20, 125 ],
           "enemy": {
-            "asset": "Boss",
+            "asset": "helicopter",
             "health": 5,
             "start": 45,
             "duration": 30,

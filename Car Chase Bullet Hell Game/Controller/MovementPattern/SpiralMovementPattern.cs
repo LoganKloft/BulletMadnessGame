@@ -11,7 +11,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
     internal class SpiralMovementPattern : MovementPattern
     {
-        private int _radius = 200;
+        private int _radius = 150;
         private int _endRadius = 200;
         private Point _pivotPoint = new Point(0, 0); // the point to rotate around
         private Entity _enemy;
