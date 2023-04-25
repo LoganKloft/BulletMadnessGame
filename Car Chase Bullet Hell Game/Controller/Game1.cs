@@ -129,7 +129,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             
             //MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
 
-            //soundEffects.Add(Content.Load<SoundEffect>("bulletNoise"));
+            soundEffects.Add(Content.Load<SoundEffect>("bulletNoise"));
 
             //soundEffects[0].Play();
             //var instance = soundEffects[0].CreateInstance();
