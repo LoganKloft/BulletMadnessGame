@@ -12,6 +12,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
     internal abstract class MovementPattern
     {
-        public abstract void Move(GameTime gameTime, Entity entity);
+        public abstract void Move(GameTime gameTime, List<Entity> entity);
     }
 }

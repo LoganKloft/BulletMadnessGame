@@ -63,7 +63,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             DestroyEvent?.Invoke(this);
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             //ShotPattern shotPattern;
             //while (ShotPatterns.TryPeek(out shotPattern) && shotPattern.Finished())
@@ -74,7 +74,9 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
             if (MovementPattern is not null)
             {
-                MovementPattern.Move(gameTime, this);
+                List<Entity> entity = new List<Entity>();
+                entity.Add(this);
+                MovementPattern.Move(gameTime, entity);
             }
             //foreach (ShotPattern pattern in ShotPatterns)
             //{

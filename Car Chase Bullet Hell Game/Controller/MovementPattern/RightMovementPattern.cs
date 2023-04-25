@@ -20,24 +20,24 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
             _movementParams = movementParams;
         }
 
-        public override void Move(GameTime gameTime, Entity entity)
+        public override void Move(GameTime gameTime, List<Entity> entity)
         {
             if (curRun == 0)
             {
                 ++curRun;
-                entity.DestinationRectangle.Y = 100;
-                entity.DestinationRectangle.X = 0;
+                entity[0].DestinationRectangle.Y = 100;
+                entity[0].DestinationRectangle.X = 0;
             }
 
             if (moveRight)
-                entity.DestinationRectangle.X += 5;
+                entity[0].DestinationRectangle.X += 5;
             else
-                entity.DestinationRectangle.X -= 5;
+                entity[0].DestinationRectangle.X -= 5;
 
-            if (entity.DestinationRectangle.X > 550 || entity.DestinationRectangle.X < 0)
+            if (entity[0].DestinationRectangle.X > 550 || entity[0].DestinationRectangle.X < 0)
                 moveRight = !moveRight;
 
-            entity.NotifyOfDestinationRectangleChange();
+            entity[0].NotifyOfDestinationRectangleChange();
         }
     }
 }

@@ -36,7 +36,9 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         {
             if (MovementPattern is not null)
             {
-                MovementPattern.Move(gameTime, this);
+                List<Entity> entity = new List<Entity>();
+                entity.Add(this);
+                MovementPattern.Move(gameTime, entity);
                 Offscreen();
             }
         }

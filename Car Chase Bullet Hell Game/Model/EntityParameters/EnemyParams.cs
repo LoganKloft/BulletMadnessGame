@@ -16,6 +16,9 @@ namespace Car_Chase_Bullet_Hell_Game.Model.EntityParameters
         public float? interval { get; set; } // how often to spawn an enemy
         public int? intervals { get; set; } // how many intervals
         public bool healthBar { get; set; }
+
+        public bool underlyingEnemy { get; set; }
+        public EnemyParams enemy { get; set; } // for spiral spawner
         public IList<int> dimensions { get; set; } // the DestinationRectangle
         public IList<MovementParams> movementItems { get; set; }
         public IList<ShotParams> shotItems { get; set; }
@@ -23,6 +26,12 @@ namespace Car_Chase_Bullet_Hell_Game.Model.EntityParameters
         public static EnemyParams DeepCopy(EnemyParams old)
         {
             EnemyParams obj = new EnemyParams();
+
+            obj.enemy = old.enemy;
+            if(obj.enemy!=null)
+            {
+                obj.underlyingEnemy = true;
+            }
 
             obj.asset = old.asset;
             obj.health = old.health;

@@ -21,29 +21,29 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
             _movementParams = movementParams;
         }
 
-        public override void Move(GameTime gameTime, Entity entity)
+        public override void Move(GameTime gameTime, List<Entity> entity)
         {
 
-            x_move = location.X - entity.DestinationRectangle.X;
-            y_move = location.Y - entity.DestinationRectangle.Y;
+            x_move = location.X - entity[0].DestinationRectangle.X;
+            y_move = location.Y - entity[0].DestinationRectangle.Y;
             distance = Math.Sqrt(Math.Pow(x_move, 2) + Math.Pow(y_move, 2));
             direction = speed / distance;
             //Update destination rectangles
             bool updated = false;
             if (x_move != 0)
             {
-                entity.DestinationRectangle.X += (int)(x_move * direction);
+                entity[0].DestinationRectangle.X += (int)(x_move * direction);
                 updated = true;
             }
             if (y_move != 0)
             {
-                entity.DestinationRectangle.Y += (int)(y_move * direction);
+                entity[0].DestinationRectangle.Y += (int)(y_move * direction);
                 updated = true;
             }
 
             if (updated)
             {
-                entity.NotifyOfDestinationRectangleChange();
+                entity[0].NotifyOfDestinationRectangleChange();
             }
         }
     }

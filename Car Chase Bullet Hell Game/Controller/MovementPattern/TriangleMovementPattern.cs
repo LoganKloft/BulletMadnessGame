@@ -27,14 +27,14 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
             _movementParams = movementParams;
         }
 
-        public override void Move(GameTime gameTime, Entity entity)
+        public override void Move(GameTime gameTime, List<Entity> entity)
         {
             // Set enemy at the correct position at the start of the movement pattern
             if (lap == 0)
             {
-                entity.DestinationRectangle.X = -10;
-                entity.DestinationRectangle.Y = -10;
-                entity.NotifyOfDestinationRectangleChange();
+                entity[0].DestinationRectangle.X = -10;
+                entity[0].DestinationRectangle.Y = -10;
+                entity[0].NotifyOfDestinationRectangleChange();
                 lap++;
             }
             //Update the index when it goes out of range
@@ -47,29 +47,29 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
             {
                 pause = false;
                 //Calculate necessary movement directions
-                x_move = points[pointIndex].X - entity.DestinationRectangle.X;
-                y_move = points[pointIndex].Y - entity.DestinationRectangle.Y;
+                x_move = points[pointIndex].X - entity[0].DestinationRectangle.X;
+                y_move = points[pointIndex].Y - entity[0].DestinationRectangle.Y;
                 distance = Math.Sqrt(Math.Pow(x_move, 2) + Math.Pow(y_move, 2));
                 direction = speed / distance;
                 //Update destination rectangles
                 bool updated = false;
                 if (x_move != 0)
                 {
-                    entity.DestinationRectangle.X += (int)(x_move * direction);
+                    entity[0].DestinationRectangle.X += (int)(x_move * direction);
                     updated = true;
                 }
                 if (y_move != 0)
                 {
-                    entity.DestinationRectangle.Y += (int)(y_move * direction);
+                    entity[0].DestinationRectangle.Y += (int)(y_move * direction);
                     updated = true;
                 }
                 if (updated)
                 {
-                    entity.NotifyOfDestinationRectangleChange();
+                    entity[0].NotifyOfDestinationRectangleChange();
                 }
             }
             //Update the index of the point we are trying to get to once we have reached the previous point.
-            if (entity.DestinationRectangle.X >= points[pointIndex].X - 5 && entity.DestinationRectangle.X <= points[pointIndex].X + 5 && entity.DestinationRectangle.Y >= points[pointIndex].Y - 5 && entity.DestinationRectangle.Y <= points[pointIndex].Y + 5)
+            if (entity[0].DestinationRectangle.X >= points[pointIndex].X - 5 && entity[0].DestinationRectangle.X <= points[pointIndex].X + 5 && entity[0].DestinationRectangle.Y >= points[pointIndex].Y - 5 && entity[0].DestinationRectangle.Y <= points[pointIndex].Y + 5)
             {
                 pause = true;
                 pointIndex++;

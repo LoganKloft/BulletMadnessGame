@@ -33,7 +33,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
         public delegate void DestroySpawnItemEventHandler(SpawnItem spawnItem);
         public event DestroySpawnItemEventHandler DestroySpawnItemEvent;
 
-        EnemyParams enemyParams;
+        public EnemyParams enemyParams;
 
         public SpawnItem(EnemyParams enemyParams)
         {
@@ -63,7 +63,18 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
         // add sprite to DrawController to be drawn
         public void Spawn()
         {
-            (Enemy enemy, Sprite sprite) = EnemyFactory.CreateEnemy(asset);
+            Enemy enemy;
+            Sprite sprite;
+
+            if(!enemyParams.underlyingEnemy)
+            {
+                (enemy, sprite) = EnemyFactory.CreateEnemy(asset);
+            }
+            else
+            {
+                (enemy, sprite) = SpiralSpawnerFactory.CreateEnemy(asset);
+            }
+            
 
             this.enemy = enemy;
             this.sprite = sprite;

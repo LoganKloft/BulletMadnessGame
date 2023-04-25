@@ -179,6 +179,46 @@
           ]
         }
       ]
+    },
+    {
+      "id": 4,
+      "enemies": [
+        {
+          "asset": "heart",
+          "health": 3000,
+          "start": 45,
+          "duration": 30,
+          "dimensions": [ 20, 125 ],
+          "enemy": {
+            "asset": "Boss",
+            "health": 5,
+            "start": 45,
+            "duration": 30,
+            "dimentsions": [ 125, 125 ],
+            "movementItems": [
+              {
+                "movementPattern": "TriangleMovementPattern",
+                "enitity": 1,
+                "duration": 30
+              }
+            ],
+            "shotItems": []
+          },
+          "underlyingEnemy": true,
+          "movementItems": [
+            {
+              "movementPattern": "SpiralMovementPattern",
+              "entity": 1,
+              "duration": 30.0
+            }
+          ],
+          "shotItems": [
+          ]
+        }
+
+
+      ]
+
     }
   ]
 }

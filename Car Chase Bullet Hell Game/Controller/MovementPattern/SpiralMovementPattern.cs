@@ -11,9 +11,10 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
     internal class SpiralMovementPattern : MovementPattern
     {
-        private int _radius = 100;
-        private int _endRadius = 400;
+        private int _radius = 20;
+        private int _endRadius = 200;
         private Point _pivotPoint = new Point(0, 0); // the point to rotate around
+        private Entity _enemy;
         private float _speed = 2f;
         private double _angle = Math.PI / 2d;
         MovementParams _movementParams;
@@ -46,17 +47,18 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
             set { _endRadius = value; }
         }
 
-        public override void Move(GameTime gameTime, Entity entity)
+        public override void Move(GameTime gameTime, List<Entity> entity)
         {
             _angle += gameTime.ElapsedGameTime.TotalSeconds * _speed;
+            _enemy = entity[1];
 
             double x_component = Math.Cos(_angle) * Radius;
             double y_component = Math.Sin(_angle) * Radius;
+            PivotPoint = new Point(_enemy.Center.X, _enemy.Center.Y);
+            entity[0].DestinationRectangle.X = PivotPoint.X + (int)x_component;
+            entity[0].DestinationRectangle.Y = PivotPoint.Y + (int)y_component;
 
-            entity.DestinationRectangle.X = PivotPoint.X + (int)x_component;
-            entity.DestinationRectangle.Y = PivotPoint.Y + (int)y_component;
-
-            entity.NotifyOfDestinationRectangleChange();
+            entity[0].NotifyOfDestinationRectangleChange();
 
             if (_radius < _endRadius)
             {

@@ -80,9 +80,21 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
             {
                 foreach (EnemyParams enemyParams in waveParams.enemies)
                 {
+                    //handles orbit enemy for final boss
+                    if (enemyParams.enemy != null)
+                    {
+                        EnemyParams orbit = EnemyParams.DeepCopy(enemyParams.enemy);
+                        orbit.start = enemyParams.enemy.start;
+                        orbit.duration = enemyParams.enemy.duration;
+                        SpawnItem spawn = new SpawnItem(orbit);
+                        AddInactiveSpawnItem(spawn);
+                    }
+
                     // handles the original enemyParams
                     SpawnItem spawnItem = new SpawnItem(enemyParams);
                     AddInactiveSpawnItem(spawnItem);
+
+
 
                     // handles extra enemies that can be spawned every interval for intervals
                     if (enemyParams.interval != null && enemyParams.intervals != null)
@@ -137,6 +149,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
                 {
                     activeItem.duration += 2;
                     activeItem.AddMovementItem(new MovementParams{ movementPattern="OffscreenMovementPattern", duration=2});
+                }
+                if(activeItem.enemyParams.underlyingEnemy == true)
+                {
+                   if(activeSpawnItems.Count>1)
+                    ((SpiralSpawner)activeItem.enemy).setOrbit(ref activeSpawnItems[i - 1].enemy);
                 }
                 activeItem.Update(gameTime);
                 if (activeSpawnItems.Count < count)

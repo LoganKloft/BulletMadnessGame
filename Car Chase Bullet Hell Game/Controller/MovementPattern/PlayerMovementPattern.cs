@@ -34,9 +34,9 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
             _movementParams = movementParams;
         }
 
-        public override void Move(GameTime gameTime, Entity entity)
+        public override void Move(GameTime gameTime, List<Entity> entity)
         {
-            Point current = entity.Center;
+            Point current = entity[0].Center;
 
             if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) || Keyboard.GetState().IsKeyDown(Keys.RightShift))
             {
@@ -56,8 +56,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
                 if (current.X + temp * speed >= rightSideMax)
                     v.X = rightSideMax - current.X;
 
-                entity.DestinationRectangle.Offset(v);
-                entity.NotifyOfDestinationRectangleChange();
+                entity[0].DestinationRectangle.Offset(v);
+                entity[0].NotifyOfDestinationRectangleChange();
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Left) || Keyboard.GetState().IsKeyDown(Keys.A))
             {
@@ -70,8 +70,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
                     v.X = leftSideMax - current.X;
                 }
 
-                entity.DestinationRectangle.Offset(v);
-                entity.NotifyOfDestinationRectangleChange();
+                entity[0].DestinationRectangle.Offset(v);
+                entity[0].NotifyOfDestinationRectangleChange();
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Up) || Keyboard.GetState().IsKeyDown(Keys.W))
             {
@@ -80,8 +80,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
                 Vector2 v = new Vector2(0, temp * speed);
                 if (current.Y + temp * speed <= topSideMax)
                     v.Y = topSideMax - current.Y;
-                entity.DestinationRectangle.Offset(v);
-                entity.NotifyOfDestinationRectangleChange();
+                entity[0].DestinationRectangle.Offset(v);
+                entity[0].NotifyOfDestinationRectangleChange();
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Down) || Keyboard.GetState().IsKeyDown(Keys.S))
             {
@@ -92,8 +92,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
                 if (current.Y + temp * speed > bottomSideMax)
                     v.Y = bottomSideMax - current.Y;
 
-                entity.DestinationRectangle.Offset(v);
-                entity.NotifyOfDestinationRectangleChange();
+                entity[0].DestinationRectangle.Offset(v);
+                entity[0].NotifyOfDestinationRectangleChange();
             }
 
             // consider only making this call once, when Player is initialized in the program startup

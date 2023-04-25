@@ -38,17 +38,17 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
             set { _radius = value; }
         }
 
-        public override void Move(GameTime gameTime, Entity entity)
+        public override void Move(GameTime gameTime, List<Entity> entity)
         {
             _angle += gameTime.ElapsedGameTime.TotalSeconds * _speed;
 
             double x_component = Math.Cos(_angle) * Radius;
             double y_component = Math.Sin(_angle) * Radius;
 
-            entity.DestinationRectangle.X = PivotPoint.X + (int)x_component;
-            entity.DestinationRectangle.Y = PivotPoint.Y + (int)y_component;
+            entity[0].DestinationRectangle.X = PivotPoint.X + (int)x_component;
+            entity[0].DestinationRectangle.Y = PivotPoint.Y + (int)y_component;
 
-            entity.NotifyOfDestinationRectangleChange();
+            entity[0].NotifyOfDestinationRectangleChange();
         }
     }
 }
