@@ -21,7 +21,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
         private float _rotationHitBox = 0f;
         public Vector2 _originHitBox = Vector2.Zero;
-        private double percent = 1.0;
+        private double percent = 0.5d;
 
         public Rectangle HitBoxRectangle;
 
@@ -36,11 +36,12 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             HitBoxRectangle = DestinationRectangle;
         }
 
-        public Entity(double percentHitBoxSize)
+        public Entity(double? percentHitBoxSize)
         {
             DestinationRectangle = new Rectangle();
             HitBoxRectangle = new Rectangle();
-            percent = percentHitBoxSize;
+
+            if (percentHitBoxSize != null) percent = (double)percentHitBoxSize;
         }
 
         // alternatively can send 'this' instead of specific attributes

@@ -29,9 +29,14 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
         {
             foreach (Shot shot in ShotController.GetShots())
             {
+                if (shot?.shotParams?.sticky != null)
+                {
+                    if (shot.shotParams.sticky == true) continue;
+                }
+
                 if (_shot.HitBoxRectangle.Intersects(shot.HitBoxRectangle))
                 {
-                    //shot.
+                    shot.MovementPattern = _shot.MovementPattern;
                 }
             }
         }

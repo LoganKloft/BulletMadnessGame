@@ -16,7 +16,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             Sprite sprite = new Sprite();
             sprite.LoadContent(Game1.content, shotParams.asset);
 
-            Shot shot = new Shot(.5);
+            Shot shot = new Shot(shotParams);
             shot.DestinationRectangle = sprite.DestinationRectangle;
 
             shot.DestinationRectangleChanged += sprite.DestinationRectangleChangedHandler;

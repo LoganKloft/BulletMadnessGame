@@ -16,6 +16,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.EntityParameters
         public float? interval { get; set; } // how often to spawn an enemy
         public int? intervals { get; set; } // how many intervals
         public bool healthBar { get; set; }
+        public double? hitboxPercent { get; set; } // ideally a double in range [0 - 1]
 
         public bool underlyingEnemy { get; set; }
         public EnemyParams enemy { get; set; } // for spiral spawner
@@ -41,6 +42,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.EntityParameters
             obj.interval = old.interval;
             obj.intervals = old.intervals;
             obj.healthBar = old.healthBar;
+            obj.hitboxPercent = old.hitboxPercent;
             
             if (old.dimensions != null)
             {

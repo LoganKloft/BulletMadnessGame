@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Content;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 {
@@ -21,13 +22,15 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
         public delegate void HealthChangedHandler(float health);
         public event HealthChangedHandler HealthChangedEvent;
+        public EnemyParams enemyParams;
 
         //public Queue<ShotPattern> ShotPatterns = new Queue<ShotPattern>();
-        float health;
+        float health = 5f;
 
-        public Enemy(float health = 5f)
+        public Enemy(EnemyParams enemyParams) : base(enemyParams?.hitboxPercent)
         {
-            this.health = health;
+            this.enemyParams = enemyParams;
+            this.health = enemyParams.health != null ? (float)enemyParams.health : this.health;
         }
 
         public float Health
