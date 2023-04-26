@@ -37,6 +37,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
         private HalfCircleShotPatternFactory halfCircleShotPatternFactory = new HalfCircleShotPatternFactory();
         private StraightShotPatternFactory straightShotPatternFactory = new StraightShotPatternFactory();
         private ShootPlayerShotPatternFactory shootPlayerShotPatternFactory = new ShootPlayerShotPatternFactory();
+        private SingleSpiralShotFactory singleSpiralShotFactory = new SingleSpiralShotFactory();
 
         public ShotItem(SpawnItem spawnItem, ShotParams shotParams)
         {
@@ -69,7 +70,10 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
                     this.shotPattern = straightShotPatternFactory.CreateShotPattern(shotParams);
                     break;
                 case "SingleSpiralShotPattern":
-                    this.shotPattern = new SingleSpiralShotPattern(shotParams);
+                    this.shotPattern = singleSpiralShotFactory.CreateShotPattern(shotParams);
+                    break;
+                case "TripleSpiralShotPattern":
+                    this.shotPattern = new TripleSpiralShotPattern(shotParams);
                     break;
             }
         }
@@ -124,16 +128,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
                                 this.isPaused = true;
                             }
                         }
-                        //if(isPaused)
-                        //{
-                        //    this.pause += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        //    if(this.pause >= this.completePause)
-                        //    {
-                        //        this.isPaused = false;
-                        //    }
-                        //    return;
-                        //}
-                        //shotPattern.point = spawnItem.enemy.Center;
                         shotPattern.CreateShots(spawnItem.enemy);
                     }
                 }

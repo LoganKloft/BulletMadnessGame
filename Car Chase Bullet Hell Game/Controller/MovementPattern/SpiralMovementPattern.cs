@@ -28,6 +28,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 
             _endRadius = _movementParams.endRadius != null ? (int) _movementParams.endRadius : _endRadius;
             _angle = _movementParams.startDegree != null ? (double)(Math.PI / 180) * (int)_movementParams.startDegree : 0;
+
+            _speed = _movementParams.speed!= null ? (float)_movementParams.speed : _speed;
         }
 
         public Point PivotPoint

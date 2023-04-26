@@ -14,6 +14,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.EntityParameters
         public int? shotCount { get; set; }
         public float? start { get; set; }
 
+        public float? speed { get; set; }
+
         public float? pause { get; set; }
         public float? duration { get; set; }
         public float? shootSpeed { get; set; }
@@ -36,6 +38,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.EntityParameters
             obj.hitboxPercent = old.hitboxPercent;
             obj.sticky = old.sticky;
             obj.pause = old.pause;
+            obj.speed = old.speed;
 
             return obj;
         }

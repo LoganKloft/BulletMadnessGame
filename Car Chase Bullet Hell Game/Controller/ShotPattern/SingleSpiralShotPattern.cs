@@ -15,7 +15,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
     internal class SingleSpiralShotPattern : ShotPattern
     {
 
-        public int interval;
         private TargetingShotFactory targetFactory = new TargetingShotFactory();
         private StraightShotFactory straightShotFactory = new StraightShotFactory();
         string asset;

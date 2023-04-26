@@ -314,19 +314,19 @@
           "asset": "transparent",
           "health": 3000,
           "start": 70,
-          "duration": 10,
+          "duration": 20,
           "dimensions": [ 25, 25 ],
           "enemy": {
             "asset": "helicopter",
             "health": 5,
             "start": 70,
-            "duration": 10,
+            "duration": 15,
             "dimentsions": [ 125, 125 ],
             "movementItems": [
               {
                 "movementPattern": "TriangleMovementPattern",
                 "enitity": 1,
-                "duration": 15
+                "duration": 20
               }
             ],
             "shotItems": []
@@ -335,34 +335,35 @@
           "movementItems": [
             {
               "movementPattern": "SpiralMovementPattern",
+              "speed": 10.0,
               "entity": 1,
-              "duration": 10
+              "duration": 20
             }
           ],
           "shotItems": [
             {
-              "shotPattern": "SingleSpiralShotPattern",
+              "shotPattern": "TripleSpiralShotPattern",
               "asset": "bullet2",
               "start": 0.0,
-              "duration": 4.0,
-              "shootSpeed": 0.075,
-              "pause": 1.5
+              "duration": 8.0,
+              "shootSpeed": 0.025,
+              "pause": 2.0
             },
             {
               "shotPattern": "CircleShotPattern",
               "asset": "01",
               "shotCount": 16,
-              "start": 5.0,
-              "duration": 3.0,
+              "start": 8.0,
+              "duration": 4.0,
               "shootSpeed": 2.5
             },
             {
-              "shotPattern": "SingleSpiralShotPattern",
+              "shotPattern": "TripleSpiralShotPattern",
               "asset": "bullet2",
-              "start": 10.0,
-              "duration":3.0,
-              "shootSpeed": 0.075,
-              "pause": 1.5
+              "start": 12.0,
+              "duration":8.0,
+              "shootSpeed": 0.025,
+              "pause": 2.0
             }
           ]
         }
