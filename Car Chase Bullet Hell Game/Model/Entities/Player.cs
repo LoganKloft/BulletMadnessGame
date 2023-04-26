@@ -86,7 +86,10 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             set
             {
                 health = value;
+
+
                 LostLife?.Invoke();
+                
                 if (health <= 0f)
                 {
                     InvokeDestroyEvent();
@@ -108,6 +111,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                 {
                     Shot shot = (Shot)entity;
                     Health = Health - shot.Damage;
+                    shots = new PlayerShotPattern(new ShotParams { asset = "01"}, 1f);
                 }
 
                 if (entity is Enemy)
@@ -182,7 +186,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
             else
             {
-                shots = new PlayerShotPattern(new ShotParams { asset = "01"}, 2f); // FIX THIS TO APPLY EXTRA DAMAGE TO SHOTS
+                shots = new PlayerShotPattern(new ShotParams { asset = "cycleBullet"}, 2f); // FIX THIS TO APPLY EXTRA DAMAGE TO SHOTS
             }
 
             // System.Console.Write("Hi");
