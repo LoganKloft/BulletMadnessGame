@@ -30,6 +30,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         private static bool gameOverLost = false;
         private static bool gameOverWin = false;
 
+
         public static void AddSprite(Sprite sprite)
         {
             sprites.Add(sprite);
@@ -53,7 +54,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                     lives[i].Draw(spriteBatch, gameTime);
                 }
 
-
                 foreach (Sprite sprite in sprites)
                 {
                     sprite.Draw(spriteBatch, gameTime);
@@ -73,6 +73,17 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 {
                     gameOverWin = true;
                 }
+
+                /* if (Player.Instance.checkIntersectPowerUp() == true)
+                {
+                    foreach (Sprite s in sprites)
+                    {
+                        if (s is Powerup)
+                        {
+                            DestroyEventHandler(s);
+                        }
+                    }
+                } */
 
                 // draw player last so it appears on top of everything else
                 //Player.Instance.Draw(_spriteBatch, gameTime);
@@ -111,6 +122,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 // make the player smaller
                 Player.Instance.NotifyOfDestinationRectangleChange();
             }
+
             else
             {
                 gameOverLost = true;

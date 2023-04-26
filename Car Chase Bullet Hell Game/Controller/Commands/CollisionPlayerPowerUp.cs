@@ -9,20 +9,20 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
 {
     internal class CollisionPlayerPowerUpCommand : Command
     {
-        private Entity power;
+        private Powerup power;
         private Entity player;
 
         public CollisionPlayerPowerUpCommand(Entity x, Entity y)
         { 
             if (x is Powerup)
             {
-                power = x;
+                power = (Powerup)x;
                 player = y;
             }
 
             else
             {
-                power = y;
+                power = (Powerup)y;
                 player = x;
             }
 
@@ -33,9 +33,10 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
 
         public override void execute()
         {
-            if (power.HitBoxRectangle.Intersects(player.HitBoxRectangle))
+            if (power.DestinationRectangle.Intersects(player.DestinationRectangle))
             {
                 ((Player)player).ApplyPowerUp((Powerup)power);
+                power.InvokeDestroyEvent();
             }
         }
 

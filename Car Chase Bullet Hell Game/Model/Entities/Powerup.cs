@@ -17,6 +17,11 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             pType = powerUpType;
         }
 
+        public void InvokeDestroyEvent()
+        {
+            DestroyEvent?.Invoke(this);
+        }
+
         public Tuple<string, int> powerUpDeterminer()
         {
             if (pType == "ExtraDamage")

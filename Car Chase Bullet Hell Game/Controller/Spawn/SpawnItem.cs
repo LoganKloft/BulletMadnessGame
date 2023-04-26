@@ -18,6 +18,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
 {
     internal class SpawnItem
     {
+        public Tuple<Powerup, Sprite> PowerUpTuple = new Tuple<Powerup, Sprite>(null, null);
         public bool spawned = false;
         public string asset;
         public float start = 0;
@@ -91,8 +92,41 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
             spawned = true;
         }
 
+
+
         public void DestroyEnemyEventHandler(Entity entity)
         {
+            Random rnd = new Random();
+            int pUpDecider = rnd.Next(1, 4); // powerup is random, randomly can not spawn as well!
+
+            Tuple<Powerup, Sprite> tup = new Tuple<Powerup, Sprite>(null, null);
+
+            if (pUpDecider == 1)
+            {
+                PowerUpFactory pFact = new PowerUpFactory();
+                tup = pFact.CreatePowerUp("pUpHeart", "ExtraHeart", this.enemy);
+                PowerUpTuple = tup;
+
+                DrawController.AddSprite(PowerUpTuple.Item2);
+
+                Command command = new CollisionPlayerPowerUpCommand(PowerUpTuple.Item1, Player.Instance);
+                CollisionDetector.AddCommand(command);
+            }
+
+            if (pUpDecider == 2)
+            {
+                PowerUpFactory pFact = new PowerUpFactory();
+                tup = pFact.CreatePowerUp("pUpDamage", "ExtraDamage", this.enemy); 
+                PowerUpTuple = tup;
+
+                DrawController.AddSprite(PowerUpTuple.Item2);
+
+                Command command = new CollisionPlayerPowerUpCommand(PowerUpTuple.Item1, Player.Instance);
+                CollisionDetector.AddCommand(command);
+            }
+
+         
+
             InvokeDestroySpawnItemEvent();
         }
 

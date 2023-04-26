@@ -174,13 +174,29 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
             if (powerUpTuple.Item1 == "ExtraHealth")
             {
+                IsInvincible = true;
+                invincibilityTime = 3;
                 health += (float)powerUpTuple.Item2;
+                // rawController.AddLives();
             }
 
             else
             {
                 shots = new PlayerShotPattern(new ShotParams { asset = "01"}, 2f); // FIX THIS TO APPLY EXTRA DAMAGE TO SHOTS
             }
+
+            // System.Console.Write("Hi");
+        }
+
+        public bool checkIntersectPowerUp(Powerup p)
+        {
+            if (p.HitBoxRectangle.Intersects(this.HitBoxRectangle))
+            {
+                powerup = p;
+                return true;
+            }
+
+            return false;
         }
     }
 }
