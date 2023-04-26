@@ -253,6 +253,13 @@
 /processorParam:TextureFormat=Color
 /build:Road.png
 
+#begin ScoreFont.spritefont
+/importer:FontDescriptionImporter
+/processor:LocalizedFontProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:ScoreFont.spritefont
+
 #begin Shield.png
 /importer:TextureImporter
 /processor:TextureProcessor

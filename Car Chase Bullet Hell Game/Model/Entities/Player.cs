@@ -31,6 +31,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         public double invincibilityTime = 2;
         bool _pauseHasBeenUp = true;
         
+        public int Score = 0;
+
         private int hitCounter = 0;
 
         private Powerup powerup = null; 

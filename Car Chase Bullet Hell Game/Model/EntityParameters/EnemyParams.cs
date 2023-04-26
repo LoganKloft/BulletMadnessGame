@@ -17,5 +17,6 @@ namespace Car_Chase_Bullet_Hell_Game.Model.EntityParameters
         public IList<MovementParams> movementItems { get; set; }
         public IList<ShotParams> shotItems { get; set; }
         public bool healthBar { get; set; }
+        public int score { get; set; }
     }
 }

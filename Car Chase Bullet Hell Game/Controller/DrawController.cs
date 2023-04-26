@@ -74,17 +74,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                     gameOverWin = true;
                 }
 
-                /* if (Player.Instance.checkIntersectPowerUp() == true)
-                {
-                    foreach (Sprite s in sprites)
-                    {
-                        if (s is Powerup)
-                        {
-                            DestroyEventHandler(s);
-                        }
-                    }
-                } */
-
                 // draw player last so it appears on top of everything else
                 //Player.Instance.Draw(_spriteBatch, gameTime);
                 playerSprite?.Draw(spriteBatch, gameTime);
