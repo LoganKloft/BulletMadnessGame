@@ -31,6 +31,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         public double invincibilityTime = 2;
         bool _pauseHasBeenUp = true;
         
+        private int hitCounter = 0;
+
         private Powerup powerup = null; 
 
         private bool invincibility = false;
@@ -110,8 +112,15 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                 if (entity is Shot)
                 {
                     Shot shot = (Shot)entity;
-                    Health = Health - shot.Damage;
-                    shots = new PlayerShotPattern(new ShotParams { asset = "01"}, 1f);
+
+                    if (hitCounter == 0) 
+                    { 
+                        Health = Health - shot.Damage;
+                        shots = new PlayerShotPattern(new ShotParams { asset = "01"}, 1f);
+                    }
+
+                    else
+                        --hitCounter;
                 }
 
                 if (entity is Enemy)
@@ -178,9 +187,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
             if (powerUpTuple.Item1 == "ExtraHealth")
             {
-                IsInvincible = true;
-                invincibilityTime = 3;
-                health += (float)powerUpTuple.Item2;
+                ++hitCounter;
+                // health += (float)powerUpTuple.Item2;
                 // rawController.AddLives();
             }
 
