@@ -38,6 +38,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
         private StraightShotPatternFactory straightShotPatternFactory = new StraightShotPatternFactory();
         private ShootPlayerShotPatternFactory shootPlayerShotPatternFactory = new ShootPlayerShotPatternFactory();
         private SingleSpiralShotFactory singleSpiralShotFactory = new SingleSpiralShotFactory();
+        private TripleSpiralShotPatternFactory tripleSpiralShotPatternFactory = new TripleSpiralShotPatternFactory();
 
         public ShotItem(SpawnItem spawnItem, ShotParams shotParams)
         {
@@ -73,7 +74,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
                     this.shotPattern = singleSpiralShotFactory.CreateShotPattern(shotParams);
                     break;
                 case "TripleSpiralShotPattern":
-                    this.shotPattern = new TripleSpiralShotPattern(shotParams);
+                    this.shotPattern = tripleSpiralShotPatternFactory.CreateShotPattern(shotParams);
                     break;
             }
         }
