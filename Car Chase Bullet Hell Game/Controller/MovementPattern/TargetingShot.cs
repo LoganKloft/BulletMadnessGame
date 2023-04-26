@@ -47,7 +47,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
             Point current = entity[0].Center;
 
             // v = unit vector from current to target
-            Vector2 v = new Vector2(target.X - current.X, target.Y - current.Y);
+            Vector2 v = new Vector2(target.X - current.X, 200);
             float magnitude = (float)Math.Sqrt(Math.Pow(v.X, 2) + Math.Pow(v.Y, 2));
             v.X = Math.Abs(v.X / magnitude);
             v.Y = Math.Abs(v.Y / magnitude);

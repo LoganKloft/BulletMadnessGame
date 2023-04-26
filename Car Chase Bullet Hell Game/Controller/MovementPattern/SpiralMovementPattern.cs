@@ -11,11 +11,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 {
     internal class SpiralMovementPattern : MovementPattern
     {
-        private int _radius = 150;
-        private int _endRadius = 200;
+        private int _radius = 100;
+        private int _endRadius = 150;
         private Point _pivotPoint = new Point(0, 0); // the point to rotate around
         private Entity _enemy;
-        private float _speed = 2f;
+        private float _speed = 5f;
         private double _angle = Math.PI / 2d;
         MovementParams _movementParams;
 
@@ -60,11 +60,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
 
             entity[0].NotifyOfDestinationRectangleChange();
 
-            //if (_radius < _endRadius)
-            //{
-            //    // could base increase on speed, but _radius is an integer so not ideal
-            //    _radius++;
-            //}
+            if (_radius < _endRadius)
+            {
+                // could base increase on speed, but _radius is an integer so not ideal
+                _radius++;
+            }
         }
     }
 }

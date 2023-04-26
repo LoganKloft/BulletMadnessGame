@@ -152,7 +152,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
                 }
                 if(activeItem.enemyParams.underlyingEnemy == true)
                 {
-                   if(activeSpawnItems.Count>1)
+                   if(activeSpawnItems.Count>1 && i!=0)
                     ((SpiralSpawner)activeItem.enemy).setOrbit(ref activeSpawnItems[i - 1].enemy);
                 }
                 activeItem.Update(gameTime);

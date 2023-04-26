@@ -186,22 +186,25 @@
       "id": 4,
       "enemies": [
         {
-          "asset": "heart",
+          "asset": "transparent",
           "health": 3000,
           "start": 45,
-          "duration": 30,
-          "dimensions": [ 20, 125 ],
+          "duration": 15,
+          "dimensions": [ 25, 25 ],
+          "interval": 0.5,
+          "intervals": 1,
+
           "enemy": {
             "asset": "helicopter",
             "health": 5,
             "start": 45,
-            "duration": 30,
+            "duration": 15,
             "dimentsions": [ 125, 125 ],
             "movementItems": [
               {
                 "movementPattern": "TriangleMovementPattern",
                 "enitity": 1,
-                "duration": 30
+                "duration": 15
               }
             ],
             "shotItems": []
@@ -211,10 +214,35 @@
             {
               "movementPattern": "SpiralMovementPattern",
               "entity": 1,
-              "duration": 30.0
+              "duration": 15
             }
           ],
           "shotItems": [
+            {
+              "shotPattern": "SingleSpiralShotPattern",
+              "asset": "bullet2",
+              "start": 0.0,
+              "duration": 5.0,
+              "shootSpeed": 0.075,
+              "pause": 1.5
+            },
+            {
+              "shotPattern": "CircleShotPattern",
+              "asset": "01",
+              "shotCount": 16,
+              "start": 5.0,
+              "duration": 5.0,
+              "shootSpeed": 2.5
+            },
+            {
+              "shotPattern": "SingleSpiralShotPattern",
+              "asset": "bullet2",
+              "start": 10.0,
+              "duration": 5.0,
+              "shootSpeed": 0.075,
+              "pause": 1.5
+            }
+
           ]
         }
 
