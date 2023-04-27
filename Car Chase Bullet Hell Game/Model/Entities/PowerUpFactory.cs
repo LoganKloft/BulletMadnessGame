@@ -22,7 +22,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
             sprite.DestinationRectangle = new Rectangle(e.DestinationRectangle.X,
                 e.DestinationRectangle.Y,
-                128, 128);
+                96, 96);
 
             Powerup enemy = new Powerup(pType);
             enemy.DestinationRectangle = sprite.DestinationRectangle;

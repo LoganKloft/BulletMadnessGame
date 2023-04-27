@@ -22,11 +22,10 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public static Sprite playerSprite;
         public static Sprite gameLost;
         public static Sprite gameWon;
-        public static Sprite slowMode;
-        public static Sprite invulnMode;
         public static Dictionary<string, Sprite> effects = new Dictionary<string, Sprite>();
         public static List<Sprite> sprites = new List<Sprite>();
         public static List<Sprite> lives = new List<Sprite>();
+        public static List<Sprite> shields = new List<Sprite>();
         public static List<Sprite> powerUps = new List<Sprite>();
         public static float death = 1f;
         private static bool gameOverLost = false;
@@ -65,6 +64,25 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             UpdateLifeLocation();
         }
 
+        public static void AddShield()
+        {
+            Sprite sprite = new Sprite();
+            sprite.LoadContent(Game1.content, "WoodenShield");
+            sprite.DestinationRectangle.Width = 64;
+            sprite.DestinationRectangle.Height = 64;
+            shields.Add(sprite);
+            UpdateShieldLocation();
+        }
+
+        public static void RemoveShield()
+        {
+            if (shields.Count > 0)
+            {
+                shields.RemoveAt(0);
+                UpdateShieldLocation();
+            } 
+        }
+
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime, Spawner spawn)
         {
             if(!gameOverLost && !gameOverWin)
@@ -75,6 +93,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 for (int i = 0; i < lives.Count; ++i)
                 {
                     lives[i].Draw(spriteBatch, gameTime);
+                }
+
+                for (int i = 0; i < shields.Count; ++i)
+                {
+                    shields[i].Draw(spriteBatch, gameTime);
                 }
 
                 foreach (Sprite sprite in sprites)
@@ -154,6 +177,15 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             {
                 lives[i].DestinationRectangle.X = (int)(1250 /1.25) - 157 / 2 / 2 + i*60;
                 lives[i].DestinationRectangle.Y = 20;
+            }
+        }
+
+        public static void UpdateShieldLocation()
+        {
+            for (int i = 0; i < shields.Count; ++i)
+            {
+                shields[i].DestinationRectangle.X = (int)(1250 / 1.25) - 157 / 2 / 2 + i * 60;
+                shields[i].DestinationRectangle.Y = 64;
             }
         }
 

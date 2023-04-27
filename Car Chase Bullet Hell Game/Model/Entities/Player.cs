@@ -126,15 +126,18 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                 {
                     Shot shot = (Shot)entity;
 
-                    //if (hitCounter == 0) 
-                    //{ 
-                    //    Health = Health - shot.Damage;
-                    //    shots = new PlayerShotPattern(new ShotParams { asset = "01"}, 1f);
-                    //}
+                    if (hitCounter == 0)
+                    {
+                        Health = Health - shot.Damage;
+                        shots = new PlayerShotPattern(new ShotParams { asset = "01" }, 1f);
+                    }
 
-                    //else
-                    //    --hitCounter;
-                    Health = Health - shot.Damage;
+                    else
+                    {
+                        --hitCounter;
+                        DrawController.RemoveShield();
+                    }
+                        
                 }
 
                 if (entity is Enemy)
@@ -251,8 +254,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
             if (powerUpTuple.Item1 == "ExtraHealth")
             {
-                //++hitCounter;
-                Health = Health + 1;
+                ++hitCounter;
+                DrawController.AddShield();
                 // health += (float)powerUpTuple.Item2;
                 // rawController.AddLives();
             }
