@@ -18,7 +18,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPatternFactories
             // need to be able to search an entity based on their id
             //Entity entity = GetEntity(movementParams.entity);
             //return new TargetingShot(entity);
-            throw new NotImplementedException();
+            return new TargetingShot(movementParams);
         }
     }
 }

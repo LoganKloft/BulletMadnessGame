@@ -11,6 +11,7 @@ using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Controller;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 
 namespace Car_Chase_Bullet_Hell_Game.Model.Entities
@@ -22,12 +23,13 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         public bool hasLifeTime = false;
         private bool _offscreen = false; // prevent multiple offscreen event calls
         private bool _collided = false; // prevent multiple collided event calls
+        public ShotParams shotParams;
 
         public MovementPattern MovementPattern;
 
-        public Shot() : base() { }
-        public Shot(double percentHitBoxSize) : base(percentHitBoxSize)
+        public Shot(ShotParams shotParams) : base(shotParams?.hitboxPercent)
         {
+            this.shotParams = shotParams;
             Player.Instance.LostLife += this.PlayerLostLife;
         }
 
@@ -36,7 +38,9 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         {
             if (MovementPattern is not null)
             {
-                MovementPattern.Move(gameTime, this);
+                List<Entity> entity = new List<Entity>();
+                entity.Add(this);
+                MovementPattern.Move(gameTime, entity);
                 Offscreen();
             }
         }

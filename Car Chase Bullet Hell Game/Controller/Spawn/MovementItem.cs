@@ -23,6 +23,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
         private LeftMovementPatternFactory leftFactory = new LeftMovementPatternFactory();
         private CircleMovementPatternFactory circleFactory = new CircleMovementPatternFactory();
         private TriangleMovementPatternFactory triangleFactory = new TriangleMovementPatternFactory();
+        private SpiralMovementPatternFactory spiralFactory = new SpiralMovementPatternFactory();
 
         public float duration;
         public MovementPattern.MovementPattern movementPattern;
@@ -52,6 +53,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
                     break;
                 case "OffscreenMovementPattern":
                     movementPattern = offScreenMovementFactory.CreateMovementPattern(movementParams);
+                    break;
+                case "SpiralMovementPattern":
+                    movementPattern = spiralFactory.CreateMovementPattern(movementParams);
+                    break;
+                default:
                     break;
             }
         }

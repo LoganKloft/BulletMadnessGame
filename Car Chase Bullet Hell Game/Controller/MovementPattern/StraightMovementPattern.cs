@@ -27,12 +27,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
             waypoints.Enqueue(p);
         }
 
-        public override void Move(GameTime gameTime, Entity entity)
+        public override void Move(GameTime gameTime, List<Entity> entity)
         {
             if (waypoints.Count > 0)
             {
                 Point target = waypoints.Peek();
-                Point current = entity.Center;
+                Point current = entity[0].Center;
 
                 // move the enemy closer to the target
                 // 1 - create unit vector
@@ -50,11 +50,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
                 yDistance = v.Y < 0 ? -yDistance : yDistance;
 
                 Point offset = new Point(xDistance, yDistance);
-                entity.DestinationRectangle.Offset(offset);
-                entity.NotifyOfDestinationRectangleChange();
+                entity[0].DestinationRectangle.Offset(offset);
+                entity[0].NotifyOfDestinationRectangleChange();
 
                 // check if we've reached the target
-                if (entity.Center == target)
+                if (entity[0].Center == target)
                 {
                     // we've reached the taget, time to move towards the next waypoint
                     discarded.Enqueue(waypoints.Dequeue());

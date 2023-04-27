@@ -170,8 +170,10 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             }
 
             shots.CreateShots(_instance, gameTime);
+            List<Entity> entity = new List<Entity>();
+            entity.Add(_instance);
 
-            movement.Move(gameTime, _instance);
+            movement.Move(gameTime, entity);
             
         }
 

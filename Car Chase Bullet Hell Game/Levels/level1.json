@@ -248,13 +248,132 @@
               "shootSpeed": 0.075,
               "pause": 1.5
             }
-
           ]
         }
-
-
       ]
-
+    },
+    {
+      "id": 5,
+      "enemies": [
+        {
+          "asset": "Motorcycle",
+          "health": 5,
+          "id": 0,
+          "start": 60,
+          "duration": 10,
+          "dimensions": [ 125, 125 ],
+          "interval": 1.0,
+          "intervals": 2,
+          "hitboxPercent": 0.5,
+          "movementItems": [
+            {
+              "movementPattern": "LeftMovementPattern",
+              "entity": 0,
+              "duration": 10
+            }
+          ],
+          "shotItems": [
+            {
+              "shotPattern": "CircleShotPattern",
+              "asset": "02",
+              "shotCount": 12,
+              "start": 0.0,
+              "duration": 10.0,
+              "shootSpeed": 3.0,
+              "hitboxPercent": 0.5
+            }
+          ]
+        },
+        {
+          "asset": "Motorcycle",
+          "health": 5,
+          "id": 1,
+          "start": 60,
+          "duration": 15,
+          "dimensions": [ 125, 125 ],
+          "interval": 1.0,
+          "intervals": 2,
+          "movementItems": [
+            {
+              "movementPattern": "RightMovementPattern",
+              "entity": 1,
+              "duration": 10.0
+            }
+          ],
+          "shotItems": [
+            {
+              "shotPattern": "CircleShotPattern",
+              "asset": "01",
+              "shotCount": 12,
+              "start": 0.0,
+              "duration": 10.0,
+              "shootSpeed": 3.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "enemies": [
+        {
+          "asset": "transparent",
+          "health": 3000,
+          "start": 70,
+          "duration": 20,
+          "dimensions": [ 25, 25 ],
+          "enemy": {
+            "asset": "helicopter",
+            "health": 5,
+            "start": 70,
+            "duration": 15,
+            "dimentsions": [ 125, 125 ],
+            "movementItems": [
+              {
+                "movementPattern": "TriangleMovementPattern",
+                "enitity": 1,
+                "duration": 20
+              }
+            ],
+            "shotItems": []
+          },
+          "underlyingEnemy": true,
+          "movementItems": [
+            {
+              "movementPattern": "SpiralMovementPattern",
+              "speed": 10.0,
+              "entity": 1,
+              "duration": 20
+            }
+          ],
+          "shotItems": [
+            {
+              "shotPattern": "TripleSpiralShotPattern",
+              "asset": "bullet2",
+              "start": 0.0,
+              "duration": 8.0,
+              "shootSpeed": 0.025,
+              "pause": 2.0
+            },
+            {
+              "shotPattern": "CircleShotPattern",
+              "asset": "01",
+              "shotCount": 16,
+              "start": 8.0,
+              "duration": 4.0,
+              "shootSpeed": 2.5
+            },
+            {
+              "shotPattern": "TripleSpiralShotPattern",
+              "asset": "bullet2",
+              "start": 12.0,
+              "duration":8.0,
+              "shootSpeed": 0.025,
+              "pause": 2.0
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -41,13 +41,13 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
             }
         }
 
-        public override void Move(GameTime gameTime, Entity entity)
+        public override void Move(GameTime gameTime, List<Entity> entity)
         {
             Point target = Player.Instance.Center;
-            Point current = entity.Center;
+            Point current = entity[0].Center;
 
             // v = unit vector from current to target
-            Vector2 v = new Vector2(target.X - current.X, target.Y - current.Y);
+            Vector2 v = new Vector2(target.X - current.X, 200);
             float magnitude = (float)Math.Sqrt(Math.Pow(v.X, 2) + Math.Pow(v.Y, 2));
             v.X = Math.Abs(v.X / magnitude);
             v.Y = Math.Abs(v.Y / magnitude);
@@ -92,10 +92,10 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
             offset *= _rotationSpeed;
             Direction += offset;
 
-            entity.Rotation = (float)Direction;
-            entity.DestinationRectangle.X += (int)(_xDirection * _speed);
-            entity.DestinationRectangle.Y += (int)(_yDirection * _speed);
-            entity.NotifyOfDestinationRectangleChange();
+            entity[0].Rotation = (float)Direction;
+            entity[0].DestinationRectangle.X += (int)(_xDirection * _speed);
+            entity[0].DestinationRectangle.Y += (int)(_yDirection * _speed);
+            entity[0].NotifyOfDestinationRectangleChange();
         }
     }
 }

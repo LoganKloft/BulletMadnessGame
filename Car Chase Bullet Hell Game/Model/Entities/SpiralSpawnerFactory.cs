@@ -1,27 +1,22 @@
-﻿using System;
+﻿using Car_Chase_Bullet_Hell_Game.Controller;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
+using Car_Chase_Bullet_Hell_Game.View.Sprite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
-using Car_Chase_Bullet_Hell_Game.View.Sprite;
-using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
-using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
-using Car_Chase_Bullet_Hell_Game.Controller;
-using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 {
-    internal class EnemyFactory
+    internal class SpiralSpawnerFactory
     {
-        public static (Enemy, Sprite) CreateEnemy(EnemyParams enemyParams)
+        public static (Enemy, Sprite) CreateEnemy(EnemyParams asset)
         {
             Sprite sprite = new Sprite();
-            sprite.LoadContent(Game1.content, enemyParams.asset);
+            sprite.LoadContent(Game1.content, asset.asset);
 
-            Enemy enemy = new Enemy(enemyParams);
+            Enemy enemy = new SpiralSpawner(asset);
             enemy.DestinationRectangle = sprite.DestinationRectangle;
 
             enemy.DestinationRectangleChanged += sprite.DestinationRectangleChangedHandler;

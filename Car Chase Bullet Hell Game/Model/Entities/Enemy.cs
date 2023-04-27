@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
-using Car_Chase_Bullet_Hell_Game.Controller.Spawn;
+using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 
 namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 {
@@ -22,13 +22,15 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
         public delegate void HealthChangedHandler(float health);
         public event HealthChangedHandler HealthChangedEvent;
+        public EnemyParams enemyParams;
 
         //public Queue<ShotPattern> ShotPatterns = new Queue<ShotPattern>();
-        float health;
+        float health = 5f;
 
-        public Enemy(float health = 5f)
+        public Enemy(EnemyParams enemyParams) : base(enemyParams?.hitboxPercent)
         {
-            this.health = health;
+            this.enemyParams = enemyParams;
+            this.health = enemyParams.health != null ? (float)enemyParams.health : this.health;
         }
 
         public float Health
@@ -64,7 +66,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             DestroyEvent?.Invoke(this);
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             //ShotPattern shotPattern;
             //while (ShotPatterns.TryPeek(out shotPattern) && shotPattern.Finished())
@@ -75,7 +77,9 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
             if (MovementPattern is not null)
             {
-                MovementPattern.Move(gameTime, this);
+                List<Entity> entity = new List<Entity>();
+                entity.Add(this);
+                MovementPattern.Move(gameTime, entity);
             }
             //foreach (ShotPattern pattern in ShotPatterns)
             //{

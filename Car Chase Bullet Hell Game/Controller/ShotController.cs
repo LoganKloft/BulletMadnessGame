@@ -7,6 +7,7 @@ using Car_Chase_Bullet_Hell_Game.Model.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Car_Chase_Bullet_Hell_Game.Controller.Commands;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller
 {
@@ -23,6 +24,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         {
             shots.Add(shot);
             shot.DestroyEvent += DestroyEventHandler;
+
+            if (shot?.shotParams?.sticky != null)
+            {
+                CollisionBulletBulletsCommand collisionBulletBulletsCommand = new CollisionBulletBulletsCommand(shot);
+                CollisionDetector.AddCommand(collisionBulletBulletsCommand);
+            }
         }
 
         public static void Update(GameTime gameTime)
