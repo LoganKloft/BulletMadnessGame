@@ -17,6 +17,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.EntityParameters
         public int? intervals { get; set; } // how many intervals
         public bool healthBar { get; set; }
         public double? hitboxPercent { get; set; } // ideally a double in range [0 - 1]
+        public int score { get; set; }
 
         public bool underlyingEnemy { get; set; }
         public EnemyParams enemy { get; set; } // for spiral spawner

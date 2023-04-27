@@ -25,6 +25,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
         ShotParams _shotParams;
         float dmg = 0f;
         public delegate void LostLifeEventHandler();
+        List<SoundEffect> soundEffects;
 
         public PlayerShotPattern(ShotParams shotParams, float damage)
         {
