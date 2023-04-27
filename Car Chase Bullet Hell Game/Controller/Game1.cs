@@ -6,6 +6,8 @@ using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.Commands;
 using Car_Chase_Bullet_Hell_Game.View.Sprite;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -52,12 +54,16 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
         public static GameState gameState;
 
+        public static Song song;
+        List<SoundEffect> soundEffects;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             gameState = GameState.StartMenu;
+            soundEffects = new List<SoundEffect>();
 
             System.Diagnostics.Debug.WriteLine("Starting Game");
         }
@@ -119,6 +125,17 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             Player.Instance.DestinationRectangle.Height = playerHeight / 2;
             Player.Instance.NotifyOfDestinationRectangleChange();
 
+            song = Content.Load<Song>("song");
+            
+            //MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
+
+            soundEffects.Add(Content.Load<SoundEffect>("bulletNoise"));
+
+            //soundEffects[0].Play();
+            //var instance = soundEffects[0].CreateInstance();
+            //instance.IsLooped = true;
+            //instance.Play();
+
             // add the same image two times for the background
             for (int i = 0; i < 2; i++)
             {
@@ -153,6 +170,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             DrawController.invulnMode = invulnMode;
         }
 
+        //void MediaPlayer_MediaStateChanged(object sender, System.EventArgs e)
+        //{
+        //    MediaPlayer.Play(song);
+        //}
+
         public void HandleInput(GameTime gameTime)
         {
             _mouseState = MouseButtons.GetState();
@@ -182,6 +204,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
             /*if (Keyboard.GetState().IsKeyDown(Keys.P))
             {
                 if (gameState != GameState.Pause && gameState != GameState.StartMenu)
@@ -205,9 +228,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                     if (CheckIfButtonWasClicked())
                     {
                         _startButton.Clicked();
+                        MediaPlayer.Play(song);
                     }
                 }
             }
+
             else if (gameState == GameState.Playing)
             {
                 spawner.Update(gameTime);
@@ -218,6 +243,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
                 if (spawner.CheckGameOver() == true)
                 {
+                    MediaPlayer.Stop();
                     return;
                 }
             }

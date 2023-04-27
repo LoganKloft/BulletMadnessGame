@@ -13,6 +13,7 @@
           "interval": 1.0,
           "intervals": 4,
           "hitboxPercent": 0.5,
+          "score":  500,
           "movementItems": [
             {
               "movementPattern": "LeftMovementPattern",
@@ -41,6 +42,7 @@
           "dimensions": [ 125, 125 ],
           "interval": 1.0,
           "intervals": 4,
+          "score":  500,
           "movementItems": [
             {
               "movementPattern": "RightMovementPattern",
@@ -71,6 +73,7 @@
           "id": 2,
           "start": 15,
           "duration": 15,
+          "score":  5000,
           "movementItems": [
             {
               "movementPattern": "TriangleMovementPattern",
@@ -140,6 +143,7 @@
           "start": 30,
           "duration": 15,
           "dimensions": [ 125, 125 ],
+          "score":  500,
           "movementItems": [
             {
               "movementPattern": "RightMovementPattern",
@@ -163,6 +167,7 @@
           "start": 30,
           "duration": 15,
           "dimensions": [ 125, 125 ],
+          "score":  500,
           "movementItems": [
             {
               "movementPattern": "LeftMovementPattern",
@@ -193,13 +198,14 @@
           "dimensions": [ 25, 25 ],
           "interval": 0.5,
           "intervals": 1,
-
+          "score":  0,
           "enemy": {
             "asset": "helicopter",
             "health": 5,
             "start": 45,
             "duration": 15,
             "dimentsions": [ 125, 125 ],
+            "score":  10000,
             "movementItems": [
               {
                 "movementPattern": "TriangleMovementPattern",

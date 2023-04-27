@@ -12,6 +12,7 @@ using Car_Chase_Bullet_Hell_Game.Controller.ShotPattern;
 using Car_Chase_Bullet_Hell_Game.Controller.MovementPattern;
 using Car_Chase_Bullet_Hell_Game.Model.Entities;
 using Car_Chase_Bullet_Hell_Game.Controller.Spawn;
+using Microsoft.Xna.Framework.Media;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller
 {
@@ -25,9 +26,11 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public static Sprite invulnMode;
         public static List<Sprite> sprites = new List<Sprite>();
         public static List<Sprite> lives = new List<Sprite>();
+        public static List<Sprite> powerUps = new List<Sprite>();
         public static float death = 1f;
         private static bool gameOverLost = false;
         private static bool gameOverWin = false;
+
 
         public static void AddSprite(Sprite sprite)
         {
@@ -51,7 +54,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 {
                     lives[i].Draw(spriteBatch, gameTime);
                 }
-
 
                 foreach (Sprite sprite in sprites)
                 {
@@ -79,10 +81,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             }
             else if(gameOverLost)
             {
+                MediaPlayer.Stop();
                 GameOverLost(spriteBatch, gameTime);
             }
             else
             {
+                MediaPlayer.Stop();
                 GameOverWon(spriteBatch, gameTime);
             }
         }
@@ -110,6 +114,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 // make the player smaller
                 Player.Instance.NotifyOfDestinationRectangleChange();
             }
+
             else
             {
                 gameOverLost = true;
