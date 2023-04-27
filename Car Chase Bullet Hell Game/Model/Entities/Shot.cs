@@ -30,6 +30,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         public Shot(ShotParams shotParams) : base(shotParams?.hitboxPercent)
         {
             this.shotParams = shotParams;
+            this.Damage = shotParams.damage != null ? (float)shotParams.damage : this.Damage;
             Player.Instance.LostLife += this.PlayerLostLife;
         }
 

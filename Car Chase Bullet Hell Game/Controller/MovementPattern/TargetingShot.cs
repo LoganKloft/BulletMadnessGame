@@ -21,6 +21,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
         public TargetingShot(MovementParams movementParams)
         {
             _movementParams = movementParams;
+            _speed = movementParams.speed != null ? (float)movementParams.speed : _speed;
             //entity.Origin = new Vector2(entity.DestinationRectangle.Width / 2, entity.DestinationRectangle.Height / 2);
         }
 

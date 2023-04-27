@@ -19,6 +19,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
         public OffScreenMovementPattern(MovementParams movementParams)
         {
             _movementParams = movementParams;
+            speed = movementParams.speed != null ? (float)movementParams.speed : speed;
         }
 
         public override void Move(GameTime gameTime, List<Entity> entity)

@@ -13,11 +13,13 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
     {
         private int curRun = 0;
         private bool moveLeft = true;
+        private float _speed = 1f;
         MovementParams _movementParams;
 
         public LeftMovementPattern(MovementParams movementParams)
         {
             _movementParams = movementParams;
+            _speed = movementParams.speed != null ? (float)movementParams.speed : _speed;
         }
 
         public override void Move(GameTime gameTime, List<Entity> entity)
@@ -30,9 +32,9 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
             }
 
             if (moveLeft)
-                entity[0].DestinationRectangle.X -= 5;
+                entity[0].DestinationRectangle.X -= (int)(5 * _speed);
             else
-                entity[0].DestinationRectangle.X += 5;
+                entity[0].DestinationRectangle.X += (int)(5 * _speed);
 
             if (entity[0].DestinationRectangle.X < 580 || entity[0].DestinationRectangle.X > 1130)
                 moveLeft = !moveLeft;

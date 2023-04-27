@@ -13,7 +13,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.EntityParameters
         public IList<int> point { get; set; }
         public int? shotCount { get; set; }
         public float? start { get; set; }
-
+        public float? damage { get; set; }
         public float? speed { get; set; }
 
         public float? pause { get; set; }
@@ -39,6 +39,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.EntityParameters
             obj.sticky = old.sticky;
             obj.pause = old.pause;
             obj.speed = old.speed;
+            obj.damage = old.damage;
 
             return obj;
         }

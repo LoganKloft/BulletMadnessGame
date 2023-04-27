@@ -24,7 +24,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
                 : _pivotPoint;
 
             _radius = _movementParams.radius != null ? (int)_movementParams.radius : _radius;
-
+            _speed = _movementParams.speed != null ? (float)_movementParams.speed : _speed;
         }
 
         public Point PivotPoint

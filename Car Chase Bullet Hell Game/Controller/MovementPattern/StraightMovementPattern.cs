@@ -20,6 +20,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.MovementPattern
         public StraightMovementPattern(MovementParams movementParams)
         {
             _movementParams = movementParams;
+            speed = movementParams.speed != null ? (float)movementParams.speed : speed;
         }
 
         public void AddPoint(Point p)
