@@ -25,6 +25,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         public int CellWidth { get; set; }
         public int CellHeight { get; set; }
 
+        //public Game1 gameInstance = new Game1();
+
         public Button(Texture2D staticImage, Texture2D clickedImage, Point dimensions, Vector2 position, string name, int id, bool visible, float layerDepth)
         {
             _staticTexture = staticImage;
@@ -45,7 +47,7 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         public void Clicked()
         {
             //AnimationTime = 30;
-            Game1.gameState = Game1.GameState.Playing;
+            Game1.playGame();
         }
 
         public void UpdateButton()

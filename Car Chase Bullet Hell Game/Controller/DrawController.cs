@@ -133,13 +133,13 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             {
                 MediaPlayer.Stop();
                 GameOverLost(spriteBatch, gameTime);
-                Game1.gameState = Game1.GameState.GameOver;
+                Game1.stopGame();
             }
             else
             {
                 MediaPlayer.Stop();
                 GameOverWon(spriteBatch, gameTime);
-                Game1.gameState = Game1.GameState.GameOver;
+                Game1.stopGame();
             }
         }
 

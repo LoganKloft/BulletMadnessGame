@@ -58,6 +58,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public static Song song;
         List<SoundEffect> soundEffects;
 
+        public static State state;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -65,6 +67,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             IsMouseVisible = true;
             gameState = GameState.StartMenu;
             soundEffects = new List<SoundEffect>();
+            state = new StartState();
+            startGame();
 
             System.Diagnostics.Debug.WriteLine("Starting Game");
         }
@@ -210,7 +214,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             HandleInput(gameTime);
             _startButton.UpdateButton();
 
-            if (gameState == GameState.StartMenu)
+            if (getState() is StartState)
             {
                 if (_mouseLeftPressed)
                 {
@@ -224,7 +228,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 }
             }
 
-            else if (gameState == GameState.Playing || gameState == GameState.GameOver)
+            else if (getState() is PlayingState || getState() is EndState)
             {
                 spawner.Update(gameTime);
                 Player.Instance.Update(gameTime);
@@ -251,12 +255,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
             _spriteBatch.Begin();
 
-            if (gameState == GameState.StartMenu)
+            if (getState() is StartState)
             {
                 _mainMenuBackground.Draw(_spriteBatch, gameTime);
                 _spriteBatch.Draw(_startButton.Texture, destinationRectangle, sourceRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
             }
-            else if (gameState == GameState.Playing || gameState == GameState.GameOver)
+            else if (getState() is PlayingState || getState() is EndState)
             {
                 DrawController.Draw(_spriteBatch, gameTime, spawner);
             }
@@ -265,6 +269,31 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public static void startGame()
+        {
+            state.startGame();
+        }
+
+        public static void playGame()
+        {
+            state.playGame();
+        }
+
+        public static void stopGame()
+        {
+            state.endGame();
+        }
+
+        public static void setState(State state)
+        {
+            Game1.state = state;
+        }
+
+        public static State getState()
+        {
+            return state;
         }
     }
 }

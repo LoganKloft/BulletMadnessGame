@@ -60,7 +60,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
                     shot.DestinationRectangle.Y = entity.Center.Y - shot.DestinationRectangle.Height / 2;
                     shot.NotifyOfDestinationRectangleChange();
                     ShotController.AddShot(shot);
-                    if (Game1.gameState == GameState.Playing)
+                    if (getState() is PlayingState)
                     {
                         soundEffects[0].Play();
                     }
