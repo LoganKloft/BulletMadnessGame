@@ -26,6 +26,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             StartMenu,
             Playing,
             Pause,
+            GameOver,
             Exit
         }
         private Button _startButton;
@@ -223,7 +224,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 }
             }
 
-            else if (gameState == GameState.Playing)
+            else if (gameState == GameState.Playing || gameState == GameState.GameOver)
             {
                 spawner.Update(gameTime);
                 Player.Instance.Update(gameTime);
@@ -255,7 +256,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                 _mainMenuBackground.Draw(_spriteBatch, gameTime);
                 _spriteBatch.Draw(_startButton.Texture, destinationRectangle, sourceRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
             }
-            else if (gameState == GameState.Playing)
+            else if (gameState == GameState.Playing || gameState == GameState.GameOver)
             {
                 DrawController.Draw(_spriteBatch, gameTime, spawner);
             }

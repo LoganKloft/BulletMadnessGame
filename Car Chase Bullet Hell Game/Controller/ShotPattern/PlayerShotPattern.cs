@@ -14,6 +14,7 @@ using static Car_Chase_Bullet_Hell_Game.Model.Entities.Entity;
 using Car_Chase_Bullet_Hell_Game.Model.EntityParameters;
 using Microsoft.Xna.Framework.Audio;
 using System.Reflection.Metadata;
+using static Car_Chase_Bullet_Hell_Game.Controller.Game1;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 {
@@ -59,7 +60,10 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
                     shot.DestinationRectangle.Y = entity.Center.Y - shot.DestinationRectangle.Height / 2;
                     shot.NotifyOfDestinationRectangleChange();
                     ShotController.AddShot(shot);
-                    soundEffects[0].Play();
+                    if (Game1.gameState == GameState.Playing)
+                    {
+                        soundEffects[0].Play();
+                    }
                     Command command = new CollisionBulletEnemyCommand(shot);
                     CollisionDetector.AddCommand(command);
 
