@@ -35,13 +35,18 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
         private int hitCounter = 0;
 
-        private Powerup powerup = null; 
+        private Powerup powerup = null;
+        private float powerupTime = 0f;
+        private bool powerupActive = false;
 
         private bool invincibility = false;
 
         public override event DestroyEventHandler DestroyEvent;
 
         public event LostLifeEventHandler LostLife;
+
+        public delegate void GainLifeEventHandler();
+        public event GainLifeEventHandler GainLife;
 
         Player() : base(.5) { }
         public static Player Instance
@@ -89,14 +94,20 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             get { return health; }
             set
             {
-                health = value;
-
-
-                LostLife?.Invoke();
-                
-                if (health <= 0f)
+                if (value < health)
                 {
-                    InvokeDestroyEvent();
+                    health = value;
+                    LostLife?.Invoke();
+
+                    if (health <= 0f)
+                    {
+                        InvokeDestroyEvent();
+                    }
+                }
+                else if (value > health)
+                {
+                    health = value;
+                    GainLife?.Invoke();
                 }
             }
         }
@@ -115,14 +126,15 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                 {
                     Shot shot = (Shot)entity;
 
-                    if (hitCounter == 0) 
-                    { 
-                        Health = Health - shot.Damage;
-                        shots = new PlayerShotPattern(new ShotParams { asset = "01"}, 1f);
-                    }
+                    //if (hitCounter == 0) 
+                    //{ 
+                    //    Health = Health - shot.Damage;
+                    //    shots = new PlayerShotPattern(new ShotParams { asset = "01"}, 1f);
+                    //}
 
-                    else
-                        --hitCounter;
+                    //else
+                    //    --hitCounter;
+                    Health = Health - shot.Damage;
                 }
 
                 if (entity is Enemy)
@@ -157,6 +169,42 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
                 }
             }
 
+            if (!IsInvincible && DrawController.HasEffect("Invincible"))
+            {
+                DrawController.RemoveEffect("Invincible");
+            }
+            else if (IsInvincible && !DrawController.HasEffect("Invincible"))
+            {
+                DrawController.AddEffect("Invincible", "Shield");
+            }
+
+            if (!IsSlow && DrawController.HasEffect("Slow"))
+            {
+                DrawController.RemoveEffect("Slow");
+            }
+            else if (IsSlow && !DrawController.HasEffect("Slow"))
+            {
+                DrawController.AddEffect("Slow", "Turtle");
+            }
+
+            if (!IsCheatMode && DrawController.HasEffect("Cheat"))
+            {
+                DrawController.RemoveEffect("Cheat");
+            }
+            else if (IsCheatMode && !DrawController.HasEffect("Cheat"))
+            {
+                DrawController.AddEffect("Cheat", "Shield");
+            }
+
+            if (!powerupActive && DrawController.HasEffect("Damage"))
+            {
+                DrawController.RemoveEffect("Damage");
+            }
+            else if (powerupActive && !DrawController.HasEffect("Damage"))
+            {
+                DrawController.AddEffect("Damage", "pUpDamage");
+            }
+
             // enable invulnerability
             if (Keyboard.GetState().IsKeyDown(Keys.P) && PauseHasBeenUp)
             {
@@ -167,6 +215,18 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             if (Keyboard.GetState().IsKeyUp(Keys.P))
             {
                 PauseHasBeenUp = true;
+            }
+
+            if (powerupActive && powerupTime <= 0f)
+            {
+                powerupTime = 0f;
+                powerupActive = false;
+                shots = new PlayerShotPattern(new ShotParams { asset = "01" }, 1f);
+            }
+
+            if (powerupTime > 0f)
+            {
+                powerupTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
             shots.CreateShots(_instance, gameTime);
@@ -191,7 +251,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
 
             if (powerUpTuple.Item1 == "ExtraHealth")
             {
-                ++hitCounter;
+                //++hitCounter;
+                Health = Health + 1;
                 // health += (float)powerUpTuple.Item2;
                 // rawController.AddLives();
             }
@@ -199,6 +260,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             else
             {
                 shots = new PlayerShotPattern(new ShotParams { asset = "cycleBullet"}, 2f); // FIX THIS TO APPLY EXTRA DAMAGE TO SHOTS
+                powerupActive = true;
+                powerupTime += 5f;
             }
 
             // System.Console.Write("Hi");

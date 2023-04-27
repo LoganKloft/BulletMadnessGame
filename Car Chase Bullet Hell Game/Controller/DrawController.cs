@@ -24,6 +24,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public static Sprite gameWon;
         public static Sprite slowMode;
         public static Sprite invulnMode;
+        public static Dictionary<string, Sprite> effects = new Dictionary<string, Sprite>();
         public static List<Sprite> sprites = new List<Sprite>();
         public static List<Sprite> lives = new List<Sprite>();
         public static List<Sprite> powerUps = new List<Sprite>();
@@ -31,6 +32,26 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         private static bool gameOverLost = false;
         private static bool gameOverWin = false;
 
+        public static void AddEffect(string effectName, string asset)
+        {
+            Sprite sprite = new Sprite();
+            sprite.LoadContent(Game1.content, asset);
+            sprite.DestinationRectangle.Width = 64;
+            sprite.DestinationRectangle.Height = 64;
+            effects.Add(effectName, sprite);
+            UpdateEffectLocation();
+        }
+
+        public static void RemoveEffect(string effectName)
+        {
+            effects.Remove(effectName);
+            UpdateEffectLocation();
+        }
+
+        public static bool HasEffect(string effectName)
+        {
+            return effects.ContainsKey(effectName);
+        }
 
         public static void AddSprite(Sprite sprite)
         {
@@ -41,6 +62,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         public static void AddLives(Sprite sprite)
         {
             lives.Add(sprite);
+            UpdateLifeLocation();
         }
 
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime, Spawner spawn)
@@ -60,14 +82,19 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                     sprite.Draw(spriteBatch, gameTime);
                 }
 
-                if(Player.Instance.IsInvincible || Player.Instance.IsCheatMode)
-                {
-                    invulnMode.Draw(spriteBatch, gameTime);
-                }
+                //if(Player.Instance.IsInvincible || Player.Instance.IsCheatMode)
+                //{
+                //    invulnMode.Draw(spriteBatch, gameTime);
+                //}
 
-                if (Player.Instance.IsSlow)
+                //if (Player.Instance.IsSlow)
+                //{
+                //    slowMode.Draw(spriteBatch, gameTime);
+                //}
+
+                foreach (KeyValuePair<string, Sprite> kvp in effects)
                 {
-                    slowMode.Draw(spriteBatch, gameTime);
+                    kvp.Value.Draw(spriteBatch, gameTime);
                 }
 
                 if(spawn.CheckGameOver() == true)
@@ -127,6 +154,20 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             {
                 lives[i].DestinationRectangle.X = (int)(1250 /1.25) - 157 / 2 / 2 + i*60;
                 lives[i].DestinationRectangle.Y = 20;
+            }
+        }
+
+        public static void UpdateEffectLocation()
+        {
+            int x = Game1.widthSize - 64;
+            int y = Game1.heightSize - 64;
+
+            foreach (KeyValuePair<string, Sprite> kvp in effects)
+            {
+                kvp.Value.DestinationRectangle.X = x;
+                kvp.Value.DestinationRectangle.Y = y;
+
+                y -= 64;
             }
         }
 

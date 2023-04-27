@@ -18,6 +18,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
         public LifeItem(ContentManager content, string asset)
         {
             Player.Instance.LostLife += LostLifeItem;
+            Player.Instance.GainLife += AddLifeItem;
             this.content = content;
             this.asset = asset;
             for (int i = 0; i < (int)Player.Instance.Health; ++i)
@@ -33,6 +34,13 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
         {
             DrawController.RemoveLife();
             Player.Instance.IsInvincible = true;
+        }
+
+        private void AddLifeItem()
+        {
+            sprite = new Sprite();
+            sprite.LoadContent(content, asset);
+            DrawController.AddLives(sprite);
         }
 
     }

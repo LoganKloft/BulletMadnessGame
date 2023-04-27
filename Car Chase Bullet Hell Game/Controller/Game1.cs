@@ -40,8 +40,8 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
 
         public static GraphicsDevice gd;
 
-        public const int widthSize = 1250, heightSize = 800;
-        public const int playerWidth = 70;
+        public static int widthSize = 1250, heightSize = 800;
+        public static int playerWidth = 70;
         public const int playerHeight = 125;
 
         private MainMenuBackground _mainMenuBackground;
@@ -154,20 +154,10 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
             Sprite gameWon = new Sprite();
             gameWon.LoadContent(Content, "win");
 
-            Sprite slowMode = new Sprite();
-            slowMode.LoadContent(Content, "Turtle");
-            slowMode.DestinationRectangle = new Rectangle(widthSize - 64, heightSize - 64, 64, 64);
-
-            Sprite invulnMode = new Sprite();
-            invulnMode.LoadContent(Content, "Shield");
-            invulnMode.DestinationRectangle = new Rectangle(widthSize - 64, heightSize - 128, 64, 64);
-
             DrawController.gameLost = gameLost;
             DrawController.gameWon = gameWon;
             DrawController.background = _background;
             DrawController.playerSprite = _playerSprite;
-            DrawController.slowMode = slowMode;
-            DrawController.invulnMode = invulnMode;
         }
 
         //void MediaPlayer_MediaStateChanged(object sender, System.EventArgs e)

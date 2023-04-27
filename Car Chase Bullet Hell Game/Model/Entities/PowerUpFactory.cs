@@ -20,7 +20,9 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             Sprite sprite = new Sprite();
             sprite.LoadContent(Game1.content, asset);
 
-            sprite.DestinationRectangle = e.DestinationRectangle;
+            sprite.DestinationRectangle = new Rectangle(e.DestinationRectangle.X,
+                e.DestinationRectangle.Y,
+                128, 128);
 
             Powerup enemy = new Powerup(pType);
             enemy.DestinationRectangle = sprite.DestinationRectangle;
@@ -29,6 +31,8 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
             enemy.RotationChanged += sprite.RotationChangedHandler;
             enemy.OriginChanged += sprite.OriginChangedHandler;
             enemy.DestroyEvent += sprite.DestroyEventHandler;
+
+            enemy.NotifyOfDestinationRectangleChange();
 
             return new Tuple<Powerup, Sprite>(enemy, sprite);
         }
