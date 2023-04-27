@@ -15,7 +15,7 @@ namespace Car_Chase_Bullet_Hell_Game.View.Sprite
     {
         // the size and location of the sprite
         public Rectangle DestinationRectangle;
-
+        public SpriteFont font;
         // the part of the image used for the sprite
         public Rectangle SourceRectangle;
         public Color Color = Color.White;
@@ -36,6 +36,7 @@ namespace Car_Chase_Bullet_Hell_Game.View.Sprite
         // call this function to load an asset image for the sprite
         public void LoadContent(ContentManager content, string asset)
         {
+            font = content.Load<SpriteFont>("ScoreFont");
             _texture = content.Load<Texture2D>(asset);
             SourceRectangle = _texture.Bounds;
             DestinationRectangle = new Rectangle(_texture.Bounds.X, _texture.Bounds.Y, _texture.Bounds.Width, _texture.Bounds.Height);
@@ -43,6 +44,7 @@ namespace Car_Chase_Bullet_Hell_Game.View.Sprite
 
         public void LoadContent(ContentManager content, string asset, Rectangle sourceRectangle)
         {
+            font = content.Load<SpriteFont>("ScoreFont");
             _texture = content.Load<Texture2D>(asset);
             SourceRectangle = sourceRectangle;
             DestinationRectangle = new Rectangle(0, 0, sourceRectangle.Width, sourceRectangle.Height);
@@ -64,6 +66,8 @@ namespace Car_Chase_Bullet_Hell_Game.View.Sprite
 
                 SourceRectangle = Animations[animationIndex];
             }
+
+            spriteBatch.DrawString(font, "Score: " + Player.Instance.Score.ToString(), new Vector2(10, 10), Color.White);
         }
 
         public Point Center

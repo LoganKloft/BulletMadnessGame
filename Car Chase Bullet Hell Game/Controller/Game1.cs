@@ -204,6 +204,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
             /*if (Keyboard.GetState().IsKeyDown(Keys.P))
             {
                 if (gameState != GameState.Pause && gameState != GameState.StartMenu)
@@ -231,6 +232,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller
                     }
                 }
             }
+
             else if (gameState == GameState.Playing)
             {
                 spawner.Update(gameTime);

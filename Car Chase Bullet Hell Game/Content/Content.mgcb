@@ -217,6 +217,30 @@
 /processorParam:TextureFormat=Color
 /build:Police.png
 
+#begin pUpDamage.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:pUpDamage.png
+
+#begin pUpHeart.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:pUpHeart.png
+
 #begin RedHealthBar.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -240,6 +264,13 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Road.png
+
+#begin ScoreFont.spritefont
+/importer:FontDescriptionImporter
+/processor:LocalizedFontProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:ScoreFont.spritefont
 
 #begin Shield.png
 /importer:TextureImporter

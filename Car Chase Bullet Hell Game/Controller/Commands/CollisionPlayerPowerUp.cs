@@ -1,4 +1,4 @@
- using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,38 +7,36 @@ using Car_Chase_Bullet_Hell_Game.Model.Entities;
 
 namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
 {
-    internal class CollisionPlayerEnemyCommand : Command
+    internal class CollisionPlayerPowerUpCommand : Command
     {
-        private Entity enemy;
+        private Powerup power;
         private Entity player;
 
-        public CollisionPlayerEnemyCommand(Entity x, Entity y)
-        {
-            //x.DestroyEvent += DestroyEventHandler;
-            //y.DestroyEvent += DestroyEventHandler;
-
-            if (x is Enemy)
+        public CollisionPlayerPowerUpCommand(Entity x, Entity y)
+        { 
+            if (x is Powerup)
             {
-                enemy = x;
+                power = (Powerup)x;
                 player = y;
             }
 
             else
             {
-                enemy = y;
+                power = (Powerup)y;
                 player = x;
             }
 
-            enemy.DestroyEvent += DestroyEventHandler;
+            power.DestroyEvent += DestroyEventHandler;
         }
 
         public override event DestroyCommandEventHandler DestroyEvent;
 
         public override void execute()
         {
-            if (enemy.HitBoxRectangle.Intersects(player.HitBoxRectangle))
+            if (power.DestinationRectangle.Intersects(player.DestinationRectangle))
             {
-                ((Player)player).TakeDamage(enemy);
+                ((Player)player).ApplyPowerUp((Powerup)power);
+                power.InvokeDestroyEvent();
             }
         }
 
