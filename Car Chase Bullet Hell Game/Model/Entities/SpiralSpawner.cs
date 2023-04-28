@@ -23,7 +23,14 @@ namespace Car_Chase_Bullet_Hell_Game.Model.Entities
         public void setOrbit(ref Enemy enemy)
         {
             this.orbitEnemy = enemy;
+            this.orbitEnemy.DestroyEvent += DestroyHandler;
         }
+
+        public void DestroyHandler(Entity entity)
+        {
+            this.InvokeDestroyEvent();
+        }
+
         public override void Update(GameTime gameTime)
         {
             if(MovementPattern!=null)

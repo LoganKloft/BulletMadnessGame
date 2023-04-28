@@ -15,7 +15,7 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
     internal class SingleSpiralShotPattern : ShotPattern
     {
 
-        private TargetingShotFactory targetFactory = new TargetingShotFactory();
+        //private TargetingShotFactory targetFactory = new TargetingShotFactory();
         private StraightShotFactory straightShotFactory = new StraightShotFactory();
         string asset;
         ShotParams _shotParams;
@@ -28,8 +28,21 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
 
         public override void CreateShots(Entity entity, GameTime gameTime = null)
         {
+            // (1) calculate angle of shots to shoot at player
+            Point target = Player.Instance.Center;
+            Point current = entity.Center;
+
+            // v = unit vector from current to target
+            Vector2 v = new Vector2(target.X - current.X, target.Y - current.Y);
+            float magnitude = (float)Math.Sqrt(Math.Pow(v.X, 2) + Math.Pow(v.Y, 2));
+            v.X = v.X / magnitude;
+            v.Y = v.Y / magnitude;
+
+            // angle based on x-axis
+            double angle = Math.Atan2(v.Y, v.X);
+
             (Shot shot, Sprite sprite) = ShotFactory.CreateShot(_shotParams);
-            MovementPattern.MovementPattern movementPattern = targetFactory.CreateMovementPattern(new MovementParams());
+            MovementPattern.MovementPattern movementPattern = straightShotFactory.CreateMovementPattern(new MovementParams{ direction = angle });
             shot.MovementPattern = movementPattern;
             DrawController.AddSprite(sprite);
             //shot.LoadContent(content, asset);

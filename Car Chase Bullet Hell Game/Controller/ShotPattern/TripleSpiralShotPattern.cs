@@ -24,20 +24,36 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             this._shotParams = shotParams;
             this.asset = shotParams.asset;
         }
+
+        // shoots at player location
         public override void CreateShots(Entity entity, GameTime gameTime = null)
         {
+            // (1) calculate angle of shots to shoot at player
+            Point target = Player.Instance.Center;
+            Point current = entity.Center;
+
+            // v = unit vector from current to target
+            Vector2 v = new Vector2(target.X - current.X, target.Y - current.Y);
+            float magnitude = (float)Math.Sqrt(Math.Pow(v.X, 2) + Math.Pow(v.Y, 2));
+            v.X = v.X / magnitude;
+            v.Y = v.Y / magnitude;
+
+            // angle based on x-axis
+            double angle = Math.Atan2(v.Y, v.X);
+
+            // (2) create three shots, one shooting at the player, the others +120 and +240 degrees of the original shot
             (Shot shot1, Sprite sprite1) = ShotFactory.CreateShot(_shotParams);
-            MovementPattern.MovementPattern movementPattern1 = straightShotFactory.CreateMovementPattern(new MovementParams() { direction = 1});
+            MovementPattern.MovementPattern movementPattern1 = straightShotFactory.CreateMovementPattern(new MovementParams() { direction = angle});
             shot1.MovementPattern = movementPattern1;
             DrawController.AddSprite(sprite1);
 
             (Shot shot2, Sprite sprite2) = ShotFactory.CreateShot(_shotParams);
-            MovementPattern.MovementPattern movementPattern2 = straightShotFactory.CreateMovementPattern(new MovementParams() { direction = 3 });
+            MovementPattern.MovementPattern movementPattern2 = straightShotFactory.CreateMovementPattern(new MovementParams() { direction = angle + ((2.0d / 3.0d) * Math.PI) });
             shot2.MovementPattern = movementPattern2;
             DrawController.AddSprite(sprite2);
 
             (Shot shot3, Sprite sprite3) = ShotFactory.CreateShot(_shotParams);
-            MovementPattern.MovementPattern movementPattern3 = straightShotFactory.CreateMovementPattern(new MovementParams() { direction = 5 });
+            MovementPattern.MovementPattern movementPattern3 = straightShotFactory.CreateMovementPattern(new MovementParams() { direction = angle + ((4.0d / 3.0d) * Math.PI) });
             shot3.MovementPattern = movementPattern3;
             DrawController.AddSprite(sprite3);
 
@@ -61,27 +77,20 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.ShotPattern
             }
 
             ShotController.AddShot(shot1);
+            ShotController.AddShot(shot2);
+            ShotController.AddShot(shot3);
+
             // create proper command
             if (entity is Enemy)
             {
                 // then shots should collide with player
                 CollisionBulletCommand command = new CollisionBulletCommand(shot1, Player.Instance);
                 CollisionDetector.AddCommand(command);
-            }
-            ShotController.AddShot(shot2);
-            // create proper command
-            if (entity is Enemy)
-            {
-                // then shots should collide with player
-                CollisionBulletCommand command = new CollisionBulletCommand(shot2, Player.Instance);
+
+                command = new CollisionBulletCommand(shot2, Player.Instance);
                 CollisionDetector.AddCommand(command);
-            }
-            ShotController.AddShot(shot3);
-            // create proper command
-            if (entity is Enemy)
-            {
-                // then shots should collide with player
-                CollisionBulletCommand command = new CollisionBulletCommand(shot3, Player.Instance);
+
+                command = new CollisionBulletCommand(shot3, Player.Instance);
                 CollisionDetector.AddCommand(command);
             }
         }

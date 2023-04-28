@@ -26,9 +26,12 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Commands
             {
                 if (_shot.HitBoxRectangle.Intersects(enemy.HitBoxRectangle))
                 {
-                    enemy.TakeDamage(_shot);
-                    _shot.InvokeDestroyEvent();
-                    break;
+                    if (enemy is not SpiralSpawner)
+                    {
+                        enemy.TakeDamage(_shot);
+                        _shot.InvokeDestroyEvent();
+                        break;
+                    }
                 }
             }
         }

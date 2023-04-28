@@ -81,20 +81,19 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
                 foreach (EnemyParams enemyParams in waveParams.enemies)
                 {
                     //handles orbit enemy for final boss
+                    SpawnItem spawn = null;
                     if (enemyParams.enemy != null)
                     {
                         EnemyParams orbit = EnemyParams.DeepCopy(enemyParams.enemy);
                         orbit.start = enemyParams.enemy.start;
                         orbit.duration = enemyParams.enemy.duration;
-                        SpawnItem spawn = new SpawnItem(orbit);
+                        spawn = new SpawnItem(orbit);
                         AddInactiveSpawnItem(spawn);
                     }
 
                     // handles the original enemyParams
                     SpawnItem spawnItem = new SpawnItem(enemyParams);
                     AddInactiveSpawnItem(spawnItem);
-
-
 
                     // handles extra enemies that can be spawned every interval for intervals
                     if (enemyParams.interval != null && enemyParams.intervals != null)
@@ -120,22 +119,6 @@ namespace Car_Chase_Bullet_Hell_Game.Controller.Spawn
                     }
                 }
             }
-
-            //si = new SpawnItem("02", 0, 15);
-            //MovementPattern.MovementPattern mp1 = SpiralMovementPatternFactory.Create(new Point(500, 80), 1, 120, 180);
-            //si.AddMovementItem(mp1, 15);
-            //si.AddShotItem(0, 3f, 0.1f, shootPlayerShotPatternFactory.CreateShots(asset: "01", shotCount: 1));
-            //si.AddShotItem(5, 3f, 0.1f, shootPlayerShotPatternFactory.CreateShots(asset: "01", shotCount: 1));
-            //si.AddShotItem(10, 3f, 0.1f, shootPlayerShotPatternFactory.CreateShots(asset: "01", shotCount: 1));
-            //AddInactiveSpawnItem(si);
-
-            //si = new SpawnItem("02", 0, 15);
-            //MovementPattern.MovementPattern mp2 = SpiralMovementPatternFactory.Create(new Point(500, 80), 1, 120, 0);
-            //si.AddMovementItem(mp2, 15);
-            //si.AddShotItem(0, 3f, 0.1f, shootPlayerShotPatternFactory.CreateShots(asset: "01", shotCount: 1));
-            //si.AddShotItem(5, 3f, 0.1f, shootPlayerShotPatternFactory.CreateShots(asset: "01", shotCount: 1));
-            //si.AddShotItem(10, 3f, 0.1f, shootPlayerShotPatternFactory.CreateShots(asset: "01", shotCount: 1));
-            //AddInactiveSpawnItem(si);
         }
 
         public void Update(GameTime gameTime)

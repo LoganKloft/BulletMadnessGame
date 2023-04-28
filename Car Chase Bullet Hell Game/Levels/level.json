@@ -1,110 +1,133 @@
 {
-    "waves":
-    [
+  "waves": [
     {
-        "id": 1,
-        "enemies":
-        [
-            {
-            "asset": "Motorcycle",
-            "health": 1,
-            "id": 0,
+      "id": 4,
+      "enemies": [
+        {
+          "asset": "transparent",
+          "health": 3000,
+          "start": 0,
+          "duration": 15,
+          "dimensions": [ 25, 25 ],
+          "interval": 0.5,
+          "intervals": 1,
+          "score": 0,
+          "enemy": {
+            "asset": "helicopter",
+            "health": 5,
             "start": 0,
-            "duration": 45,
+            "duration": 15,
+            "healthBar": true,
+            "dimentsions": [ 125, 125 ],
+            "score": 10000,
             "movementItems": [
-                {
-                    "movementPattern": "LeftMovementPattern",
-                    "point": [0, 1],
-                    "radius": 0,
-                    "entity": 0,
-                    "direction": 0.0,
-                    "speed": 1.0,
-                    "duration": 3.0
-                }
+              {
+                "movementPattern": "TriangleMovementPattern",
+                "enitity": 1,
+                "duration": 15
+              }
             ],
-            "shotItems": [
-                {
-                    "shotPattern": "CicleShotPattern",
-                    "asset": "01",
-                    "point": [0, 0],
-                    "shotCount": 5,
-                    "start": 0.0,
-                    "duration": 5.0,
-                    "shootSpeed": 3.0
-                }
-            ]
-        } 
-        ]
+            "shotItems": []
+          },
+          "underlyingEnemy": true,
+          "movementItems": [
+            {
+              "movementPattern": "SpiralMovementPattern",
+              "entity": 1,
+              "duration": 15
+            }
+          ],
+          "shotItems": [
+            {
+              "shotPattern": "SingleSpiralShotPattern",
+              "asset": "bullet2",
+              "start": 0.0,
+              "duration": 5.0,
+              "shootSpeed": 0.05,
+              "pause": 1.5
+            },
+            {
+              "shotPattern": "CircleShotPattern",
+              "asset": "01",
+              "shotCount": 16,
+              "start": 5.0,
+              "duration": 5.0,
+              "shootSpeed": 2.5
+            },
+            {
+              "shotPattern": "SingleSpiralShotPattern",
+              "asset": "bullet2",
+              "start": 10.0,
+              "duration": 5.0,
+              "shootSpeed": 0.075,
+              "pause": 1.5
+            }
+          ]
+        }
+      ]
     },
     {
-        "id": 2,
-        "enemies":
-        [
-            {
-            "asset": "Tank",
-            "health": 1,
-            "id": 1,
-            "start": 0.0,
-            "duration": 45.0,
+      "id": 6,
+      "enemies": [
+        {
+          "asset": "transparent",
+          "health": 3000,
+          "start": 15,
+          "duration": 20,
+          "dimensions": [ 25, 25 ],
+          "enemy": {
+            "asset": "helicopter",
+            "health": 5,
+            "start": 15,
+            "duration": 15,
+            "healthBar": true,
+            "dimentsions": [ 125, 125 ],
             "movementItems": [
-                {
-                    "point": [0, 0],
-                    "radius": 0,
-                    "entity": 1,
-                    "direction": 0,
-                    "speed": 1.0,
-                    "duration": 45.0,
-                    "movementPattern": "TriangleMovementPattern"
-                }
+              {
+                "movementPattern": "TriangleMovementPattern",
+                "enitity": 1,
+                "duration": 20
+              }
             ],
-            "shotItems": [
-                {
-                    "shotPattern": "CicleShotPattern",
-                    "asset": "bullet1",
-                    "point": [0, 0],
-                    "shotCount": 5,
-                    "start": 0.0,
-                    "duration": 5.0,
-                    "shootSpeed": 3
-                }
-            ]
-        }
-        ]
-    },
-    {
-        "id": 3,
-        "enemies": 
-        [
+            "shotItems": []
+          },
+          "underlyingEnemy": true,
+          "movementItems": [
             {
-            "asset": "Police",
-            "health": 1,
-            "id": 3,
-            "start": 0.0,
-            "duration": 45.0,
-            "movementItems": [
-                {
-                    "point": [0, 0],
-                    "radius": 0,
-                    "entity": 3,
-                    "direction": 0,
-                    "speed": 1.0,
-                    "duration": 45.0,
-                    "movementPattern": "RightMovementPattern"
-                }
-            ],
-            "shotItems": [
-                {
-                    "shotPattern": "CicleShotPattern",
-                    "asset": "KirbyBullet01",
-                    "point": [0, 0],
-                    "shotCount": 5,
-                    "start": 0,
-                    "duration": 5,
-                    "shootSpeed": 3
-                }
-            ]
+              "movementPattern": "SpiralMovementPattern",
+              "speed": 10.0,
+              "entity": 1,
+              "duration": 20
+            }
+          ],
+          "shotItems": [
+            {
+              "shotPattern": "TripleSpiralShotPattern",
+              "asset": "bullet2",
+              "start": 0.0,
+              "duration": 8.0,
+              "shootSpeed": 0.025,
+              "pause": 2.0
+            },
+            {
+              "shotPattern": "CircleShotPattern",
+              "asset": "01",
+              "shotCount": 16,
+              "start": 8.0,
+              "duration": 4.0,
+              "shootSpeed": 2.5
+            },
+            {
+              "shotPattern": "TripleSpiralShotPattern",
+              "asset": "bullet2",
+              "start": 12.0,
+              "duration": 8.0,
+              "shootSpeed": 0.025,
+              "pause": 2.0
+            }
+          ]
         }
-        ]
+      ]
     }
-    ]
+  ]
 }

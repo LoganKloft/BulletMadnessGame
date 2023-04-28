@@ -13,7 +13,7 @@
           "interval": 1.0,
           "intervals": 4,
           "hitboxPercent": 0.5,
-          "score":  500,
+          "score": 500,
           "movementItems": [
             {
               "movementPattern": "LeftMovementPattern",
@@ -42,7 +42,7 @@
           "dimensions": [ 125, 125 ],
           "interval": 1.0,
           "intervals": 4,
-          "score":  500,
+          "score": 500,
           "movementItems": [
             {
               "movementPattern": "RightMovementPattern",
@@ -204,6 +204,7 @@
             "health": 5,
             "start": 45,
             "duration": 15,
+            "healthBar": true,
             "dimentsions": [ 125, 125 ],
             "score":  10000,
             "movementItems": [
@@ -229,7 +230,7 @@
               "asset": "bullet2",
               "start": 0.0,
               "duration": 5.0,
-              "shootSpeed": 0.075,
+              "shootSpeed": 0.05,
               "pause": 1.5
             },
             {
@@ -327,6 +328,7 @@
             "health": 5,
             "start": 70,
             "duration": 15,
+            "healthBar": true,
             "dimentsions": [ 125, 125 ],
             "movementItems": [
               {
